@@ -1,0 +1,11 @@
+.carousel-dots-container {
+    overflow: hidden;
+  }
+  
+  .carousel-dots-container ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  
