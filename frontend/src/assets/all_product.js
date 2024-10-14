@@ -13,7 +13,7 @@ import chaussure_basket_lumineuse  from "./images/chaussure-basket-lumineuse.jpg
 import chaussure_compense from "./images/chaussure-compense.jpg";
 import chaussure_compense_de_luxe from "./images/chaussure-compense-de-luxe.jpg";
 import television_LG_28TQ515S from "./images/télévision-LG 28TQ515S-PZ.jpg";
-//import television_Hisense_43A6K from "./images/télévision-Hisense 43A6K.jpg;";
+import television_Hisense_43A6K from "./images/télévision-Hisense 43A6K.jpg";
 import television_LG_32LQ631C   from "./images/télévision-LG 32LQ631C.webp";
 import television_LG_28TQ525S_PZ from "./images/télévision-LG 28TQ525S-PZ.jpg";
 import television_TCL_55C743 from "./images/télévision-TCL 55C743.jpg";
@@ -173,7 +173,7 @@ let all_product = [
     },
     {
         id:15,
-        name:"Télévision -LG 28TQ515S",
+        name:"Télévision LG 28TQ515S",
         category:"Télévision",
         image:television_LG_28TQ515S,
         new_price:100000,
@@ -181,16 +181,16 @@ let all_product = [
         description:"A la fois TV LED et moniteur PC, la LG 28TQ515S-PZ s'adapte aux besoins de chacun en combinant le meilleur des deux technologies. En proposant des images nettes et des angles de vision larges, vous pouvez profiter du meilleur du cinéma et du divertissement.",
         stock:14
     },
-    // {
-    //     id:16,
-    //     name:"Télévision Hisense 43A6K",
-    //     category:"Télévision",
-    //     image:television_Hisense_43A6K,
-    //     new_price:110000,
-    //     old_price:145000,
-    //     description:"Profitez d'un spectacle saisissant avec une qualité d'image supérieure en installant le téléviseur 4K UHD Hisense 43A6K dans votre salon. Cette Smart TV propose une expérience visuelle des plus agréables avec sa technologie Direct Full Array qui diffuse la lumière uniformément sur l'écran.",
-    //     stock:14
-    // },
+    {
+        id:16,
+        name:"Télévision Hisense 43A6K",
+        category:"Télévision",
+        image:television_Hisense_43A6K,
+        new_price:110000,
+        old_price:145000,
+        description:"Profitez d'un spectacle saisissant avec une qualité d'image supérieure en installant le téléviseur 4K UHD Hisense 43A6K dans votre salon. Cette Smart TV propose une expérience visuelle des plus agréables avec sa technologie Direct Full Array qui diffuse la lumière uniformément sur l'écran.",
+        stock:14
+    },
     {
         id:17,
         name:"Télévision LG 32LQ631C",
@@ -203,7 +203,7 @@ let all_product = [
     },
     {
         id:18,
-        name:"Télévision LG 32LQ631C",
+        name:"Télévision LG 28TQ525S PZ",
         category:"Télévision",
         image:television_LG_28TQ525S_PZ,
         new_price:118000,
@@ -277,7 +277,7 @@ let all_product = [
 
     {
         id:25,
-        name:"Mini PC Mac Mini",
+        name:"Mini PC Mac 58",
         category:"Ordinateur",
         image:mini_pc_mac_58,
         new_price:114000,

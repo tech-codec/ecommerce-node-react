@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Carousel, initTWE } from "tw-elements";
 import banner_1 from '../../assets/banner-1.jpg'
 import banner_3 from '../../assets/banner-3.jpg'
+import banner_4 from '../../assets/banniere-vente-ordinateur.avif'
 
 function Index() {
 
@@ -16,7 +17,7 @@ function Index() {
             data-twe-carousel-init
             data-twe-ride="carousel">
             <div
-                className="relative h-24 sm:h-40 lg:h-52 rousel-height-1:h-72 w-full overflow-hidden after:clear-both after:block after:content-['']">
+                className="relative h-24 sm:h-40 lg:h-52 rousel-height-1:h-64 w-full overflow-hidden after:clear-both after:block after:content-['']">
                 <div
                     className="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                     data-twe-carousel-item
@@ -41,7 +42,7 @@ function Index() {
                     className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                     data-twe-carousel-item>
                     <img
-                        src={banner_1}
+                        src={banner_4}
                         className="block w-full"
                         alt="Exotic Fruits" />
                 </div>

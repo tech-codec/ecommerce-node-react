@@ -1,11 +1,48 @@
-import {useState } from 'react'
+import { useContext, useEffect, useState} from 'react'
 import logo from '../assets/logo-3.png'
 import panier from '../assets/panier.png'
-import { Link } from 'react-router-dom'
+//import { Link, useNavigate, useLocation} from 'react-router-dom'
+import { Link} from 'react-router-dom'
+import { ProductAndCategoryContext } from '../context/ProductAndCategoryContext'
+import { FilterContext } from '../context/FilterContext'
 
 const Navbar = () => {
 
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('');
+  //const navigate = useNavigate();
+  //const location = useLocation();
+    const query_2 = new URLSearchParams(window.location.search).get('q');
+  const { allCategoriesContext } = useContext(ProductAndCategoryContext)
+  const { filters, setFilters } = useContext(FilterContext)
+
+  const renitialiseFilter = () => {
+
+    setFilters(
+      {
+        ...filters,
+        minPrice: 0,
+        maxPrice: 100000000,
+        sortBy: '',
+        selectedKeyword: ""
+      }
+
+    )
+  }
+
+ 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      //navigate(`/search?q=${query}`);
+      window.location.href = `/search?q=${query}`;
+      renitialiseFilter()
+    }
+  };
+
+  useEffect(()=>{
+    setQuery(query_2)
+  }, [])
 
   return (
     <nav className='sticky py-2 bg-white top-0 z-50 px-5p md:px-10p '>
@@ -19,13 +56,13 @@ const Navbar = () => {
           <Link to={"/"}><img src={logo} alt="" className='h-9 sm:w-32 md:w-36 lg:w-44 md:h-12' /></Link>
         </div>
 
-        <div className='h-12 grow flex order-last md-wrap:order-2 justify-between  items-center rounded-3xl px-2 py-4 border-solid border-2 border-indigo-600'>
-          <input type="text" className='w-full px-2 py-1 text-lg border-none outline-none bg-transparent' />
-          <button className='flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold'>
+        <form onSubmit={handleSearch} className='h-12 grow flex order-last md-wrap:order-2 justify-between  items-center rounded-3xl px-2 py-4 border-solid border-2 border-indigo-600'>
+          <input type="text" value={query} onChange={(e)=> setQuery(e.target.value)} className='w-full px-2 py-1 text-lg border-0 outline-none focus:ring-0 focus:outline-none'/>
+          <button type='submit' className='flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold'>
             <ion-icon name="search-outline"></ion-icon>
             <span>Rechercher</span>
           </button>
-        </div>
+        </form>
 
         <div className='flex justify-end order-2 gap-4 items-center relative'>
 
@@ -35,11 +72,9 @@ const Navbar = () => {
 
             <ul className='absolute hidden z-50 top-3/4 left-0 bg-white rounded-xl border-2 py-7 w-full group-hover:block'>
 
-              <Link to={"/clothes"}><li className='w-full p-2 text-center hover:bg-slate-400'>Vertements</li></Link>
-              <Link to={"/televisions"}><li className='w-full p-2 text-center hover:bg-slate-400'>Télévisions</li></Link>
-              <Link to={"/computers"}><li className='w-full p-2 text-center hover:bg-slate-400'>Ordinateurs</li></Link>
-              <Link to={"/phones"}><li className='w-full p-2 text-center hover:bg-slate-400'>Téléphones</li></Link>
-              <Link to={"/electro"}><li className='w-full p-2 text-center hover:bg-slate-400'>Électro menagère</li></Link>
+              {allCategoriesContext.map(cat =>
+                <Link key={cat.name} to={`/${cat.name}`} onClick={renitialiseFilter}><li className='w-full p-2 text-center hover:bg-slate-400'>{cat.name}</li></Link>
+              )}
             </ul>
 
           </div>
@@ -76,21 +111,11 @@ const Navbar = () => {
         <div className={` fixed z-50 flex justify-between xl:hidden cursor-pointer top-0 left-0 w-full h-full bg-white py-10 px-8 duration-500 ${open ? "left-0" : "left-[-100%]"} `}>
           <ul>
 
-            <Link to={"/clothes"}>
-              <li className='py-4 px-1' onClick={() => setOpen(!open)}>Vertements</li>
-            </Link>
-            <Link to={"/televisions"}>
-              <li className='py-4 px-1' onClick={() => setOpen(!open)}>Télévisions</li>
-            </Link>
-            <Link to={"/computers"}>
-              <li className='py-4 px-1' onClick={() => setOpen(!open)}>Ordinateurs</li>
-            </Link>
-            <Link to={"/phones"}>
-              <li className='py-4 px-1' onClick={() => setOpen(!open)}>Téléphones</li>
-            </Link>
-            <Link to={"/electro"}>
-              <li className='py-4 px-1' onClick={() => setOpen(!open)}>Électro menagère</li>
-            </Link>
+            {allCategoriesContext.map(cat =>
+              <Link key={cat.name} to={`/${cat.name}`} onClick={renitialiseFilter}>
+                <li className='py-4 px-1' onClick={() => setOpen(!open)}>{cat.name}</li>
+              </Link>
+            )}
             <Link to={"/shop"}>
               <li className='py-4 px-1' onClick={() => setOpen(!open)}>Boutique</li>
             </Link>

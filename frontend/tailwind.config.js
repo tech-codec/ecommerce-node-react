@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const flowbite = require("flowbite-react/tailwind");
 export default {
   content: [
     "./index.html",
@@ -15,7 +16,13 @@ export default {
         '10.5p': '10.5%',
         '15p': '15%',
         '20p': '20%',
+        '25p':'25%',
         '30p': '30%',
+        '40p': '40%',
+        '74p':'74%',
+        '69p':'69%',
+        '59p':'59%',
+        '79p': '79%',
         '134p': '134%',
         // Ajoutez d'autres pourcentages si nécessaire
       },
@@ -23,10 +30,15 @@ export default {
         'plan-gray': ""
       },
       screens:{
+        'banner_670':'670px',
+        'banner_890':'890px',
+        'visible_filter':'1001px',
         'lg': '1007px',
         'height-e':'1066px',
         'md-wrap': '1156px',
+        'list_p_1179':'1179px',
         'rousel-height-1':'1230px',
+        'list_p_1406':'1406px',
         'xl':'1524px',
         
       },
@@ -37,6 +49,7 @@ export default {
   },
   plugins: [
     require('tw-elements/plugin.cjs'),
+    flowbite.plugin(),
     require('flowbite/plugin')
   ],
 }
