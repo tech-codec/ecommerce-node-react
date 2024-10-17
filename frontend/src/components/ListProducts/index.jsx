@@ -1,8 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useCart } from '../../context/CartContext';
+
 
 function ListProducts({ products }) {
 
+
+    const { addToCart } = useCart();
+
+    const hanleonclick = (product)=>{
+        console.log("merci pour le produit")
+        addToCart(product)
+    }
 
     return (
         <div className='w-full visible_filter:w-74p list_p_1179:w-79p'>
@@ -27,7 +36,7 @@ function ListProducts({ products }) {
 
                                 <span className="font-semibold text-lg text-gray-900">{product.new_price} FCFA</span>
                             </div>
-                            <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-600 hover:bg-orange-700 flex items-center justify-center relative">
+                            <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-600 hover:bg-orange-700 flex items-center justify-center relative" onClick={()=>hanleonclick(product)}>
                                 <span className="text-lg absolute top-2 left-0 text-white"><ion-icon name="add-outline"></ion-icon></span>
                                 <div className="w-5 h-5">
                                     <span className="text-2xl text-white"><ion-icon name="cart-outline"></ion-icon></span>

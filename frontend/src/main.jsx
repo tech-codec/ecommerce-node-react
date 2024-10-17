@@ -7,6 +7,7 @@ import 'flowbite';
 import { Tooltip, initTWE } from "tw-elements";
 import { ProductAndCategoryProvider } from './context/ProductAndCategoryContext.jsx';
 import { FilterProvider } from './context/FilterContext.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 
 
 
@@ -16,10 +17,13 @@ initTWE({ Tooltip });
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
     <FilterProvider>
-      <ProductAndCategoryProvider>
-        <App />
-      </ProductAndCategoryProvider>
+      <CartProvider>
+        <ProductAndCategoryProvider>
+          <App />
+        </ProductAndCategoryProvider>
+      </CartProvider>
     </FilterProvider>
-  </StrictMode>,
+  </StrictMode>
 )

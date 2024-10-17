@@ -5,6 +5,8 @@ import panier from '../assets/panier.png'
 import { Link} from 'react-router-dom'
 import { ProductAndCategoryContext } from '../context/ProductAndCategoryContext'
 import { FilterContext } from '../context/FilterContext'
+import { useCart } from '../context/CartContext'
+
 
 const Navbar = () => {
 
@@ -13,8 +15,10 @@ const Navbar = () => {
   //const navigate = useNavigate();
   //const location = useLocation();
     const query_2 = new URLSearchParams(window.location.search).get('q');
-  const { allCategoriesContext } = useContext(ProductAndCategoryContext)
-  const { filters, setFilters } = useContext(FilterContext)
+    const { getTotalItems } = useCart();
+    const { allCategoriesContext } = useContext(ProductAndCategoryContext)
+    const { filters, setFilters } = useContext(FilterContext)
+  
 
   const renitialiseFilter = () => {
 
@@ -30,6 +34,8 @@ const Navbar = () => {
     )
   }
 
+  console.log(`c'est le contenu du panier${getTotalItems()}`)
+
  
   const handleSearch = (e) => {
     e.preventDefault();
@@ -42,6 +48,7 @@ const Navbar = () => {
 
   useEffect(()=>{
     setQuery(query_2)
+    console.log(`c'est le contenu du panier${getTotalItems()}`)
   }, [])
 
   return (
@@ -58,7 +65,7 @@ const Navbar = () => {
 
         <form onSubmit={handleSearch} className='h-12 grow flex order-last md-wrap:order-2 justify-between  items-center rounded-3xl px-2 py-4 border-solid border-2 border-indigo-600'>
           <input type="text" value={query} onChange={(e)=> setQuery(e.target.value)} className='w-full px-2 py-1 text-lg border-0 outline-none focus:ring-0 focus:outline-none'/>
-          <button type='submit' className='flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold'>
+          <button type='submit' className='flex text-white gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold'>
             <ion-icon name="search-outline"></ion-icon>
             <span>Rechercher</span>
           </button>
@@ -89,7 +96,7 @@ const Navbar = () => {
           </div>
 
           <Link to={"/signUp"}>
-            <button className="hidden xl:flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold"> {`S'inscrire`}</button>
+            <button className="text-white hidden xl:flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold"> {`S'inscrire`}</button>
           </Link>
 
           <div className='h-12 flex items-center cursor-pointer relative font-semibold hover:underline'>
@@ -100,7 +107,7 @@ const Navbar = () => {
               </div>
 
             </Link>
-            <span className='absolute text-orange-700 text-xs font-semibold top-0 left-1 sm:left-2'>23</span>
+            <span className='absolute text-orange-700 text-xs font-semibold top-0 left-1 sm:left-2'>{getTotalItems()}</span>
 
           </div>
 

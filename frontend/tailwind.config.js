@@ -30,6 +30,7 @@ export default {
         'plan-gray': ""
       },
       screens:{
+        'cart-img-360':'360px',
         'banner_670':'670px',
         'banner_890':'890px',
         'visible_filter':'1001px',
@@ -38,6 +39,7 @@ export default {
         'md-wrap': '1156px',
         'list_p_1179':'1179px',
         'rousel-height-1':'1230px',
+        'cart-wrap':'1280px',
         'list_p_1406':'1406px',
         'xl':'1524px',
         

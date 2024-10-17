@@ -6,11 +6,23 @@ import "./index.css";
 import { useContext } from "react";
 import { ProductAndCategoryContext } from "../../context/ProductAndCategoryContext";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+
 
 
 function CategoryAndproduct() {
 
+  
+
   const { allCategoriesContext, allProductContext } = useContext(ProductAndCategoryContext)
+
+
+  const { addToCart } = useCart();
+
+    const hanleonclick = (valu)=>{
+        console.log("cool merci")
+        addToCart(valu)
+    }
 
   const settings = {
     className: "center",
@@ -101,7 +113,7 @@ function CategoryAndproduct() {
 
                       <span className="font-semibold text-lg text-gray-900">{prd.new_price} FCFA</span>
                     </div>
-                    <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-600 hover:bg-orange-700 flex items-center justify-center relative">
+                    <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-600 hover:bg-orange-700 flex items-center justify-center relative" onClick={()=>hanleonclick(prd)}>
                       <span className="text-lg absolute top-2 left-0 text-white"><ion-icon name="add-outline"></ion-icon></span>
                       <div className="w-5 h-5">
                         <span className="text-2xl text-white"><ion-icon name="cart-outline"></ion-icon></span>
