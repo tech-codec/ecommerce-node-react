@@ -22,11 +22,12 @@ exports.getUser = async (req, res)=>{
 
 exports.updateUser = async (req, res)=>{
     const {id} = req.params
-    const {name, email, image, bio, roles} = req.body
+    const {name, email, bio, roles} = req.body
 
 
     try{
-        const userUpdate = await User.findByIdAndUpdate(id, {name, email, image, bio, roles}, {new:true,upsert:true,setDefaultsOnInsert:true,runValidators:true}).select('-password')
+        image = req.file !== null ? req.file.path : ""
+        const userUpdate = await User.findByIdAndUpdate(id, {name, email, image:image, bio, roles}, {new:true,upsert:true,setDefaultsOnInsert:true,runValidators:true}).select('-password')
         
         if(!userUpdate) res.status('404').json({message:"utilisateur non trouvé"})
         
