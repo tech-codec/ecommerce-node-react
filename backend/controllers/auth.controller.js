@@ -2,12 +2,17 @@
 
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
+
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const transporter = require('../utils/nodemailer');
+
 const {registerErrors, loginErrors} = require('../utils/errors.util')
 
 const SALT_WORK_FACTOR = 10;
 
-const maxAge = 3 *21 *60 *1000
+//const maxAge = 3 *21 *60 *1000
+const maxAge = 72 *60 *60 *1000 //72h donc 3d
 // const createToken = (id)=>{
 //     return jwt.sign({id},process.env.JWT_SECRET, {
 //         expiresIn:maxAge
@@ -17,19 +22,41 @@ const maxAge = 3 *21 *60 *1000
 
 // Inscription
 exports.register = async (req, res) => {
-    const { name, email, bio, password, roles } = req.body;
+    const { name, email, password, roles, confirmPassword } = req.body;
+
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+        return res.status(400).json({ errors: [{ msg: 'Les mots de passe ne correspondent pas' }] });
+    }
 
     try {
         // Création de l'utilisateur
-        const newUser = new User({ name, email, bio, password, roles });
-        await newUser.save();
+        const newUser = new User({ name, email,password, roles });
+        const savedUser = await newUser.save();
 
-        res.status(201).json({ message: 'Utilisateur enregistré avec succès' });
+        const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const url = `${process.env.CLIENT_URL}/activate/${token}`;
+        console.log("mon url de connexion: "+url+"\n")
+        console.log("mon token : "+token)
+
+        await transporter.sendMail({
+            from:{
+                name:process.env.NAME_USER,
+                address:process.env.EMAIL_USER
+            },
+            to: email,
+            subject: 'Activation du compte',
+            template: 'activate',
+            context: { name, url }
+        });
+        
+
+        res.status(201).json({ message: "Utilisateur enregistré. E-mail d'activation envoyé." });
     } catch (error) {
-        const errors = registerErrors(error)
-        res.status(500).send({errors});
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 
 // Connexion
@@ -38,7 +65,7 @@ exports.login = async (req, res) => {
 
     try {
         const user = await User.login(email,password);
-        const token = jwt.sign({ id: user._id, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '3d' });
 
         // Stockage du token dans un cookie
         res.cookie('token', token, { httpOnly: true, maxAge:maxAge });
@@ -46,6 +73,83 @@ exports.login = async (req, res) => {
     } catch (error) {
         const errors = loginErrors(error)
         res.status(500).send({errors});
+    }
+};
+
+
+exports.activateAccount = async (req, res) => {
+    const { token } = req.params;
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+        if (!user) {
+            return res.status(400).json({ error: 'Le token est invalide' });
+        }
+        user.isActive = true;
+        await user.save();
+        res.status(200).json({ message: 'Votre compte a été activé' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+exports.requestPasswordReset = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "L'utilisateur avec cet e-mail n'existe pas" });
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        await user.save();
+
+        const url = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+        await transporter.sendMail({
+            from:{
+                name:process.env.NAME_USER,
+                address:process.env.EMAIL_USER
+            },
+            to: email,
+            subject: 'Réinitialisation du mot de passe',
+            template: 'reset',
+            context: { name: user.name, url }
+        });
+
+        res.status(200).json({ message: 'E-mail de réinitialisation du mot de passe envoyé' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.resetPassword = async (req, res) => {
+    const { token } = req.params;
+    const { password, confirmPassword } = req.body;
+    if (password !== confirmPassword) {
+        return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
+    }
+
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
+        if (!user) {
+            return res.status(400).json({ error: 'Jeton invalide ou expiré' });
+        }
+
+        user.password = await bcrypt.hash(password, 10);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.status(200).json({ message: 'Réinitialisation du mot de passe réussie' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 

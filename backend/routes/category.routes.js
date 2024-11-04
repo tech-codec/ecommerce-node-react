@@ -1,8 +1,6 @@
 const express = require('express')
 
-//const multer  = require('multer')
-
-//const upload = multer()
+const {verifyToken, isAdmin} = require("../milddleware/auth")
 
 const {upload} = require('../utils/upload.image')
 
@@ -11,10 +9,10 @@ const {createCategory, updateCategory, deleteCategory, getAllCategories, getcate
 
 const router = express.Router()
 
-router.post('/',upload.single("image"), createCategory)
+router.post('/',verifyToken, isAdmin,upload.single("image"), createCategory)
 router.get('/',getAllCategories)
 router.get('/:id',getcategory)
-router.put('/:id',upload.single("image"), updateCategory)
-router.delete('/:id', deleteCategory)
+router.put('/:id',verifyToken, isAdmin,upload.single("image"), updateCategory)
+router.delete('/:id',verifyToken, isAdmin, deleteCategory)
 
 module.exports = router

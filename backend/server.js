@@ -7,6 +7,7 @@ const UserRoutes = require('./routes/user.routes')
 const RoleRoutes = require('./routes/role.routes')
 const CategoryRoutes = require('./routes/category.routes')
 const ProductRoutes = require('./routes/product.routes')
+const OrderRoutes = require('./routes/order.routes')
 const {initRoles} = require('./utils/initRoles')
 
 
@@ -35,7 +36,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser());
-//initRoles()
+initRoles()
 
 
 
@@ -45,6 +46,7 @@ app.use('/api/users', UserRoutes)
 app.use('/api/roles', RoleRoutes)
 app.use('/api/categories', CategoryRoutes)
 app.use('/api/products', ProductRoutes)
+app.use('/api/orders',OrderRoutes)
 
 
 
@@ -53,4 +55,5 @@ app.use('/api/products', ProductRoutes)
 
 app.listen(PORT, ()=>{
     console.log(`server runing on port ${PORT} `)
+    console.log( typeof process.env.REFRESH_TOKEN)
 })

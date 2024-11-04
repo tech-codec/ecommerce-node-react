@@ -41,6 +41,9 @@ const userSchema = new mongoose.Schema(
         type: String,
         maxlength: 1024,
       },
+      isActive: { type: Boolean, default: false },
+      resetPasswordToken: String,
+      resetPasswordExpires: Date,
       roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }]
     },
     {
@@ -68,12 +71,11 @@ const userSchema = new mongoose.Schema(
       if (auth) {
         return user;
       }
-      throw Error('incorrect password');
+      throw Error("Mot de passe ou l'email sont incorrets");
+      if(!user.isActive)throw Error("Vous devez Activer votre compte")
     }
-    throw Error('incorrect email')
+    throw Error("Mot de passe ou l'email sont incorrets")
   };
-
-
 
 module.exports = mongoose.model('User', userSchema)
   
