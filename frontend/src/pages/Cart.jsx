@@ -1,10 +1,12 @@
 // src/Cart.js
-import { useCart } from '../context/CartContext';
+//import { useCart } from '../context/CartContext';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 
 
 const Cart = () => {
-  const { cart, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useCart();
+  const { cart, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useContext(CartContext)
 
   return (
     <div className="px-5p md:px-10p mt-10 mb-6">

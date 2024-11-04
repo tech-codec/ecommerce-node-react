@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../../context/CartContext';
+import { CartContext } from '../../context/CartContext';
+//import { useCart } from '../../context/CartContext';
 
 
 function ListProducts({ products }) {
 
 
-    const { addToCart } = useCart();
+    const { addToCart } = useContext(CartContext);
 
     const hanleonclick = (product)=>{
         console.log("merci pour le produit")
@@ -19,7 +20,7 @@ function ListProducts({ products }) {
                 {products.map(product =>
                     <div key={product.id} className="rounded-lg border bg-white  py-4 px-4 shadow-lg">
                         <Link to={`/product/${product.id}`}>
-                            <img src={product.image} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer" />
+                            <img src={product.image[0]} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer" />
                         </Link>
 
                         <Link to={`/product/${product.id}`}>

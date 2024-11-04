@@ -1,11 +1,21 @@
-import React from 'react'
-import { useCart } from '../../context/CartContext';
+import { useContext, useEffect, useState } from 'react'
+//import { useCart } from '../../context/CartContext';
 import { Link } from 'react-router-dom';
-
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+import { CartContext } from '../../context/CartContext';
 
 function ProductDetail({ product }) {
 
-    const { addToCart } = useCart();
+    const { addToCart } = useContext(CartContext);
+
+    const [selectedImage, setSelectedImage] = useState(product.image[0]);
+
+
+    useEffect(() => {
+        setSelectedImage(product.image[0])
+    }, [product]);
+    
 
     const hanleonclick = (product) => {
         console.log("merci pour le produit ajouter")
@@ -13,9 +23,38 @@ function ProductDetail({ product }) {
     }
 
     return (
-        <div className='flex-wrap  banner_890:flex-nowrap flex justify-between gap-10'>
-            <img src={product.image} alt={product.image} className='w-full banner_890:w-40p visible_filter:w-30p h-96' />
-            <div className='w-full banner_890:w-59p visible_filter:w-69p flex flex-col'>
+        <div className='flex  w-full justify-between '>
+
+            <div className="flex flex-col md:flex-row w-30p gap-2">
+
+
+                <div className="flex flex-col w-20p">
+                    {product.image.map((image, index) => (
+                        <img
+                            key={index}
+                            src={image}
+                            alt={`product ${index}`}
+                            className="cursor-pointer mb-2 h-20"
+                            onClick={() => setSelectedImage(image)}
+                        />
+                    ))}
+                </div>
+                <div className="w-79p">
+                    <div className="flex justify-center">
+                        <Zoom>
+                            <img
+                                src={selectedImage}
+                                alt="Selected Product"
+                                style={{ width: '400px', height: '400px' }}
+                            />
+                        </Zoom>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div className='flex flex-col w-69p'>
 
                 <div className='flex justify-between mb-2'>
                     <h3 className='text-2xl banner_890:text-3xl font-semibold text-gray-800'>{product.name}</h3>

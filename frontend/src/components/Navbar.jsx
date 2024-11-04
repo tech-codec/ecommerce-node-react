@@ -5,7 +5,8 @@ import panier from '../assets/panier.png'
 import { Link} from 'react-router-dom'
 import { ProductAndCategoryContext } from '../context/ProductAndCategoryContext'
 import { FilterContext } from '../context/FilterContext'
-import { useCart } from '../context/CartContext'
+import { CartContext } from '../context/CartContext'
+//import { useCart } from '../context/CartContext'
 
 
 const Navbar = () => {
@@ -15,7 +16,7 @@ const Navbar = () => {
   //const navigate = useNavigate();
   //const location = useLocation();
     const query_2 = new URLSearchParams(window.location.search).get('q');
-    const { getTotalItems } = useCart();
+    const { getTotalItems } = useContext(CartContext)
     const { allCategoriesContext } = useContext(ProductAndCategoryContext)
     const { filters, setFilters } = useContext(FilterContext)
   
@@ -48,7 +49,7 @@ const Navbar = () => {
 
   useEffect(()=>{
     setQuery(query_2)
-    console.log(`c'est le contenu du panier${getTotalItems()}`)
+    //console.log(`c'est le contenu du panier${getTotalItems()}`)
   }, [])
 
   return (

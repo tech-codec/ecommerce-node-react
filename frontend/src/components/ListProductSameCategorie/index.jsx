@@ -3,12 +3,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
-import { useCart } from "../../context/CartContext";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+//import { useCart } from "../../context/CartContext";
 
 
 function ListProductSameCategorie({ products, category }) {
 
-    const { addToCart } = useCart();
+    const { addToCart } = useContext(CartContext);
 
     const hanleonclick = (product)=>{
         console.log("merci pour le produit ajouter")
@@ -83,7 +85,7 @@ function ListProductSameCategorie({ products, category }) {
 
                             <div key={prd.id} className="rounded-lg border bg-white  py-4 px-4 shadow-lg">
                                 <Link to={`/product/${prd.id}`}>
-                                    <img src={prd.image} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer" />
+                                    <img src={prd.image[0]} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer" />
                                 </Link>
                                 <Link to={`/product/${prd.id}`}>
                                     <div className="text-sm cursor-pointer text-gray-700 whitespace-normal mt-4 mb-8 text-center max-h-16 overflow-hidden overflow-ellipsis">
