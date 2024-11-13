@@ -20,6 +20,8 @@ function ProductDetail({ product }) {
     const hanleonclick = (product) => {
         console.log("merci pour le produit ajouter")
         addToCart(product)
+        const apiUrl = import.meta.env.VITE_API_URL;
+        console.log('API URL:', apiUrl);
     }
 
     return (

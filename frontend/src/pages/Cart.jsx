@@ -73,7 +73,7 @@ const Cart = () => {
               Vider le panier
             </button>
 
-            <h1 className='text-sm text-end md:text-lg tlist_p_1406:ext-xl'> {`sous-total(${getTotalItems()}): ${getTotalPrice().toFixed(2)} FCFA`} </h1>
+            <h1 className='text-sm text-end md:text-lg tlist_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): <span>{getTotalPrice().toFixed(2)}</span>FCFA</h1>
 
 
           </div>
@@ -83,8 +83,8 @@ const Cart = () => {
           <div className='font-semibold block md:hidden'>
 
             <div className='flex items-center text-sm md:text-lg justify-between'>
-              <h1 className='list_p_1406:ext-xl'> {`sous-total(${getTotalItems()}): `} </h1>
-              <h1 className='tlist_p_1406:ext-xl'> {`${getTotalPrice().toFixed(2)} FCFA`} </h1>
+              <h1 className='list_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): </h1>
+              <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> FCFA </h1>
             </div>
 
             <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-2 w-full' onClick={() => clearCart()}>
@@ -98,12 +98,12 @@ const Cart = () => {
         <div className=' hidden cart-wrap:w-25p cart-wrap:block '>
           <div className='bg-white pt-3 pb-6 px-4'>
             <div className='flex  text-sm list_p_1406:text-base items-center justify-between border-b border-gray-200 p-3'>
-              <p> {`Produits (${getTotalItems()})`} </p>
-              <p> {`${getTotalPrice().toFixed(2)} FCFA`} </p>
+              <p> Produits (<span>{getTotalItems()}</span>)</p>
+              <p> <span>{getTotalPrice().toFixed(2)}</span> FCFA</p>
             </div>
             <div className='flex text-lg list_p_1406:text-xl font-semibold items-center justify-between border-b border-gray-200 p-3'>
               <p> Total :</p>
-              <p> {`${getTotalPrice().toFixed(2)} FCFA`} </p>
+              <p> <span>{getTotalPrice().toFixed(2)}</span> FCFA</p>
             </div>
             <div className='w-full font-semibold border-b border-gray-200 p-3'>
               <button className='bg-orange-600 w-full py-2 px-6 rounded-3xl hover:bg-orange-700 text-white text-sm list_p_1406:text-lg' onClick={() => clearCart()}>
@@ -120,8 +120,8 @@ const Cart = () => {
       <div className='font-semibold bg-white w-full fixed left-0 z-40 bottom-0 p-2  block cart-wrap:hidden'>
 
         <div className='flex items-center text-sm md:text-lg justify-between'>
-          <h1 className='list_p_1406:ext-xl'> {`sous-total(${getTotalItems()}): `} </h1>
-          <h1 className='tlist_p_1406:ext-xl'> {`${getTotalPrice().toFixed(2)} FCFA`} </h1>
+          <h1 className='list_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): </h1>
+          <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> FCFA </h1>
         </div>
 
         <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-3  w-full'>

@@ -6,6 +6,8 @@ import { Link} from 'react-router-dom'
 import { ProductAndCategoryContext } from '../context/ProductAndCategoryContext'
 import { FilterContext } from '../context/FilterContext'
 import { CartContext } from '../context/CartContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../actions/authAction/auth.action'
 //import { useCart } from '../context/CartContext'
 
 
@@ -13,14 +15,19 @@ const Navbar = () => {
 
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('');
+  const auth = useSelector(state => state.auth)
+  const user_state = useSelector(state => state.user)
+  const dispatch = useDispatch()
   //const navigate = useNavigate();
   //const location = useLocation();
     const query_2 = new URLSearchParams(window.location.search).get('q');
     const { getTotalItems } = useContext(CartContext)
     const { allCategoriesContext } = useContext(ProductAndCategoryContext)
     const { filters, setFilters } = useContext(FilterContext)
-  
 
+    const {user} = user_state
+    
+  
   const renitialiseFilter = () => {
 
     setFilters(
@@ -33,6 +40,10 @@ const Navbar = () => {
       }
 
     )
+  }
+
+  const onClick = ()=>{
+    dispatch(logout())
   }
 
   console.log(`c'est le contenu du panier${getTotalItems()}`)
@@ -86,8 +97,23 @@ const Navbar = () => {
             </ul>
 
           </div>
-
-          <div className='cursor-pointer'>
+          
+          {auth.isAuthenticated 
+          ? 
+          <>
+           <div className='cursor-pointer'>
+            <Link to={"/signIn"}>
+              <div className='flex items-center hover:underline'>
+              <span className='text-xl sm:text-3xl mr-1'><ion-icon name="person-outline"></ion-icon></span>
+                <span className='-mt-1'>{user?.name}</span>
+              </div>
+            </Link>
+          </div>
+            <button onClick={onClick} className="text-white xl:flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold"> {`Se déconnecter`}</button>
+          </>
+          :
+           <>
+            <div className='cursor-pointer'>
             <Link to={"/signIn"}>
               <div className='flex items-center hover:underline'>
                 <span className='text-xl sm:text-3xl mr-1'><ion-icon name="person-outline"></ion-icon></span>
@@ -99,6 +125,9 @@ const Navbar = () => {
           <Link to={"/signUp"}>
             <button className="text-white hidden xl:flex gap-1 px-2 py-1 ml-2 text-sm  justify-between items-center rounded-2xl bg-orange-700 font-semibold"> {`S'inscrire`}</button>
           </Link>
+           </>
+          }
+          
 
           <div className='h-12 flex items-center cursor-pointer relative font-semibold hover:underline'>
             <Link to={"/cart"}>

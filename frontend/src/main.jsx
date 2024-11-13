@@ -9,21 +9,27 @@ import { ProductAndCategoryProvider } from './context/ProductAndCategoryContext.
 import { FilterProvider } from './context/FilterContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 
+import {Provider} from 'react-redux'
+import store from './store/store.js';
+import { loadUser } from './actions/authAction/auth.action.js';
 
+store.dispatch(loadUser())
 
 initTWE({ Tooltip });
 
-
+//console.log(store.getState())
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
 
-    <FilterProvider>
-      <CartProvider>
-        <ProductAndCategoryProvider>
-          <App />
-        </ProductAndCategoryProvider>
-      </CartProvider>
-    </FilterProvider>
+    <Provider store={store}>
+      <FilterProvider>
+        <CartProvider>
+          <ProductAndCategoryProvider>
+            <App />
+          </ProductAndCategoryProvider>
+        </CartProvider>
+      </FilterProvider>
+    </Provider>
   </StrictMode>
 )

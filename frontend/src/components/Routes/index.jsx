@@ -9,6 +9,9 @@ import SignIn from '../../pages/SignIn'
 import { useContext } from 'react'
 import { ProductAndCategoryContext } from '../../context/ProductAndCategoryContext'
 import Shearch from "../../pages/Search"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ForgotPassword from '../../pages/ForgotPassword'
 
 const MyRoutes = () => {
   const {allCategoriesContext, allProductContext} = useContext(ProductAndCategoryContext)
@@ -32,8 +35,11 @@ const MyRoutes = () => {
         <Route path="/cart" element={<Cart/>} />
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/signIn" element={<SignIn/>} />
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
         <Route path="*" element={<Navigate to="/" />}  />
+        {/*<PrivateRoute exact path="/dashboard" component={Dashboard} />*/}
       </Routes>
+      <ToastContainer />
     </Router>
   )
 }
