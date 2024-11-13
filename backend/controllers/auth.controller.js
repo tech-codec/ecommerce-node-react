@@ -7,12 +7,14 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const transporter = require('../utils/nodemailer');
 
-const {registerErrors, loginErrors} = require('../utils/errors.util')
+const {registerErrors, loginErrors} = require('../utils/errors.util');
+const Role = require('../models/Role');
 
 const SALT_WORK_FACTOR = 10;
 
 //const maxAge = 3 *21 *60 *1000
-const maxAge = 72 *60 *60 *1000 //72h donc 3d
+//const maxAge = 72 *60 *60 *1000 //72h donc 3d
+const maxAge = 3 * 24 * 60 * 60 * 1000; // 3 jours en millisecondes
 // const createToken = (id)=>{
 //     return jwt.sign({id},process.env.JWT_SECRET, {
 //         expiresIn:maxAge
@@ -22,16 +24,18 @@ const maxAge = 72 *60 *60 *1000 //72h donc 3d
 
 // Inscription
 exports.register = async (req, res) => {
-    const { name, email, password, roles, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
     // Check if password and confirmPassword match
     if (password !== confirmPassword) {
-        return res.status(400).json({ errors: [{ msg: 'Les mots de passe ne correspondent pas' }] });
+        return res.status(500).json({ confirmPassword: 'Les mots de passe ne correspondent pas' });
     }
 
     try {
         // Création de l'utilisateur
-        const newUser = new User({ name, email,password, roles });
+        const newUser = new User({ name, email,password});
+        const role = await Role.findOne({ name: "client" });
+        newUser.roles.push(role)
         const savedUser = await newUser.save();
 
         const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
@@ -51,9 +55,10 @@ exports.register = async (req, res) => {
         });
         
 
-        res.status(201).json({ message: "Utilisateur enregistré. E-mail d'activation envoyé." });
+        res.status(201).json({ message: "Votre compte a été créé avec succès et un mail d'activation de compte vous a été envoyé à  "+email });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        const erros = registerErrors(error)
+        res.status(500).json(erros);
     }
 };
 
@@ -65,14 +70,24 @@ exports.login = async (req, res) => {
 
     try {
         const user = await User.login(email,password);
-        const token = jwt.sign({ id: user._id, roles: user.roles }, process.env.JWT_SECRET, { expiresIn: '3d' });
+        const token = jwt.sign({ id: user._id, roles: user.roles}, process.env.JWT_SECRET, { expiresIn: '3d' });
 
         // Stockage du token dans un cookie
-        res.cookie('token', token, { httpOnly: true, maxAge:maxAge });
+        res.cookie('token', token, { 
+            httpOnly: true, 
+            maxAge:maxAge, 
+            sameSite: 'strict', // To prevent CSRF 
+        });
+        // // Store the token in a cookie
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: process.env.NODE_ENV === 'production', // Set secure flag in production
+        //     maxAge,
+        //     sameSite: 'strict', // To prevent CSRF
+        // });
         res.json({ message: 'Connexion réussie', user });
     } catch (error) {
-        const errors = loginErrors(error)
-        res.status(500).send({errors});
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -96,6 +111,7 @@ exports.activateAccount = async (req, res) => {
 
 exports.requestPasswordReset = async (req, res) => {
     const { email } = req.body;
+    console.log("cette email: "+email)
     try {
         const user = await User.findOne({ email });
         if (!user) {

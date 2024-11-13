@@ -6,8 +6,8 @@ const {getRole, getAllRoles, updateRole, deleteRole, createRole } = require('../
 
 const router = express.Router()
 
-router.get('/',verifyToken,getAllRoles)
-router.get('/:id',verifyToken, getRole)
+router.get('/',getAllRoles)
+router.get('/:id',getRole)
 router.post('/',verifyToken, isAdmin, createRole)
 router.put('/:id',verifyToken, isAdmin, updateRole)
 router.delete('/:id',verifyToken, isAdmin, deleteRole)

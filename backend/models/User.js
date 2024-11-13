@@ -66,15 +66,19 @@ const userSchema = new mongoose.Schema(
 
   userSchema.statics.login = async function(email, password) {
     const user = await this.findOne({ email }).populate('roles');
+
     if (user) {
       const auth = await bcrypt.compare(password, user.password);
-      if (auth) {
+      if(!user.isActive){
+        throw Error(`Vous devez activer votre compte grace au mail d'activation envoyé à ${user.email}`)
+      } 
+      if (auth && user.isActive) {
         return user;
       }
-      throw Error("Mot de passe ou l'email sont incorrets");
-      if(!user.isActive)throw Error("Vous devez Activer votre compte")
+      throw Error("Mot de passe est incorret");
+     
     }
-    throw Error("Mot de passe ou l'email sont incorrets")
+    throw Error("l'email est incorret")
   };
 
 module.exports = mongoose.model('User', userSchema)

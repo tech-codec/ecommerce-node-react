@@ -62,5 +62,5 @@ exports.updateProduct = async (req, res)=>{
 exports.deleteProduct = async (req, res) => {
     const { id } = req.params;
     await Product.findByIdAndDelete(id);
-    res.status(204).send();
+    res.status(204).send("produit supprimé avec succès");
 };

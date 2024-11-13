@@ -9,6 +9,7 @@ const CategoryRoutes = require('./routes/category.routes')
 const ProductRoutes = require('./routes/product.routes')
 const OrderRoutes = require('./routes/order.routes')
 const {initRoles} = require('./utils/initRoles')
+const { requiAuth } = require('./milddleware/auth')
 
 
 require('dotenv').config({path:'./config/.env'})
@@ -31,12 +32,23 @@ const corsOptions ={
      credentials:true,            
      optionSuccessStatus:200,
   }
+  
     
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser());
 initRoles()
+
+
+//demande d'autorisation
+app.get('/api/userAutorised',requiAuth, (req,res)=>{
+  res.status(200).send(req.userautorised)
+})
+
+// app.get('/jwtid', requireAuth, (req, res) => {
+//   res.status(200).send(res.locals.user._id)
+// });
 
 
 
