@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import UserRolesSelect from '../../UserRolesSelect';
 
-const AddEditRoleModal = ({ show, user, roles, onSave, onClose }) => {
+const AddEditUserModal = ({ show, user, roles, onSave, onClose }) => {
   const [formUser, setFormUser] = useState({ id: null, name: '', email: '', roles: [] });
 
   const { theme } = useTheme()
@@ -124,4 +124,4 @@ const AddEditRoleModal = ({ show, user, roles, onSave, onClose }) => {
   );
 };
 
-export default AddEditRoleModal;
+export default AddEditUserModal;
