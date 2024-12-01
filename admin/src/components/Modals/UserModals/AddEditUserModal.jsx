@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import UserRolesSelect from '../../UserRolesSelect';
 
-const AddEditRoleModal = ({ show, user, roles, onSave, onClose }) => {
+const AddEditRoleModal = ({ show, user, onSave, onClose }) => {
   const [formUser, setFormUser] = useState({ id: null, name: '', email: '', roles: [] });
 
   const { theme } = useTheme()
@@ -107,9 +107,7 @@ const AddEditRoleModal = ({ show, user, roles, onSave, onClose }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-1">Rôles</label>
             <UserRolesSelect
-              roles={roles}
               selectedRoles={formUser.roles}
               onChange={handleRolesChange}
             />

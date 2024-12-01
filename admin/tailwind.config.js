@@ -14,6 +14,7 @@ export default {
         '1400px': '1400px',
       },
       screens: {
+        '299bp':"299px",
         '400m': '400px',
         '1400m': '1400px'
       },

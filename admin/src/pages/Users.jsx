@@ -158,7 +158,6 @@ const Users = () => {
 
       <AddEditUserModal
         show={showModal}
-        roles={roles}
         user={currentUser}
         onSave={handleSave}
         onClose={() => setShowModal(false)}

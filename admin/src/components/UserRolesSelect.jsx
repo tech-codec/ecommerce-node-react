@@ -1,40 +1,63 @@
-import React, { useState } from 'react';
 
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from 'react-icons/fa';
+import listRoles from '../assets/roles.js'
+import React, { useState, useRef, useEffect } from 'react';
 
-const UserRolesSelect = ({ roles, selectedRoles, onChange }) => {
+const UserRolesSelect = ({ selectedRoles, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const selectRef = useRef(null);
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  const toggleOpen = () => setIsOpen(!isOpen);
 
-  const handleOptionClick = (role) => {
-    const newSelectedRoles = selectedRoles.includes(role)
+  const handleRolesChange = (role) => {
+    const updatedRoles = selectedRoles.includes(role)
       ? selectedRoles.filter(r => r !== role)
       : [...selectedRoles, role];
-    onChange(newSelectedRoles);
+    onChange(updatedRoles);
   };
 
+  const handleClickOutside = (event) => {
+    if (selectRef.current && !selectRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="w-full">
+    <div ref={selectRef} className="relative mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="roles">
+        Rôles
+      </label>
       <div
-        onClick={handleToggle}
-        className="border-gray-300 cursor-pointer border p-2 w-full rounded-md bg-gray-200 flex items-center justify-between"
+        className="shadow flex items-center border border-red-500 justify-between rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer"
+        onClick={toggleOpen}
       >
-        <span>{selectedRoles.length > 0 ? selectedRoles.join(', ') : 'Selectionnez un ou plussieurs roles'}</span>
+        <span>{selectedRoles.length > 0 ? selectedRoles.join(', ') : 'Sélectionner les rôles'}</span>
         <span><FaChevronDown/></span>
-        
       </div>
+      <p className="text-red-500 text-xs italic">error</p>
+
       {isOpen && (
-        <div className="absolute border border-gray-300 rounded-md bg-white w-auto mt-1 z-10 max-h-48 overflow-y-auto shadow-lg">
-          {roles.map((role) => (
+        <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded">
+          {listRoles.map((role) => (
             <div
-              key={role}
-              onClick={() => handleOptionClick(role)}
-              className={`p-2 cursor-pointer hover:bg-gray-200 ${selectedRoles.includes(role) ? 'bg-blue-100' : ''}`}
+              key={role.id}
+              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              onClick={() => handleRolesChange(role.name)}
             >
-              {role}
+              <input
+                type="checkbox"
+                checked={selectedRoles.includes(role.name)}
+                onChange={() => handleRolesChange(role.name)}
+                className="mr-2"
+              />
+              {role.name}
             </div>
           ))}
         </div>
@@ -44,3 +67,5 @@ const UserRolesSelect = ({ roles, selectedRoles, onChange }) => {
 };
 
 export default UserRolesSelect;
+
+
