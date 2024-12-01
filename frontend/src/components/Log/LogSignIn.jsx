@@ -12,6 +12,8 @@ function LogSignIn() {
 
   const {success, error, loading} = auth
 
+  console.log(JSON.stringify(error))
+
   // const success = JSON.parse(auth.success)
   // const error = JSON.parse(auth.error)
 

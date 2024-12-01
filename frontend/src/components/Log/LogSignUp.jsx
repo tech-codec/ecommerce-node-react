@@ -25,7 +25,7 @@ function LogSignUp() {
 
   
 
-  console.log(typeof (error))
+  console.log(JSON.stringify(error))
   const onSumit = e => {
     e.preventDefault();
     dispatch(register({ name, email, password, confirmPassword }))
@@ -52,32 +52,32 @@ function LogSignUp() {
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
             Nom
           </label>
-          <input type="text" value={name} name='name' onChange={onChange} className={`shadow ${error.name && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="name" placeholder="Entrez votre nom" />
-          {error.name != "" && <p className="text-red-500 text-xs italic">{error.name}</p>}
+          <input type="text" value={name} name='name' onChange={onChange} className={`shadow ${error?.name && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="name" placeholder="Entrez votre nom" />
+          {error?.name != "" && <p className="text-red-500 text-xs italic">{error?.name}</p>}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
-          <input type="email" value={email} name='email' onChange={onChange} className={`shadow ${error.email && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="email" placeholder="Entrez votre email" />
-          {error.email != "" && <p className="text-red-500 text-xs italic">{error.email}</p>}
+          <input type="email" value={email} name='email' onChange={onChange} className={`shadow ${error?.email && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="email" placeholder="Entrez votre email" />
+          {error?.email != "" && <p className="text-red-500 text-xs italic">{error?.email}</p>}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Mot de passe
           </label>
-          <input type="password" value={password} name='password' onChange={onChange} className={`shadow ${error.password && "border-red-500"}  appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="name" placeholder="Entrez le mot de passe" />
-          {error.password != "" && <p className="text-red-500 text-xs italic">{error.password}</p>}
+          <input type="password" value={password} name='password' onChange={onChange} className={`shadow ${error?.password && "border-red-500"}  appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="name" placeholder="Entrez le mot de passe" />
+          {error?.password != "" && <p className="text-red-500 text-xs italic">{error?.password}</p>}
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Confirmez le mot de passe
           </label>
-          <input type="password" value={confirmPassword} name='confirmPassword' onChange={onChange} className={`shadow ${error.confirmPassword && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name`} placeholder="Entrez à nouveau le mot de passe" />
-          {error.confirmPassword != "" && <p className="text-red-500 text-xs italic">{error.confirmPassword}</p>}
+          <input type="password" value={confirmPassword} name='confirmPassword' onChange={onChange} className={`shadow ${error?.confirmPassword && "border-red-500"} appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name`} placeholder="Entrez à nouveau le mot de passe" />
+          {error?.confirmPassword != "" && <p className="text-red-500 text-xs italic">{error?.confirmPassword}</p>}
         </div>
 
         <div className="flex items-center">

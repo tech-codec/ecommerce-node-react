@@ -42,7 +42,7 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
     // };
 
     return (
-        <div className='hidden vible_filter:w-25p visible_filter:block list_p_1179:w-20p'>
+        <div className='hidden  visible_filter:w-25p visible_filter:block list_p_1179:w-20p'>
             <div className='pb-4 text-xl flex items-center relative'>
                 <span className='font-bold absolute top-1 left-0' ><ion-icon name="options-outline"></ion-icon></span>
                 <span className='ml-6'>Filtres</span>
