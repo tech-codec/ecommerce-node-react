@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const bcrypt = require('bcrypt')
 
-const {isEmail} = require('validator')
+const {isEmail, trim} = require('validator')
 
 
 const SALT_WORK_FACTOR = 10;
@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema(
         required: true,
         minlength: 3,
         maxlength: 55,
-        unique: true,
+        trim: true
+      },
+      firstName: {
+        type: String, 
+        minlength: 3,
+        maxlength: 55,
         trim: true
       },
       email: {
@@ -33,9 +38,12 @@ const userSchema = new mongoose.Schema(
         maxlength: 1024,
         minlength: 6
       },
+      phoneNumber: {
+        type: String,
+      },
       image:{
           type:String,
-          default:"./uploads/profil/random-user.png"
+          default:  "../../assets/images/avatar_image.png"
       },
       bio :{
         type: String,

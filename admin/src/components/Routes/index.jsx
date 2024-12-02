@@ -15,13 +15,18 @@ import { useTheme } from '../../context/ThemeContext'
 import UpdateProfil from '../../pages/UpdateProfil'
 import UpdatePassword from '../../pages/UpdatePassword'
 import Roles from '../../pages/Roles'
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux'
+import ActivateAccount from '../../pages/ActivateAccount'
+import ResetPassword from '../../pages/ResetPassword'
 
 function MyRoutes() {
-    const connected = false
+    const auth = useSelector(state => state.auth)
     const {theme} = useTheme()
     return (
         <Router>
-            {connected
+            {auth.isAuthenticated
                 ?
                 <div className={`flex justify-between w-full ${theme ==='dark' ? 'bg-gray-900' : 'bg-gray-200' } gap-0 `}>
                     <Sidebar />
@@ -52,10 +57,12 @@ function MyRoutes() {
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/forgot-password' element={<ForgotPassword />} />
+                    <Route path='/reset-password/:token' element={<ResetPassword/>} />
+                    <Route path="/activate/:token" element={<ActivateAccount/>} />
                     <Route path="*" element={<Navigate to="/login" />} />
                 </Routes>
             }
-
+         <ToastContainer />
 
         </Router>
     )

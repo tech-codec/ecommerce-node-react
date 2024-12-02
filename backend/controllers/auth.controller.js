@@ -64,6 +64,50 @@ exports.register = async (req, res) => {
 
 
 
+// Inscription
+exports.adminRegister = async (req, res) => {
+    const { name, email, roles, password, confirmPassword } = req.body;
+
+    if (roles.length === 0) {
+        return res.status(500).json({ rolesError: 'vous devez choisir au-moins un rôle !' });
+    }
+
+    // Check if password and confirmPassword match
+    if (password !== confirmPassword) {
+        return res.status(500).json({ confirmPassword: 'Les mots de passe ne correspondent pas' });
+    }
+
+    try {
+        // Création de l'utilisateur
+        const newUser = new User({ name, email,password,roles});
+        const savedUser = await newUser.save();
+
+        const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const url = `${process.env.ADMIN_URL}/activate/${token}`;
+        console.log("mon url de connexion: "+url+"\n")
+        console.log("mon token : "+token)
+
+        await transporter.sendMail({
+            from:{
+                name:process.env.NAME_USER,
+                address:process.env.EMAIL_USER
+            },
+            to: email,
+            subject: 'Activation du compte',
+            template: 'activate',
+            context: { name, url }
+        });
+        
+
+        res.status(201).json({ message: "Votre compte a été créé avec succès et un mail d'activation de compte vous a été envoyé à  "+email });
+    } catch (error) {
+        const erros = registerErrors(error)
+        res.status(500).json(erros);
+    }
+};
+
+
+
 // Connexion
 exports.login = async (req, res) => {
     const { email, password } = req.body;
@@ -124,6 +168,40 @@ exports.requestPasswordReset = async (req, res) => {
         await user.save();
 
         const url = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+        await transporter.sendMail({
+            from:{
+                name:process.env.NAME_USER,
+                address:process.env.EMAIL_USER
+            },
+            to: email,
+            subject: 'Réinitialisation du mot de passe',
+            template: 'reset',
+            context: { name: user.name, url }
+        });
+
+        res.status(200).json({ message: 'E-mail de réinitialisation du mot de passe envoyé' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+exports.adminRequestPasswordReset = async (req, res) => {
+    const { email } = req.body;
+    console.log("cette email: "+email)
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "L'utilisateur avec cet e-mail n'existe pas" });
+        }
+
+        const token = crypto.randomBytes(32).toString('hex');
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        await user.save();
+
+        const url = `${process.env.ADMIN_URL}/reset-password/${token}`;
 
         await transporter.sendMail({
             from:{

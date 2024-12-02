@@ -12,12 +12,25 @@ import { BiLogOut } from "react-icons/bi";
 import { useState } from "react";
 import { RiLockPasswordLine } from "react-icons/ri";
 import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../actions/authAction/auth.action";
 
 function Header() {
 
-    const { theme, toggleTheme, toggleOpen } = useTheme()
+    const auth = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
+    
+
+    const { theme, toggleTheme, toggleOpen } = useTheme()
+    const {user} = auth
     const [openSousMenu, setOpenSousMenu] = useState(false)
+
+    console.log(user.image)
+
+    const handleLogout = ()=>{
+        dispatch(logout())
+    }
 
     const toggleSousMenu = () => {
         setOpenSousMenu(!openSousMenu)
@@ -44,8 +57,8 @@ function Header() {
                     <IoIosNotificationsOutline />
                 </div>
                 <div onClick={toggleSousMenu} className="flex items-center justify-between gap-2 cursor-pointer ">
-                    <span className="hidden lg:block">Jean simon</span>
-                    <img src={userImage} alt="userImage" className="w-12 h-12 rounded-full" />
+                    <span className="hidden lg:block">{user.name}</span>
+                    <img src={userImage} alt="" className="w-12 h-12 rounded-full" />
                     <div className="text-lg hidden sm:block">
                         <IoChevronDown />
                     </div>
@@ -78,7 +91,7 @@ function Header() {
                     </div>
                    </Link>
                    
-                    <div className={`flex w-full border-t  ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} pt-5 px-5 items-center justify-start gap-2 mt-8 cursor-pointer hover:text-purple-700`}>
+                    <div onClick={handleLogout} className={`flex w-full border-t  ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} pt-5 px-5 items-center justify-start gap-2 mt-8 cursor-pointer hover:text-purple-700`}>
                         <div className="text-xl">
                             <BiLogOut />
                         </div>

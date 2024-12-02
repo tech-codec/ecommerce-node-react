@@ -15,6 +15,8 @@ const { requiAuth } = require('./milddleware/auth')
 require('dotenv').config({path:'./config/.env'})
 require('./config/db')
 
+
+
 console.log(authRoutes)
 
 app = express()
@@ -38,7 +40,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser());
-initRoles()
+//initRoles()
 
 
 //demande d'autorisation

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 // MongoDB connection URL
-//const mongoURI = `mongodb+srv://${process.env.DB_USER_PASS}@app-commerce-api.776s8.mongodb.net/?retryWrites=true&w=majority&appName=App-commerce-api`;
-const mongoURI = process.env.MONGODB_URI
+const mongoURI = `mongodb+srv://${process.env.DB_USER_PASS}@app-commerce-api.776s8.mongodb.net/?retryWrites=true&w=majority&appName=App-commerce-api`;
+//const mongoURI = process.env.MONGODB_URI
 // Connection options
 const options = {
     useNewUrlParser: true,

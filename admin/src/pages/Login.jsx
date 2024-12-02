@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
+import LoadingLoader from "../components/LoadingLoader"
+import { login } from '../actions/authAction/auth.action';
 
 function Login() {
+
+  const auth = useSelector(state => state.auth)
+  const dispatch = useDispatch()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -11,16 +17,39 @@ function Login() {
   })
 
   const { email, password } = formData
+  const {error, success, loading} = auth
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const onSubmit = e => {
     e.preventDefault()
+    dispatch(login({ email, password }))
   }
 
   return (
     <div className='flex items-center h-screen justify-center'>
       <div className='w-full mx-2 299bp:mx-6 lg:w-550px  bg-white  py-8 md:p-8 my-5p'>
+      {success?.message?.includes("Connexion réussie") &&
+        <div className='px-3 md:px-8'>
+          <div className='w-full text-white font-semibold px-4 py-9 bg-green-500 flex items-center justify-center '>
+            <span>{success.message}</span>
+          </div>
+        </div>
+      }
+      {error?.error?.includes("activer") &&
+        <div className='px-3 md:px-8'>
+          <div className='w-full text-white font-semibold px-4 py-5 bg-red-600 flex items-center justify-center '>
+            <span>{error?.error?.includes("activer") && error?.error}</span>
+          </div>
+        </div>
+      }
+      {
+        loading &&
+        <div className='px-3 md:px-8 flex items-center justify-center'>
+          <LoadingLoader />
+        </div>
+
+      }
         <p className='text-center mx-2 299bp:mx-6 text-lg font-semibold text-gray-800 md:text-2xl'>Connectez vous pour accéder à la page d'administration su site</p>
         <form className="bg-white shadow-md rounded px-3 md:px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
           <div className="mb-4">
@@ -31,8 +60,8 @@ function Login() {
               </div>
               
             </label>
-            <input type="email" name='email' value={email} onChange={onChange} className={`shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="email" placeholder="Entrez votre email" />
-            <p className="text-red-500 text-xs italic">error</p>
+            <input type="email" name='email' value={email} onChange={onChange} className={`shadow appearance-none border ${error?.error?.includes("email") && 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="email" placeholder="Entrez votre email" />
+            {error?.error?.includes("email") && <p className="text-red-500 text-xs italic">{error?.error}</p>}
           </div>
           <div className="mb-6">
             <div className='flex items-center justify-between'>
@@ -51,8 +80,8 @@ function Login() {
 
             </div>
 
-            <input name='password' value={password} onChange={onChange} className={`shadow appearance-none border 'border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"`} id="password" type="password" placeholder="Entrez le mot de passe" />
-            <p className="text-red-500 text-xs italic">error</p>
+            <input name='password' value={password} onChange={onChange} className={`shadow appearance-none border ${error?.error?.includes("passe") && 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"`} id="password" type="password" placeholder="Entrez le mot de passe" />
+            {error?.error?.includes("passe") && <p className="text-red-500 text-xs italic">{error?.error}</p>}
           </div>
           <div className='mb-6'>
             <button className="w-full bg-orange-700 hover:bg-orange-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
