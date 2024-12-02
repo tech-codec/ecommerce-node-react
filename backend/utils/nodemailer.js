@@ -3,11 +3,6 @@ const path = require('path');
 const {google} = require('googleapis')
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 42475b5... edit mise en place de quelque modication du système d'administration du site
-
 
 
 const oAuth2Client = new google.auth.OAuth2(
