@@ -1,7 +1,7 @@
 // controllers/authController.js
 
 const User = require('../models/User')
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -10,7 +10,7 @@ const transporter = require('../utils/nodemailer');
 const {registerErrors, loginErrors} = require('../utils/errors.util');
 const Role = require('../models/Role');
 
-const SALT_WORK_FACTOR = 10;
+//const SALT_WORK_FACTOR = 10;
 
 //const maxAge = 3 *21 *60 *1000
 //const maxAge = 72 *60 *60 *1000 //72h donc 3d
@@ -223,8 +223,12 @@ exports.adminRequestPasswordReset = async (req, res) => {
 exports.resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password, confirmPassword } = req.body;
+
+    if (password.length < 6) {
+        return res.status(400).json({ passwordLength: "Le mot de passe doit avoir au mois 6 caractères" });
+    }
     if (password !== confirmPassword) {
-        return res.status(400).json({ error: "Les mots de passe ne correspondent pas" });
+        return res.status(400).json({ confirmPasswordError: "Les mots de passe ne correspondent pas" });
     }
 
     try {
@@ -233,10 +237,12 @@ exports.resetPassword = async (req, res) => {
             resetPasswordExpires: { $gt: Date.now() }
         });
         if (!user) {
-            return res.status(400).json({ error: 'Jeton invalide ou expiré' });
+            return res.status(400).json({ jetonError: 'Jeton invalide ou expiré vous devez clicker à nouveau sur mot de passe oublier' });
         }
 
-        user.password = await bcrypt.hash(password, 10);
+        // const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+        // user.password = await bcrypt.hash(password, salt);
+        user.password = password
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         await user.save();
