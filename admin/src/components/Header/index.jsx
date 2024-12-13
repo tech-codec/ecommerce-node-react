@@ -14,14 +14,14 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/authAction/auth.action";
+import { extractUploads } from "../../utils/truncateText";
 
 function Header() {
 
     const auth = useSelector(state => state.auth)
     const dispatch = useDispatch()
-
-    
-
+    const apiUrl = import.meta.env.VITE_API_URL;
+    //const authData = JSON.parse(localStorage.getItem('auth'));
     const { theme, toggleTheme, toggleOpen } = useTheme()
     const {user} = auth
     const [openSousMenu, setOpenSousMenu] = useState(false)
@@ -58,7 +58,7 @@ function Header() {
                 </div>
                 <div onClick={toggleSousMenu} className="flex items-center justify-between gap-2 cursor-pointer ">
                     <span className="hidden lg:block">{user.name}</span>
-                    <img src={userImage} alt="" className="w-12 h-12 rounded-full" />
+                    <img src={`${apiUrl}${extractUploads(user.image)}`} alt="" className="w-12 h-12 rounded-full" />
                     <div className="text-lg hidden sm:block">
                         <IoChevronDown />
                     </div>

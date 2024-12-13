@@ -3,8 +3,7 @@ import { useTheme } from '../../../context/ThemeContext';
 import { CgDanger } from "react-icons/cg";
 
 const DeleteditUserModal = ({ show, currentUserId, onDelete, onClose }) => {
-  const [formUser, setFormUser] = useState({ id: null, name: '', email: '' });
-
+  
   const {theme} = useTheme()
 
   const handleSubmit = () => {

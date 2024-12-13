@@ -12,11 +12,14 @@ import { useState } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import { TfiControlEject } from "react-icons/tfi";
+import { useSelector } from "react-redux";
 
 function SideBar() {
 
     const { theme, toggleOpen, open } = useTheme()
     const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const auth = useSelector(state => state.auth)
+    const {user} = auth
     const [isActiveDas, setIsActiveDas] = useState(false)
     const [isActiveProf, setIsActiveProf] = useState(false)
     const [isActiveProd, setIsActiveProd] = useState(false)
@@ -24,6 +27,8 @@ function SideBar() {
     const [isActiveOrd, setIsActiveOrd] = useState(false)
     const [isActiveUser, setIsActiveUser] = useState(false)
     const [isActiveRole, setIsActiveRole] = useState(false)
+
+    console.log('mon user: '+user)
 
     const toggleIsactiveDas = () => {
         setIsActiveDas(true)
@@ -133,7 +138,7 @@ function SideBar() {
                     </div>
                 </Link>
 
-
+                
                 <Link to={'/products'}>
                     <div onClick={toggleIsactiveProd} className={`flex ${isActiveProd && "bg-gray-600"} items-center text-lg cursor-pointer text-gray-300 hover:text-white mb-3 px-4 py-2 hover:bg-gray-600 rounded-sm`}>
                         <RiProductHuntLine />
@@ -141,12 +146,15 @@ function SideBar() {
                     </div>
                 </Link>
 
-                <Link to={'/users'}>
+                {user?.roles.some(r => r.name === "admin" || r.name =="employer") &&<Link to={'/users'}>
                     <div onClick={toggleIsactiveUser} className={`flex ${isActiveUser && "bg-gray-600"} items-center text-lg cursor-pointer text-gray-300 hover:text-white mb-3 px-4 py-2 hover:bg-gray-600 rounded-sm`}>
                         <PiUsersFourLight />
                         <span className="ml-2">Utilisateurs</span>
                     </div>
                 </Link>
+                }
+
+                
 
 
                 <Link to={'/roles'}>

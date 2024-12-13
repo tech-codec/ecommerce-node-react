@@ -1,38 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useTheme } from '../../../context/ThemeContext';
-import UserRolesSelect from '../../UserRolesSelect';
+import { useSelector } from 'react-redux';
 
-const AddEditUserModal = ({ show, user, roles, onSave, onClose }) => {
-  const [formUser, setFormUser] = useState({ id: null, name: '', email: '', roles: [] });
+const AddEditRoleModal = ({ show, role, onSave, onClose }) => {
+  const { theme } = useTheme();
+  const roleState = useSelector(state => state.roles);
+  const { rolesData } = roleState;
 
-  const { theme } = useTheme()
-
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: ''
+    }
+  });
 
   useEffect(() => {
-    if (user) {
-      setFormUser({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        roles: user.roles || []
-      });
+    if (role) {
+      setValue('_id', role._id);
+      setValue('name', role.name);
     } else {
-      setFormUser({ id: null, name: '', email: '', roles: [] });
+      setValue('_id', null);
+      setValue('name', '');
     }
-  }, [user]);
+  }, [role, setValue]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormUser({ ...formUser, [name]: value });
+  useEffect(() => {
+    if (show) {
+      setValue('_id', role._id);
+      setValue('name', role.name || '');
+    }
+  }, [show, role, setValue]);
+
+  const onSubmit = (data) => {
+    onSave(data);
+    console.log(data);
   };
 
-  const handleRolesChange = (roles) => {
-    setFormUser((prevFormUser) => ({ ...prevFormUser, roles }));
-  };
-
-
-  const handleSubmit = () => {
-    onSave(formUser);
+  const isUniqueName = (name) => {
+    if (role?._id) {
+      const roleExists = rolesData.some(
+        (r) => r.name === name && r._id !== getValues('_id')
+      );
+      return !roleExists || 'Le nom existe déjà';
+    } else {
+      const roleExists = rolesData.some(
+        (r) => r.name === name
+      );
+      return !roleExists || 'Le nom existe déjà';
+    }
   };
 
   if (!show) return null;
@@ -40,88 +61,121 @@ const AddEditUserModal = ({ show, user, roles, onSave, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center px-5">
       <div className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-white'} w-550px p-4 rounded`}>
-        <h2 className={`mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'} font-semibold`}>{formUser.id ? 'Editer l\'utilisateur' : 'Ajouter un utilisateur'}</h2>
-        <form className='text-gray-500'>
-          <div className='md:flex items-center justify-between gap-3'>
-            <div className="mb-4">
-              <label htmlFor="name" className="block">Nom</label>
+        <h2 className={`mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'} font-semibold`}>
+          {role?._id ? 'Editer le rôle' : 'Ajouter un rôle'}
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className='text-gray-500'>
+          <div className='md:flex items-center '>
+            <div className="mb-4 w-full">
+              <label htmlFor="name" className="block">Nom du rôle</label>
               <input
                 type="text"
                 name="name"
                 id="name"
-                value={formUser.name}
-                onChange={handleInputChange}
-                className="border p-2 w-full rounded-md bg-gray-200"
+                {...register('name', {
+                  required: 'Le nom du rôle est requis',
+                  minLength: {
+                    value: 3,
+                    message: 'Le nom du rôle doit comporter au moins 3 lettres'
+                  },
+                  maxLength: {
+                    value: 150,
+                    message: 'Le nom du rôle ne peut pas dépasser 150 lettres'
+                  },
+                  validate: isUniqueName
+                })}
+                className={`border p-2 w-full rounded-md bg-gray-200 ${errors.name ? 'border-red-500' : ''}`}
+                placeholder='Entrer le nom du rôle'
               />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="firstName" className="block">Prénom</label>
-              <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                value={formUser.name}
-                onChange={handleInputChange}
-                className="border p-2 w-full rounded-md bg-gray-200"
-              />
-            </div>
-          </div>
-
-
-          <div className='md:flex items-center justify-between gap-3'>
-            <div className="mb-4">
-              <label htmlFor="email" className="block">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={formUser.email}
-                onChange={handleInputChange}
-                className="border p-2 w-full rounded-md bg-gray-200"
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="tel" className="block">Numéro de téléphone</label>
-              <input
-                type='tel'
-                name="phoneNumber"
-                id="tel"
-                value={formUser.email}
-                onChange={handleInputChange}
-                className="border p-2 w-full rounded-md bg-gray-200"
-              />
+              {errors.name && <p className="text-red-500 text-xs italic">{errors.name.message}</p>}
             </div>
           </div>
-
-
-          <div className="mb-4">
-            <label htmlFor="userName" className="block">Nom d'utilisateur</label>
-            <input
-              type="text"
-              name="userName"
-              id="userName"
-              value={formUser.email}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded-md bg-gray-200"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="block mb-1">Rôles</label>
-            <UserRolesSelect
-              roles={roles}
-              selectedRoles={formUser.roles}
-              onChange={handleRolesChange}
-            />
+          <div className="flex justify-end">
+            <button type="button" className="bg-gray-500 text-white px-4 py-2 mr-2 rounded-md" onClick={onClose}>Annuler</button>
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">{role?._id ? "Mettre à jour":"Enregistrer"} </button>
           </div>
         </form>
-        <div className="flex justify-end">
-          <button className="bg-gray-500 text-white px-4 py-2 mr-2 rounded-md" onClick={onClose}>Annuler</button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>Enregistrer</button>
-        </div>
       </div>
     </div>
   );
 };
 
-export default AddEditUserModal;
+export default AddEditRoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useTheme } from '../../../context/ThemeContext';
+
+// const AddEditRoleModal = ({ show, role, onSave, onClose }) => {
+//   const [formRole, setFormRole] = useState({ name: ''});
+
+//   const { theme } = useTheme()
+
+
+//   useEffect(() => {
+//     if (role) {
+//       setFormRole({
+//         _id: role._id,
+//         name: role.name
+//       });
+//     } else {
+//       setFormRole({ name: ''});
+//     }
+//   }, [role]);
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormRole({ ...formRole, [name]: value });
+//   };
+
+
+//   const handleSubmit = () => {
+//     onSave(formRole);
+//     console.log(formRole)
+//   };
+
+//   if (!show) return null;
+
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center px-5">
+//       <div className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-white'} w-550px p-4 rounded`}>
+//         <h2 className={`mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'} font-semibold`}>{formRole._id ? 'Editer le rôle' : 'Ajouter un rôle'}</h2>
+//         <form className='text-gray-500'>
+//           <div className='md:flex items-center '>
+//             <div className="mb-4 w-full">
+//               <label htmlFor="name" className="block">Nom du rôle</label>
+//               <input
+//                 type="text"
+//                 name="name"
+//                 id="name"
+//                 value={formRole.name}
+//                 onChange={handleInputChange}
+//                 className="border p-2 w-full rounded-md bg-gray-200"
+//                 placeholder='Entrer le nom du rôle'
+//               />
+//             </div>
+            
+//           </div>
+
+//         </form>
+//         <div className="flex justify-end">
+//           <button className="bg-gray-500 text-white px-4 py-2 mr-2 rounded-md" onClick={onClose}>Annuler</button>
+//           <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>Enregistrer</button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AddEditRoleModal;

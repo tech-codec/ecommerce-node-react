@@ -105,7 +105,7 @@ function Register() {
               Avez-vous déjà un compte?
             </label>
 
-            <Link to={'/signIn'}>
+            <Link to={'/login'}>
               <a className="inline-block align-baseline mb-4 font-bold text-sm text-blue-500 hover:text-blue-800 ml-2">
                 Connectez-vous
               </a>

@@ -1,6 +1,6 @@
 
 import { FaChevronDown } from 'react-icons/fa';
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectedROlejoin } from '../utils/selectedRoles.js'
 
@@ -9,12 +9,11 @@ const UserRolesSelect = ({ selectedRoles, onChange, error }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
   const [rolesSelected, setROleSelected] = useState("")
-
+  console.log("les roles du user: "+JSON.stringify(selectedRoles))
   const toggleOpen = () => setIsOpen(!isOpen);
-
   const handleRolesChange = (role) => {
     const updatedRoles = selectedRoles.includes(role)
-      ? selectedRoles.filter(r => r !== role)
+      ? selectedRoles?.filter(r => r !== role)
       : [...selectedRoles, role];
     onChange(updatedRoles);
   };
@@ -37,7 +36,7 @@ const UserRolesSelect = ({ selectedRoles, onChange, error }) => {
     rolesState.rolesData
     &&
     <div ref={selectRef} className="relative mb-4">
-      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="roles">
+      <label className="block text-gray-500 text-sm font-bold mb-2" htmlFor="roles">
         Rôles
       </label>
       <div
