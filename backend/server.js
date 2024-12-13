@@ -10,6 +10,7 @@ const ProductRoutes = require('./routes/product.routes')
 const OrderRoutes = require('./routes/order.routes')
 const {initRoles} = require('./utils/initRoles')
 const { requiAuth } = require('./milddleware/auth')
+const path = require('path')
 
 
 require('dotenv').config({path:'./config/.env'})
@@ -40,9 +41,11 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser());
+// Serve static files from the shared/uploads directory
+app.use('/api/uploads', express.static(path.join(__dirname, 'shared/uploads')));
 //initRoles()
 
-
+console.log("pour le partage d'image : "+path.join(__dirname, 'shared/uploads'))
 //demande d'autorisation
 app.get('/api/userAutorised',requiAuth, (req,res)=>{
   res.status(200).send(req.userautorised)

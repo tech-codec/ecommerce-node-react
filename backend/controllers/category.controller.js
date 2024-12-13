@@ -17,7 +17,7 @@ exports.createCategory = async (req, res) => {
 
 
 exports.getAllCategories = async (req, res) => {
-    const categories = await Category.find();
+    const categories = await Category.find().sort({ createdAt: -1 });
     res.json(categories);
 };
 
@@ -45,6 +45,38 @@ exports.updateCategory = async (req, res) => {
     }
     
 };
+
+exports.updateCategory = async (req, res) => {
+    const { id } = req.params;
+    const { name, listMotCle } = req.body;
+  
+    try {
+      const category = await Category.findById(id);
+  
+      if (!category) {
+        return res.status(404).json({ message: 'Category not found' });
+      }
+  
+      if (req.file) {
+        // Si une nouvelle image est téléchargée, supprimez l'ancienne image et mettez à jour avec la nouvelle image
+        if (category.image) {
+          fs.unlinkSync(category.image); // Supprimez l'ancienne image du serveur
+        }
+        category.image = req.file.path; // Mettez à jour avec le chemin de la nouvelle image
+      }
+  
+      category.name = name;
+      category.listMotCle = JSON.parse(listMotCle); // Parsez la liste des mots-clés si nécessaire
+  
+      await category.save();
+  
+      res.status(200).json(category);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
 
 exports.deleteCategory = async (req, res) => {
     const { id } = req.params;

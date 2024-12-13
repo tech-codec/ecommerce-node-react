@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
       },
       image:{
           type:String,
-          default:  "../../assets/images/avatar_image.png"
+          default:  "/public/shared/uploads/images/avatar_image.png"
       },
       bio :{
         type: String,

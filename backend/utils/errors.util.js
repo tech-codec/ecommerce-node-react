@@ -1,9 +1,15 @@
 
 exports.registerErrors = (error)=>{
-    let errors = {name:"", email:"", password:""}
+    let errors = {name:"", email:"", password:"", firstName:""}
 
-    if(error.message.includes("name"))
-        errors.name = "le nom est incorecte ou dèjà pris"
+    if(error.message.includes("name") && error.message.includes("minimum"))
+        errors.name = "le nom est incorecte et dois avoir au moins 3 caractères"
+    if(error.message.includes("name") && error.message.includes("maximum"))
+        errors.name = "le nom est incorecte et dois avoir au plus 55 caractères"
+    if(error.message.includes("firstName") && error.message.includes("minimum"))
+        errors.firstName = "le prénom est incorecte et dois avoir au moins 3 caractères"
+    if(error.message.includes("firstName") && error.message.includes("maximum"))
+        errors.firstName = "le prénom est incorecte et dois avoir au plus 55 caractères"
     if(error.message.includes("email"))
         errors.email = "cet email est incorrecte ou dèjà pris"
     if(error.message.includes("password"))
@@ -13,6 +19,7 @@ exports.registerErrors = (error)=>{
     
       if (error.code === 11000 && Object.keys(error.keyValue)[0].includes("email"))
         errors.email = "Cet email est déjà enregistré";
+    //longer  minimum  shorter maximum
 
     return errors
 }

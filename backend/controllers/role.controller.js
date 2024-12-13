@@ -1,4 +1,5 @@
 const Role = require('../models/Role');
+const User = require('../models/User');
 
 
 exports.createRole = async (req, res) => {
@@ -17,9 +18,14 @@ exports.createRole = async (req, res) => {
 
 
 exports.getAllRoles = async (req, res) => {
-    const roles = await Role.find();
-    res.json(roles);
-};
+    try {
+      const roles = await Role.find().sort({ createdAt: -1 }); // 1 for ascending order
+      res.json(roles);
+    } catch (error) {
+      res.status(500).json({ message: 'Une erreur est survenue', error });
+    }
+  };
+  
 
 
 exports.getRole = async (req, res)=>{
@@ -47,7 +53,26 @@ exports.updateRole = async (req, res) => {
 };
 
 exports.deleteRole = async (req, res) => {
-    const { id } = req.params;
-    await Role.findByIdAndDelete(id);
-    res.status(204).send('le rôle a été supprimé');
+    try {
+        const { id } = req.params;
+
+        // Supprimer le rôle par son ID
+        await Role.findByIdAndDelete(id);
+
+        // Trouver tous les utilisateurs
+        const users = await User.find();
+
+        // Pour chaque utilisateur, supprimer le rôle de leur tableau de rôles
+        for (const user of users) {
+            user.roles = user.roles.filter(r => r.toString() !== id);
+            console.log(user.roles)
+            await user.save();
+        }
+
+        // Envoyer la réponse une fois que tout est terminé
+        res.status(204).send('Le rôle a été supprimé et les utilisateurs ont été mis à jour.');
+    } catch (error) {
+        // En cas d'erreur, envoyer une réponse d'erreur
+        res.status(500).send('Erreur lors de la suppression du rôle et de la mise à jour des utilisateurs.');
+    }
 };

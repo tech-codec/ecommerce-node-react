@@ -37,3 +37,12 @@ exports.isAdmin = async (req, res, next) => {
         return res.status(403).send("Accès administrateur requis!");
     }
 };
+
+exports.isAdminAndEmployer = async (req, res, next) => {
+    const user = await User.findById(req.user.id).populate('roles');
+    if (user && user.roles.some(role => (role.name === 'admin' || role.name === 'employer'))) {
+        next();
+    } else {
+        return res.status(403).send("Accès administrateur ou emplyer requis!");
+    }
+};

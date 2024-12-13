@@ -21,7 +21,7 @@ exports.createProduct = async (req, res) => {
 
 
 exports.getAllProducts = async (req, res)=>{
-    const products = await Product.find().populate('category')
+    const products = await Product.find().sort({ createdAt: -1 }).populate('category')
     res.status(200).json(products)
 }
 
