@@ -1,28 +1,81 @@
 const Product = require('../models/Product')
 
+
 exports.createProduct = async (req, res) => {
-    try{
+    const { name, description, old_price, new_price, category, stock, status } = req.body;
 
-        const {name, description, old_price, new_price, category, stock} = req.body
+    try {
+        const addData = {
+            name: name,
+            description: description,
+            old_price: old_price,
+            new_price: new_price,
+            category: category,
+            stock: stock,
+            status: status,
+            images: []
+        };
 
-        image = req.file !== null ? req.file.path : ""
-       
-        const product = new Product({name, description, old_price, new_price,stock, category, image:image});
-        await product.save();
-        res.status(201).json(product);
-        
-    }catch(error){
-        res.status(500).json({message:"Une erreur s'est produit lors de la création du produit"})
+        if (req.files && req.files.length > 0) {
+            req.files.forEach(file => {
+                addData.images.push(file.path);
+            });
+        } else {
+            // Ajouter une image par défaut si aucune image n'est téléchargée
+            addData.images.push("/public/shared/uploads/images/no-image-product.jpg");
+        }
+
+        const newProduct = new Product(addData);
+        const savedProduct = await newProduct.save();
+
+        res.status(200).json(savedProduct);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
     }
-   
 };
 
 
+exports.createProduct = async (req, res) => {
+    const { name, description, old_price, new_price, category, stock, status } = req.body;
+
+    try {
+        const addData = {
+            name: name,
+            description: description,
+            old_price: old_price,
+            new_price: new_price,
+            category: category,
+            stock: stock,
+            status: status,
+            images: []
+        };
+
+        if (req.files && req.files.length > 0) {
+            req.files.forEach(file => {
+                addData.images.push(file.path);
+            });
+        } else {
+            // Ajouter une image par défaut si aucune image n'est téléchargée
+            addData.images.push("/public/shared/uploads/images/no-image-product.jpg");
+        }
+
+        const newProduct = new Product(addData);
+        const savedProduct = await newProduct.save();
+
+        res.status(200).json(savedProduct);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
 
 
 exports.getAllProducts = async (req, res)=>{
-    const products = await Product.find().sort({ createdAt: -1 }).populate('category')
-    res.status(200).json(products)
+    try{
+        const products = await Product.find().sort({createdAt: -1})
+        res.status(200).json(products)
+    }catch(error){
+        res.status(500).json({ message: 'Une erreur est survenue ', error })
+    }
 }
 
 
@@ -39,24 +92,47 @@ exports.getProduct = async (req, res)=>{
 }
 
 
-exports.updateProduct = async (req, res)=>{
+exports.updateProduct = async (req, res) => {
+    const { name, description, old_price, new_price, category, stock, status } = req.body;
+
     const {id} = req.params
-    
-    try{
-        const {name, description, old_price, new_price,stock, category} = req.body
 
-        image = req.file !== null ? req.file.path : ""
-        const productUpdate = await Product.findByIdAndUpdate(id, {name, description, old_price, new_price,stock, category, image:image}, {new:true,upsert:true,setDefaultsOnInsert:true,runValidators:true})
-        
-        if(!productUpdate) res.status('404').json({message:"produit non trouvé"})
-        
-        res.status(200).json(productUpdate)
+    try {
 
-    }catch(error){
-        console.log({message:"erreur sur le serveur"});
-        res.status(500).json({message:"Erreur du serveur"})
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ message: "Produit non trouvée" });
+        }
+
+        const updateData = {
+            name: name || product.name,
+            description: description || product.description,
+            old_price: old_price || product.old_price,
+            new_price: new_price || product.new_price,
+            category: category || product.category,
+            stock: stock || product.stock,
+            status: status || product.status,
+            images: product.images
+        };
+
+        if (req.files && req.files.length > 0) {
+            updateData.images = []; // Réinitialiser les images si de nouvelles images sont téléchargées
+            req.files.forEach(file => {
+                updateData.images.push(file.path);
+            });
+        }
+
+        const productUpdate = await Product.findByIdAndUpdate(id, updateData, {
+            new: true,
+            upsert: true,
+            setDefaultsOnInsert: true,
+            runValidators: true
+        });
+        res.status(200).json(productUpdate);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
     }
-}
+};
 
 
 exports.deleteProduct = async (req, res) => {

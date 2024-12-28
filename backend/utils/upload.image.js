@@ -1,4 +1,4 @@
-const multer = require('multer');
+const multer = require('multer')
 const path = require('path');
 
 // Définir le stockage pour les fichiers
@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 
 // Vérifier le type de fichier
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png/;
+  const allowedTypes = /jpeg|jpg|png|avif|webp/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
 

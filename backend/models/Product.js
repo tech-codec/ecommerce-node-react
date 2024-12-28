@@ -1,11 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema(
     {
         name: {
             type: String,
             required: true,
-            unique:true
+            unique: true,
+            minlength: 3,
+            maxlength: 1050,
+            trim: true
         },
         description: {
             type: String,
@@ -19,11 +22,25 @@ const productSchema = mongoose.Schema(
             type: Number,
             required: true
         },
-        image: {
-            type: String,
-            default: "./uploads/profil/random-user.png"
+        status: {
+            type: Boolean,
+            default: true
         },
-        category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+        images: {
+            type: [
+                {
+                    type: String,
+                    default: "/public/shared/uploads/images/no-image-product.jpg"
+                }
+            ],
+            validate: [arrayLimit, '{PATH} exceeds the limit of 4'] // Optional: To limit the number of images
+        },
+        category: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Category', 
+            //default: null
+            required: true 
+        },
         stock: {
             type: Number,
             required: true
@@ -32,8 +49,10 @@ const productSchema = mongoose.Schema(
     {
         timestamps: true,
     }
-)
+);
 
-
+function arrayLimit(val) {
+    return val.length <= 4;
+}
 
 module.exports = mongoose.model('Product', productSchema);
