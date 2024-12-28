@@ -1,18 +1,25 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import * as XLSX from 'xlsx';
-import ViewUserModal from '../components/Modals/CategoriesModals/ViewCategoryModal';
-import all_categories from '../assets/categories';
+import ViewCategoryModal from '../components/Modals/CategoriesModals/ViewCategoryModal';
 import { useTheme } from '../context/ThemeContext';
 import { FaPencil, FaRegEye } from 'react-icons/fa6';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5';
-import DeleteditUserModal from '../components/Modals/CategoriesModals/DeleteCategoryModal';
+import DeleteCategoryModal from '../components/Modals/CategoriesModals/DeleteCategoryModal';
 import roles from '../assets/roles'
 import AddEditCategoryModal from '../components/Modals/CategoriesModals/AddEditCategoryModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { extractUploads } from '../utils/truncateText';
+import LoadingLoader from "../components/LoadingLoader"
+import { addCategory, deleteCategory, editeCategory } from '../actions/categoryAction/category.action';
 
 const Categories = () => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { theme } = useTheme()
-  const [categories, setCategories] = useState(all_categories);
+  const categoryState = useSelector(state => state.categories)
+  const {categoriesData, loading} = categoryState
+  const dispatch = useDispatch()
+  const [categories, setCategories] = useState(categoriesData);
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -49,7 +56,7 @@ const Categories = () => {
 
   // Fonctions de gestion des Categories
   const handleAdd = () => {
-    setCurrentCategory({ id: null, image: '', name: '', listMotCle: [] });
+    setCurrentCategory({ image: '', name: '', description: "", listMotCle: [] });
     setShowModal(true);
   };
 
@@ -70,17 +77,24 @@ const Categories = () => {
   }
 
   const handleDelete = (id) => {
-    setCategories(prevCategories => prevCategories.filter(category => category.id !== id));
+    setCategories(prevCategories => prevCategories.filter(category => category._id !== id));
+    dispatch(deleteCategory(id))
     setShowDeleteModal(false)
   };
 
-  const handleSave = (category) => {
-    if (category.id) {
-      setCategories(prevCategories => prevCategories.map(cat => (cat.id === category.id ? category : cat)));
+ 
+  const handleSave = (categoryState, categoryFomdata) => {
+    if (categoryState._id) {
+      setCategories(prevCategories => prevCategories.map(c => (c._id === categoryState._id ? categoryState : c)));
+      console.log("test pb: " + JSON.stringify(categoryState))
+      dispatch(editeCategory(categoryState._id, categoryFomdata))
     } else {
-      setCategories(prevCategories => [...prevCategories, { ...category, id: prevCategories.length + 1 }]);
+      setCategories(prevCategories => [...prevCategories, categoryState]);
+      dispatch(addCategory(categoryFomdata))
     }
     setShowModal(false);
+    const { image } = categoryState
+    console.log(`test pb2: et le id:${categoryState._id} " "  ${JSON.stringify(image)}`)
   };
 
   const handleExport = () => {
@@ -94,9 +108,14 @@ const Categories = () => {
   const end = Math.min((page + 1) * rowsPerPage, filteredCategories.length);
 
   return (
+    loading
+    ?
+    <div className='px-3 md:px-8 flex items-center flex-col justify-center h-screen'>
+      <LoadingLoader />
+      <p className='text-xl text-gray-500 text-center mt-3 '>patienté quelque minutes le temps que les données chargent</p>
+    </div>
+    :
     <div className="w-full">
-
-
       <div className=' mb-8 flex items-center justify-between flex-wrap gap-2'>
         <h2 className={`text-2xl font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-800'} `}>Tous les Catégories</h2>
         <h4 className='text-base'><span className='text-gray-500 cursor-pointer'>Tableau de bord / </span><span className='text-purple-700'>Categories</span></h4>
@@ -119,15 +138,15 @@ const Categories = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedCategories.map((category) => (
+            {paginatedCategories.map((category, index) => (
               <tr key={category.id}>
-                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{category.id}</td>
-                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}><img className='w-10 h-10 bg-repeat bg-center rounded-full' src={category.image} alt="" /> </td>
+                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{start + index}</td>
+                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}><img className='w-10 h-10 bg-repeat bg-center rounded-full' src={typeof category.image === 'string' ? apiUrl + extractUploads(category.image) : category.image instanceof File ? URL.createObjectURL(category.image) : "/uploads/images/default-banner.jpg"} alt="imacategory" /> </td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{category.name}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{category.listMotCle.join(', ')}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                   <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleEdit(category)}><span className='text-gray-500'><FaPencil /></span></button>
-                  <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleShowDelete(category.id)}><span className='text-red-800'><RiDeleteBin6Line /></span></button>
+                  <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleShowDelete(category._id)}><span className='text-red-800'><RiDeleteBin6Line /></span></button>
                   <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleView(category)}><span className='text-gray-500'><FaRegEye /></span></button>
                 </td>
               </tr>
@@ -168,16 +187,16 @@ const Categories = () => {
         onClose={() => setShowModal(false)}
       />
 
-      <DeleteditUserModal
+      <DeleteCategoryModal
         show={showDeleteModal}
         currentUserId={currentCategoryId}
         onDelete={handleDelete}
         onClose={() => setShowDeleteModal(false)}
       />
 
-      <ViewUserModal
+      <ViewCategoryModal
         show={showViewModal}
-        user={viewCategory}
+        category={viewCategory}
         onClose={() => setShowViewModal(false)}
       />
     </div>

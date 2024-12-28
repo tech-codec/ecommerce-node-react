@@ -1,4 +1,3 @@
-import { ADD_ROLE_LOADED, ADD_ROLE_LOADING } from "../actions/roleAction/type.action"
 import {
     DELETE_USER_ERROR,
     DELETE_USER_LOADED,

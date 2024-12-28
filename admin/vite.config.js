@@ -12,7 +12,8 @@ export default defineConfig({
           dest: 'assets'
         }
       ]
-    })
+    }),
+    
   ],
   assetsInclude: ['**/*.JPG', '**/*.jpg', '**/*.png', '**/*.jpeg', '**/*.gif', '**/*.svg'],
 });

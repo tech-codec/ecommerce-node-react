@@ -26,5 +26,17 @@ export const truncateText = (text, maxLength) => {
     }
     return password;
   }
+
+
+  // Helper function to format numbers
+export function formatNumberWithSeparators_2(number) {
+  if (!number) return '';
+  // Split integer and decimal parts
+  const [integerPart, decimalPart] = number.split(',');
+  // Format the integer part with thousand separators
+  const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  // Combine the formatted integer part and the decimal part
+  return decimalPart ? `${formattedIntegerPart},${decimalPart}` : formattedIntegerPart;
+}
   
   

@@ -1,21 +1,28 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import * as XLSX from 'xlsx';
-import all_products from '../assets/products';
-import all_categories from '../assets/categories';
 import { useTheme } from '../context/ThemeContext';
 import { FaPencil, FaRegEye } from 'react-icons/fa6';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5';
 import roles from '../assets/roles'
-import { truncateText } from '../utils/truncateText';
+import { extractUploads, truncateText } from '../utils/truncateText';
 import AddEditProductModal from '../components/Modals/ProductsModals/AddEditProductModal';
 import ViewProductModal from '../components/Modals/ProductsModals/ViewProductModal';
 import DeleteProductModal from '../components/Modals/ProductsModals/DeleteProductModal';
 import formatNumberWithSeparators from '../utils/numberSeparator'
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct, deleteProduct, editeProduct } from '../actions/productAction/product.action';
+import LoadingLoader from "../components/LoadingLoader"
 
 const Products = () => {
   const { theme } = useTheme()
-  const [products, setProducts] = useState(all_products);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const productState = useSelector(state => state.products)
+  const {productsData, loading} = productState
+  const dispatch = useDispatch()
+  const categoryState = useSelector(state => state.categories)
+  const {categoriesData} = categoryState
+  const [products, setProducts] = useState(productsData);
   const [showModal, setShowModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -49,7 +56,7 @@ const Products = () => {
 
   // Fonctions de gestion des Produits
   const handleAdd = () => {
-    setCurrentProduct({ id: null, image: [], name: '', category:null, new_price: null, old_price: null, description: ''});
+    setCurrentProduct({ images: [], name: '', stock:0, category:'', new_price: 0, old_price: 0, description: ''});
     setShowModal(true);
   };
 
@@ -70,16 +77,21 @@ const Products = () => {
   }
 
   const handleDelete = (id) => {
-    setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
+    setProducts(prevProducts => prevProducts.filter(product => product._id !== id));
+    dispatch(deleteProduct(id))
     setShowDeleteModal(false)
   };
 
-  const handleSave = (product) => {
-    if (product.id) {
-      setProducts(prevProducts => prevProducts.map(prod => (prod.id === product.id ? product : prod)));
+  const handleSave = (productState, productFormData) => {
+    if (productState._id) {
+      setProducts(prevProducts => prevProducts.map(prod => (prod._id === productState._id ? productState : prod)));
+      dispatch(editeProduct(productState._id, productFormData))
     } else {
-      setProducts(prevProducts => [...prevProducts, { ...product, id: prevProducts.length + 1 }]);
+      setProducts(prevProducts => [...prevProducts, productState]);
+      dispatch(addProduct(productFormData))
+      console.log("test 1: ", productFormData)
     }
+    console.log("test 2: ", productFormData)
     setShowModal(false);
   };
 
@@ -94,6 +106,13 @@ const Products = () => {
   const end = Math.min((page + 1) * rowsPerPage, filteredProducts.length);
 
   return (
+    loading
+      ?
+      <div className='px-3 md:px-8 flex items-center flex-col justify-center h-screen'>
+        <LoadingLoader />
+        <p className='text-xl text-gray-500 text-center mt-3 '>patienté quelque minutes le temps que les données chargent</p>
+      </div>
+      :
     <div className="w-full">
 
 
@@ -123,19 +142,19 @@ const Products = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedProducts.map((product) => (
-              <tr key={product.id}>
-                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{product.id}</td>
-                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}><img className='w-10 h-10 bg-repeat bg-center rounded-full' src={product.image[0]} alt="" /> </td>
+            {paginatedProducts.map((product, index) => (
+              <tr key={product._id}>
+                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{start + index}</td>
+                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}><img className='w-10 h-10 bg-repeat bg-center rounded-full' src={typeof product.images[0] === 'string' ? apiUrl + extractUploads(product.images[0]) : product.images[0] instanceof File ? URL.createObjectURL(product.images[0]) : "/uploads/images/no-image-product.jpg"} alt="imaproduct" /> </td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{truncateText(product.name, 35)}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{formatNumberWithSeparators(product.stock)}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{formatNumberWithSeparators(product.new_price)}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{formatNumberWithSeparators(product.old_price)}</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{truncateText(product.description, 35)}</td>
-                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{product.category}</td>
+                <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{categoriesData.find(c => c._id === product.category)?.name }</td>
                 <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                   <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleEdit(product)}><span className='text-gray-500'><FaPencil /></span></button>
-                  <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleShowDelete(product.id)}><span className='text-red-800'><RiDeleteBin6Line /></span></button>
+                  <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleShowDelete(product._id)}><span className='text-red-800'><RiDeleteBin6Line /></span></button>
                   <button className="bg-transparent  px-2 py-1 m-1" onClick={() => handleView(product)}><span className='text-gray-500'><FaRegEye /></span></button>
                 </td>
               </tr>
@@ -173,7 +192,7 @@ const Products = () => {
         show={showModal}
         product={currentProduct}
         onSave={handleSave}
-        categories={all_categories}
+        categories={categoriesData}
         onClose={() => setShowModal(false)}
       />
 
@@ -186,7 +205,7 @@ const Products = () => {
 
       <ViewProductModal
         show={showViewModal}
-        user={viewProduct}
+        product={viewProduct}
         onClose={() => setShowViewModal(false)}
       />
     </div>

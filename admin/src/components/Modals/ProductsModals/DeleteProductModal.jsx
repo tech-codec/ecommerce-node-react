@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 import { CgDanger } from "react-icons/cg";
 
 const DeleteProductModal = ({ show, currentUserId, onDelete, onClose }) => {
-  const [formUser, setFormUser] = useState({ id: null, name: '', email: '' });
 
   const {theme} = useTheme()
 
@@ -18,7 +16,7 @@ const DeleteProductModal = ({ show, currentUserId, onDelete, onClose }) => {
       <div className={`${theme === 'dark' ? 'bg-gray-700' : 'bg-white'} w-550px p-4 rounded`}>
         <div className='flex items-center flex-col'>
             <di className='mb-6 text-red-500 text-6xl'><CgDanger /></di>
-            <p className='text-gray-500 mb-6 text-lg md:text-xl text-center'>Etes-vous sûr de vouloir supprimer <br/> cet utilisateur ?</p>
+            <p className='text-gray-500 mb-6 text-lg md:text-xl text-center'>Etes-vous sûr de vouloir supprimer <br/> ce Produit ?</p>
         </div>
         <div className="flex items-center justify-center">
           <button className="bg-gray-500 text-white px-4 py-2 mr-2 rounded-md" onClick={onClose}>Anuller</button>

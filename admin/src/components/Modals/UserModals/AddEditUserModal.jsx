@@ -170,9 +170,7 @@ const AddEditUserModal = ({ show, user, onSave, onClose }) => {
                   type="text"
                   name="firstName"
                   id="firstName"
-                  {...register('firstName', {
-                     minLength: { value: 3, message: 'Le prénom doit contenir au moins 3 caractères' }, 
-                     maxLength: { value: 55, message: 'Le prénom ne peut pas dépasser 55 caractères' } })}
+                  {...register('firstName', {maxLength: { value: 55, message: 'Le prénom ne peut pas dépasser 55 caractères' } })}
                   className={`border p-2 w-full rounded-md bg-gray-200 ${errors.firstName && 'border-red-500'}`}
                 />
                 {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName.message}</p>}
