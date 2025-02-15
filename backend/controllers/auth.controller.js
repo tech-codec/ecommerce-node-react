@@ -138,7 +138,9 @@ exports.login = async (req, res) => {
 
 exports.activateAccount = async (req, res) => {
     const { token } = req.params;
+    console.log('le token de vérification: ', token)
     try {
+        
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.id);
         if (!user) {

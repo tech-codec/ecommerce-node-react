@@ -42,6 +42,7 @@ export default {
         'cart-wrap':'1280px',
         'list_p_1406':'1406px',
         'xl':'1524px',
+        'sc-1193': '1193px'
         
       },
       sizes:{

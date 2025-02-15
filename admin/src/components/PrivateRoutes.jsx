@@ -13,6 +13,7 @@ import Profile from "../pages/Profile";
 import Roles from "../pages/Roles";
 import UpdateProfil from "../pages/UpdateProfil";
 import UpdatePassword from "../pages/UpdatePassword";
+import OrderDetail from "../pages/OrderDetail";
 
 function usePageTracking() {
   const location = useLocation();
@@ -45,6 +46,7 @@ function PrivateRoutes() {
             <Route path='/roles' element={<Roles />} />
             <Route path='/update-profil' element={<UpdateProfil />} />
             <Route path='/update-password' element={<UpdatePassword />} />
+            <Route path='/order-detail/:orderId' element={<OrderDetail />} />
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="*" element={<Navigate to={savedPage} />} />
           </Routes>

@@ -48,6 +48,7 @@ const userSchema = new mongoose.Schema(
         type: String,
         maxlength: 1024,
       },
+      orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
       isActive: { type: Boolean, default: false },
       resetPasswordToken: String,
       resetPasswordExpires: Date,

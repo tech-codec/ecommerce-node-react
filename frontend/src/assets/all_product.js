@@ -83,7 +83,7 @@ let all_product = [
     },
     {
         id:6,
-        name:"Tricot côtelé",
+        name:"Tricot côtelé ",
         category:"Vêtement",
         image:[tricot_cotele,pantalon_chino,pantalon_cargo,tricot_double],
         new_price:16500,

@@ -1,4 +1,7 @@
+const Notification = require('../models/Notification')
+const Order = require('../models/Order')
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
 const { registerErrors } = require('../utils/errors.util')
 
 
@@ -156,10 +159,54 @@ exports.adminUpdatePassWord = async (req, res)=>{
     }
 }
 
+exports.UpdateUserPassWord = async (req, res)=>{
+    const {id} = req.params
+    const {password, newPassword, confirmPassword} = req.body
+
+    try{
+        const user = await User.findById(id)
+        const comp = await bcrypt.compare(password, user.password)
+        if(!comp){
+            return res.status(400).json({ passwordError: "Le mot de passe ne correspond pas à votre mot de passe actuel" });
+        }
+        if (newPassword.length < 6) {
+            return res.status(400).json({ newPasswordLength: "Le mot de passe doit avoir au mois 6 caractères" });
+        }
+        if (newPassword !== confirmPassword) {
+            return res.status(400).json({ confirmPasswordError: "Les mots de passe ne correspondent pas" });
+        }
+        user.password = newPassword
+        await user.save()
+        res.status(200).json({message:"Le mot de passe à été modifier avec succè"})
+    }catch(error){
+        return res.status(500).json({error: error.message})
+    }
+}
+
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
-    await User.findByIdAndDelete(id);
-    res.status(204).send();
+    try {
+        // Vérifier si l'utilisateur existe
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        // Supprimer l'utilisateur par son ID
+        await User.findByIdAndDelete(id);
+
+        // Supprimer toutes les notifications appartenant à cet utilisateur
+        await Notification.deleteMany({ user: id });
+
+        // Supprimer toutes les commandes appartanant à cet utilisateur
+         await Order.deleteMany({user: id})
+
+        // Envoyer la réponse une fois que tout est terminé
+        res.status(204).json({ message: "L'utilisateur a été supprimé avec ses notifications." });
+    } catch (error) {
+        // En cas d'erreur, envoyer une réponse d'erreur
+        res.status(500).json({ error: error.message });
+    }
 };
 
 

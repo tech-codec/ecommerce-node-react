@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/authAction/auth.action";
 import { extractUploads } from "../../utils/truncateText";
+import AdminNotificationBell from "../Notification/AdminNotificationBell"
 
 function Header() {
 
@@ -54,7 +55,7 @@ function Header() {
                     </div>
                 </div>
                 <div className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-2xl cursor-pointer text-gray-500">
-                    <IoIosNotificationsOutline />
+                    <AdminNotificationBell/>
                 </div>
                 <div onClick={toggleSousMenu} className="flex items-center justify-between gap-2 cursor-pointer ">
                     <span className="hidden lg:block">{user.name}</span>

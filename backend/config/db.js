@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+//require('dotenv').config({path:'../config/.env'})
+require('dotenv').config()
 
 // MongoDB connection URL
 const mongoURI = `mongodb+srv://${process.env.DB_USER_PASS}@app-commerce-api.776s8.mongodb.net/?retryWrites=true&w=majority&appName=App-commerce-api`;

@@ -69,7 +69,7 @@ export const addCategory = (formData)=> async dispatch=>{
         toast.success("La catégorie a été ajoutée avec succès.")
         console.log("add cat: ", JSON.stringify(res.data))
         dispatch(getAllCategories())
-        window.location.reload()
+        //window.location.reload()
     }catch(err){
         dispatch({
             type:ADD_CATEGORY_ERROR,

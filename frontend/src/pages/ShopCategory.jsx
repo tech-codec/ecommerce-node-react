@@ -4,53 +4,20 @@ import ListProducts from '../components/ListProducts'
 import { FilterContext } from '../context/FilterContext'
 import ButtonFilter from '../components/ButtonFilter'
 import FilterPanelMobil from '../components/FilterPanelMobil'
+import { extractUploads } from '../utils/help'
 
 export default function ShopCategory({ banner, category, products, listMotCle }) {
-
-  // const [filters, setFilters] = useState(
-  //   {
-  //     minPrice: 0,
-  //     maxPrice: 100000000,
-  //     sortBy: '',
-  //     selectedKeyword:""
-  //     //selectedKeywords:""
-  //   }
-  // )
-
-  // const applyFilters = (listProducts, filters) => {
-
-  //   let filteredProducts = listProducts.filter(product => {
-  //     return (
-  //       // (filter.keyword === '' || product.name.toLowerCase().includes(filters.keyword.toLowerCase())) &&
-  //       product.new_price >= filters.minPrice &&
-  //       product.new_price <= filters.maxPrice &&
-  //       //(filters.selectedKeywords.length === 0 ||filters.selectedKeywords.every((keyword) => product.name.includes(keyword)))
-  //       (filters.selectedKeyword === "" || product.name.toLowerCase().includes(filters.selectedKeyword.toLowerCase()))
-  //     );
-  //   });
-
-  //   if (filters.sortBy === 'asc') {
-  //     filteredProducts.sort((a, b) => a.new_price - b.new_price);
-  //   } else if (filters.sortBy === 'desc') {
-  //     filteredProducts.sort((a, b) => b.new_price - a.new_price);
-  //   }
-
-
-
-
-  //   return filteredProducts;
-
-  // };
 
   const { filters, setFilters, applyFilters } = useContext(FilterContext)
 
   const listProductsFilters = applyFilters(products, filters)
   const [open, setOpen] = useState(false)
+  const apiUrl = import.meta.env.VITE_API_URL;
 
 
   return (
     <div className='px-5p md:px-10p mt-5'>
-      <div className="w-full mb-6 h-32 banner_670:h-44 banner_890:h-52 visible_filter:h-60 bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${banner})` }} >
+      <div className="w-full mb-6 h-36 banner_670:h-48 banner_890:h-56 visible_filter:h-64 bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(banner)})` }} >
       </div>
       <div onClick={() => setOpen(!open)} className=' cursor-pointer'>
         <ButtonFilter />

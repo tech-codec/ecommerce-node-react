@@ -1,8 +1,8 @@
 
-import ordinateur from "./images/banniere-vente-ordinateur.avif";
-import telephone from "./images/banniere-vente-telephone.avif";
-import vetement from "./images/bannier-vente-vetement-2.avif";
-import television from "./images/banniere-vente-television.webp"
+import ordinateur from "./images/cat-ordi-1.png";
+import telephone from "./images/cat-phon-1.png";
+import vetement from "./images/cat-clothes-3.png";
+import television from "./images/cat-tv-3.png"
 const all_categories = [
     {
         name:"Ordinateur",

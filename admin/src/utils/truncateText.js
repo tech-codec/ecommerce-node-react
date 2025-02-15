@@ -28,6 +28,30 @@ export const truncateText = (text, maxLength) => {
   }
 
 
+  export function removeTrailingZeros(num) {
+    // Convert the number to a string
+    let numStr = num?.toString();
+
+    // Check if the number ends with at least two zeros
+    if (numStr?.endsWith("00")) {
+        // Remove the last two zeros
+        numStr = numStr?.slice(0, -2);
+    }
+
+    // Convert back to a number (if needed) and return
+    return parseFloat(numStr);
+}
+
+
+
+// Fonction pour obtenir un cookie par son nom
+export function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null; // Retourner null si le cookie n'est pas trouvé
+}
+
   // Helper function to format numbers
 export function formatNumberWithSeparators_2(number) {
   if (!number) return '';

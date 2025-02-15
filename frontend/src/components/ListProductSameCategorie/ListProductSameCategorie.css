@@ -1,0 +1,50 @@
+.list-product-same-categorie-container .carousel-container {
+    position: relative;
+    padding-bottom: 20px; /* Adjust padding to create space for scrollbar */
+  }
+  
+  .list-product-same-categorie-container .carousel-item-padding-40-px {
+    padding: 0 15px 0 0;
+  }
+  
+  .list-product-same-categorie-container .custom-carousel-container .scrollbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .list-product-same-categorie-container .custom-carousel-container .scrollbar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 25%;
+    background: rgba(0, 0, 0, 0.3);
+    animation: scrollbar-animation 5s linear infinite;
+  }
+  
+  @keyframes scrollbar-animation {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Show scrollbar only on mobile and tablet */
+  @media (max-width: 1024px) {
+    .list-product-same-categorie-container .custom-carousel-container .scrollbar {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .list-product-same-categorie-container .custom-carousel-container .scrollbar {
+      display: none;
+    }
+  }
+  

@@ -4,18 +4,29 @@ import './index.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
-import { getAllRole } from './actions/roleAction/role.action.js'
+import { getAllRoles } from './actions/roleAction/role.action.js'
 import { loadUser } from './actions/authAction/auth.action.js'
-import { getAllUser } from './actions/userAction/user.action.js'
+import { getAllUsers } from './actions/userAction/user.action.js'
 import { getAllCategories } from './actions/categoryAction/category.action.js'
 import { getAllProducts } from './actions/productAction/product.action.js'
 import { IntlProvider } from 'react-intl';
+import { getAllOrders } from './actions/orderAction/order.action.js'
+import { getAllCustomerActivity, getAllCustomerStats, getAllLowStock, getAllRealTime, getAllRecentOrders, getAllSales, getAllTopProducts, getAllVisitors } from './actions/dashBoardAction/dashboard.action.js'
 
-store.dispatch(getAllRole())
+store.dispatch(getAllRoles())
 store.dispatch(loadUser())
-store.dispatch(getAllUser())
+store.dispatch(getAllUsers())
 store.dispatch(getAllCategories())
 store.dispatch(getAllProducts())
+store.dispatch(getAllOrders())
+store.dispatch(getAllLowStock())
+store.dispatch(getAllTopProducts())
+store.dispatch(getAllCustomerActivity())
+store.dispatch(getAllCustomerStats())
+store.dispatch(getAllRecentOrders())
+store.dispatch(getAllSales())
+store.dispatch(getAllVisitors())
+store.dispatch(getAllRealTime())
 
 const messages = {
   'en': {

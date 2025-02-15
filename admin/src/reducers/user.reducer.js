@@ -14,6 +14,9 @@ import {
     RESET_PASSWORD_USER_LOADING,
     RESET_PASSWORD_USER_LOADED,
     RESET_PASSWORD_USER_ERROR,
+    UPDATE_PASSWORD_USER_LOADING,
+    UPDATE_PASSWORD_USER_LOADED,
+    UPDATE_PASSWORD_USER_ERROR,
     UPDATE_USER_LOADING,
     UPADATE_USER_LOADED,
     UPDATE_USER_ERROR,
@@ -68,7 +71,7 @@ export default function userReducer(state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                user: null,
+                usersData: null,
                 error: payload
             }
         case DELETE_USER_LOADING:
@@ -141,25 +144,42 @@ export default function userReducer(state = initialState, action) {
                 user: null,
                 error: payload
             }
-            case ADD_USER_LOADING:
-                return {
-                    ...state,
-                    loading: true,
-                }
-            case ADD_USER_LOADED:
-                return {
-                    ...state,
-                    loading: false,
-                    user:payload,
-                    error: null
-                }
-            case ADD_USER_ERROR:
-                return {
-                    ...state,
-                    loading: false,
-                    USER:null,
-                    error: payload
-                }
+        case ADD_USER_LOADING:
+            return {
+                ...state,
+                loading: true,
+            }
+        case ADD_USER_LOADED:
+            return {
+                ...state,
+                loading: false,
+                user: payload,
+                error: null
+            }
+        case ADD_USER_ERROR:
+            return {
+                ...state,
+                loading: false,
+                USER: null,
+                error: payload
+            }
+        case UPDATE_PASSWORD_USER_LOADING:
+            return {
+                ...state,
+                loading: true,
+            }
+        case UPDATE_PASSWORD_USER_LOADED:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            }
+        case UPDATE_PASSWORD_USER_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: payload
+            }
         default:
             return state
     }

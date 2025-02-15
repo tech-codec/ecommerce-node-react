@@ -16,7 +16,7 @@ function FilterProvider({children}) {
     
       const applyFilters = (listProducts, filters) => {
     
-        let filteredProducts = listProducts.filter(product => {
+        let filteredProducts = listProducts?.filter(product => {
           return (
             // (filter.keyword === '' || product.name.toLowerCase().includes(filters.keyword.toLowerCase())) &&
             product.new_price >= filters.minPrice &&

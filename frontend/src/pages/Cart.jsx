@@ -3,10 +3,18 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { extractUploads } from '../utils/help';
+import { useSelector } from 'react-redux';
+import PayementButton from '../components/PayementButton';
 
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useContext(CartContext)
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const authState = useSelector(state => state.auth)
+  const {isAuthenticated} = authState
+  
+  
 
   return (
     <div className="px-5p md:px-10p mt-10 mb-6">
@@ -19,18 +27,18 @@ const Cart = () => {
           <div>
             {cart.map(item => {
               return (
-                <div key={item.id} className='flex w-full mb-6 pb-5 gap-1 bg-white p-3 mt-2 border-b border-gray-200'>
-                  <Link to={`/product/${item.id}`}>
-                    <img src={item.image} alt={item.image} className='w-20 h-20 cart-img-360:w-28 cart-img-360:h-28 md:w-52 md:h-52' />
+                <div key={item._id} className='flex w-full mb-6 pb-5 gap-1 bg-white p-3 mt-2 border-b border-gray-200'>
+                  <Link to={`/product/${item._id}`}>
+                    <img src={apiUrl + extractUploads(item?.images[0])} alt={item.name} className='w-20 h-20 cart-img-360:w-28 cart-img-360:h-28 md:w-52 md:h-52' />
                   </Link>
 
                   <div className='w-full'>
 
-                    <div className='flex items-center justify-between mb-3'>
-                      <Link to={`/product/${item.id}`}>
-                        <h3 className='text-xs w-24 md:w-auto md:text-sm list_p_1406:text-lg font-semibold'> {item.name} </h3>
+                    <div className='flex justify-between gap-1 mb-3'>
+                      <Link to={`/product/${item._id}`}>
+                        <h3 className='text-xs grow md:text-sm list_p_1406:text-lg font-semibold text-gray-800'> {item.name} </h3>
                       </Link>
-                      <p className='text-sm md:text-lg list_p_1406:text-xl font-semibold'> {item.new_price.toFixed(2)} FCFA </p>
+                      <p className='text-sm md:w-52 md:text-lg list_p_1406:text-xl font-semibold'> {item.new_price.toFixed(2)} €</p>
                     </div>
 
                     <div className='bg-gray-300 py-1 cart-img-360:py-2 px-2 w-20 md:w-28 rounded-xl mb-6'>
@@ -38,7 +46,7 @@ const Cart = () => {
 
                       <div className="flex items-center text-sm md:text-lg">
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() => updateQuantity(item._id, item.quantity - 1)}
                           className="px-2  bg-gray-300 rounded"
                           disabled={item.quantity <= 1}
                         >
@@ -46,7 +54,7 @@ const Cart = () => {
                         </button>
                         <span className="mx-2">{item.quantity}</span>
                         <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() => updateQuantity(item._id, item.quantity + 1)}
                           className="px-2  bg-gray-300 rounded"
                         >
                           +
@@ -56,8 +64,8 @@ const Cart = () => {
                     </div>
 
                     <div className='cursor-pointer text-xs md:text-sm'>
-                      <span className='text-blue-600 hover:text-blue-900 hover:underline mr-2' onClick={() => removeFromCart(item.id)}>supprimer</span>
-                      <Link to={`/product/${item.id}`}>
+                      <span className='text-blue-600 hover:text-blue-900 hover:underline mr-2' onClick={() => removeFromCart(item._id)}>supprimer</span>
+                      <Link to={`/product/${item._id}`}>
                         <span className='text-blue-600 hover:text-blue-900 hover:underline'>Afficher</span>
                       </Link>
                     </div>
@@ -73,7 +81,7 @@ const Cart = () => {
               Vider le panier
             </button>
 
-            <h1 className='text-sm text-end md:text-lg tlist_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): <span>{getTotalPrice().toFixed(2)}</span>FCFA</h1>
+            <h1 className='text-sm text-end md:text-lg tlist_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): <span>{getTotalPrice().toFixed(2)}</span> €</h1>
 
 
           </div>
@@ -84,7 +92,7 @@ const Cart = () => {
 
             <div className='flex items-center text-sm md:text-lg justify-between'>
               <h1 className='list_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): </h1>
-              <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> FCFA </h1>
+              <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> €</h1>
             </div>
 
             <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-2 w-full' onClick={() => clearCart()}>
@@ -99,16 +107,14 @@ const Cart = () => {
           <div className='bg-white pt-3 pb-6 px-4'>
             <div className='flex  text-sm list_p_1406:text-base items-center justify-between border-b border-gray-200 p-3'>
               <p> Produits (<span>{getTotalItems()}</span>)</p>
-              <p> <span>{getTotalPrice().toFixed(2)}</span> FCFA</p>
+              <p> <span>{getTotalPrice().toFixed(2)}</span> €</p>
             </div>
             <div className='flex text-lg list_p_1406:text-xl font-semibold items-center justify-between border-b border-gray-200 p-3'>
               <p> Total :</p>
-              <p> <span>{getTotalPrice().toFixed(2)}</span> FCFA</p>
+              <p> <span>{getTotalPrice().toFixed(2)}</span> €</p>
             </div>
             <div className='w-full font-semibold border-b border-gray-200 p-3'>
-              <button className='bg-orange-600 w-full py-2 px-6 rounded-3xl hover:bg-orange-700 text-white text-sm list_p_1406:text-lg' onClick={() => clearCart()}>
-                Valider mon panier
-              </button>
+              <PayementButton cartItems={cart} totalItems={getTotalItems()} />
             </div>
           </div>
 
@@ -121,12 +127,10 @@ const Cart = () => {
 
         <div className='flex items-center text-sm md:text-lg justify-between'>
           <h1 className='list_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): </h1>
-          <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> FCFA </h1>
+          <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> €</h1>
         </div>
 
-        <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-3  w-full'>
-          Valider mon panier
-        </button>
+        <PayementButton cartItems={cart} totalItems={getTotalItems()} />
 
       </div>
 

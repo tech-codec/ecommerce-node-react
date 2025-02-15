@@ -14,11 +14,14 @@ import { DELETE_USER_ERROR, DELETE_USER_LOADED, DELETE_USER_LOADING, GET_ALL_USE
      RESET_PASSWORD_USER_ERROR,
      ADD_USER_LOADED,
      ADD_USER_ERROR,
-     ADD_USER_LOADING, 
+     ADD_USER_LOADING,
+     UPDATE_PASSWORD_USER_LOADED,
+     UPDATE_PASSWORD_USER_ERROR,
+     UPDATE_PASSWORD_USER_LOADING, 
       } from "./type.action"
 
 
-export const getAllUser = ()=>async dispatch=>{
+export const getAllUsers = ()=>async dispatch=>{
     dispatch({type:GET_ALL_USER_LOADING})
     try{
 
@@ -64,7 +67,7 @@ export const deleteUser = (id)=> async dispatch =>{
             payload: res.data
         })
         toast.success("L'utilisateur à été supprimer avec succès")
-        dispatch(getAllUser())
+        dispatch(getAllUsers())
         //window.location.reload()
     }catch(err){
         dispatch({
@@ -72,7 +75,7 @@ export const deleteUser = (id)=> async dispatch =>{
             payload: err.response.data
         })
         toast.error("L'utilisateur n'a pas été supprimer")
-        dispatch(getAllUser())
+        dispatch(getAllUsers())
     }
 }
 
@@ -118,14 +121,14 @@ export const adminUpdateUser = (id, formData) => async dispatch =>{
             payload:data
         })
         toast.success("L'utilisateur à été modifier avec succès")
-        dispatch(getAllUser())
+        dispatch(getAllUsers())
     }catch(err){
         dispatch({
             type:UPDATE_USER_ERROR,
             payload: err.response.data
         })
         toast.error("L'utilisateur n'a pas été moddifier cas un problème est survenu")
-        dispatch(getAllUser())
+        dispatch(getAllUsers())
     }
 }
 
@@ -184,6 +187,34 @@ export const resetPasswordUser = (id, {password, confirmPassword}) => async disp
 
 
 
+export const updatePasswordUser = (id, {password, newPassword, confirmPassword}) => async dispatch=>{
+    dispatch({type:UPDATE_PASSWORD_USER_LOADING})
+    const config = {
+        headers:{
+            'content-Type' : 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({password,newPassword, confirmPassword})
+
+    try{
+        const res = await axios.put(`/users/update-USER-password/${id}`, body, config)
+        dispatch({
+            type:UPDATE_PASSWORD_USER_LOADED,
+            payload:res.data
+        })
+        toast.success("Le mot de passe de l'utilisateur à été modiffier")
+    }catch(err){
+        dispatch({
+            type: UPDATE_PASSWORD_USER_ERROR,
+            payload: err.response.data
+        })
+        toast.error("Le mot de passe de l'utilisateur n'a pas été modiffier")
+    }
+}
+
+
+
 export const addUser = (formData) => async dispatch =>{
     dispatch({type:ADD_USER_LOADING})
     const config = {
@@ -199,15 +230,15 @@ export const addUser = (formData) => async dispatch =>{
             payload:data
         })
         toast.success("L'utilisateur à été ajouter avec succès")
-        dispatch(getAllUser())
-        window.location.reload()
+        dispatch(getAllUsers())
+        //window.location.reload()
     }catch(err){
         dispatch({
             type:ADD_USER_ERROR,
             payload: err.response.data
         })
         toast.error("L'utilisateur n'à pas été ajouter")
-        dispatch(getAllUser())
-        window.location.reload()
+        dispatch(getAllUsers())
+        //window.location.reload()
     }
 }

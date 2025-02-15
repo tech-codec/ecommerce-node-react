@@ -13,11 +13,13 @@ import {
     ADD_ROLE_ERROR,
     EDITE_ROLE_LOADED,
     EDITE_ROLE_ERROR,
-    DELETE_ROLE_LOADING
+    DELETE_ROLE_LOADING,
+    DELETE_ROLE_ERROR,
+    DELETE_ROLE_LOADED
 } from "./type.action"
 
 
-export const getAllRole = ()=> async dispatch =>{
+export const getAllRoles = ()=> async dispatch =>{
     dispatch({type:GET_ALL_ROLE_LOADING})
 
     try{
@@ -58,19 +60,19 @@ export const deleteRole = (id)=> async dispatch =>{
     try{
         const res = await axios.delete(`/roles/${id}`)
         dispatch({
-            type:GET_ROLE_LOADED,
+            type:DELETE_ROLE_LOADED,
             payload: res.data
         })
         toast.success("Le rôle à été supprimer avec succès")
         //window.location.reload()
-        dispatch(getAllRole())
+        dispatch(getAllRoles())
     }catch(err){
         dispatch({
-            type:GET_ROLE_ERROR,
+            type:DELETE_ROLE_ERROR,
             payload: err.response.data
         })
         toast.error("Le rôle n'a pas été supprimer")
-        dispatch(getAllRole())
+        dispatch(getAllRoles())
     }
 }
 
@@ -91,7 +93,7 @@ export const editeRole = (id, {name})=> async dispatch =>{
         })
         toast.success("Le rôle à été modifier avec succès")
         //window.location.reload()
-        dispatch(getAllRole())
+        dispatch(getAllRoles())
     }catch(err){
         dispatch({
             type:EDITE_ROLE_ERROR,
@@ -99,7 +101,7 @@ export const editeRole = (id, {name})=> async dispatch =>{
         })
     }
     toast.error("Le rôle n'a pas été modifier")
-    dispatch(getAllRole())
+    dispatch(getAllRoles())
 }
 
 
@@ -118,8 +120,8 @@ export const addRole = ({name})=> async dispatch =>{
             payload: res.data
         })
         toast.success("le rôle à été ajouter avec succès")
-        dispatch(getAllRole())
-        window.location.reload()
+        dispatch(getAllRoles())
+        //window.location.reload()
     }catch(err){
         dispatch({
             type:ADD_ROLE_ERROR,
@@ -127,6 +129,6 @@ export const addRole = ({name})=> async dispatch =>{
         })
     }
     //toast.error("Le rôle n'as pas été ajouter")
-    dispatch(getAllRole())
-    window.location.reload()
+    dispatch(getAllRoles())
+    //window.location.reload()
 }

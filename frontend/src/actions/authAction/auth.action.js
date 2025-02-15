@@ -24,13 +24,13 @@ export const loadUser = ()=> async dispatch=>{
         dispatch(getUser(res.data.id))
         dispatch({
             type:USER_AUTORISED_LOADED,
-            payload:JSON.stringify(res.data)
+            payload:res.data
         })
     }catch(err){
         console.log("comptenu de error getUser: "+JSON.stringify(err.response.data))
         dispatch({
             type:USER_AUTORISED_ERROR,
-            payload:JSON.stringify(err.response.data)
+            payload:err.response.data
         })
     }
 }

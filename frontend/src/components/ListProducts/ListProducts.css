@@ -1,0 +1,48 @@
+/* ListProducts.css */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+  
+  .page-item {
+    margin: 0 5px;
+  }
+  
+  .page-link {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .page-link:hover {
+    background-color: #ddd;
+  }
+  
+  .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .page-link {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page-link {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .pagination {
+      justify-content: space-around;
+    }
+  }
