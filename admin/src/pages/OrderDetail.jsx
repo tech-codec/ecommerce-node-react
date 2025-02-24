@@ -122,7 +122,7 @@ const OrderDetail = () => {
                                         <td className={`border-r-0 columns-2 flex gap-3 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                                             <img
                                                 className='w-28 h-28'
-                                                src={typeof element.product.images[0] === 'string'
+                                                src={typeof element.product?.images[0] === 'string'
                                                     ? apiUrl + extractUploads(element.product.images[0])
                                                     : element.product.images[0] instanceof File
                                                         ? URL.createObjectURL(element.product.images[0])

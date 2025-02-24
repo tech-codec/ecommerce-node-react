@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { getOrder } from '../../actions/orderAction/order.action';
 import { useTheme } from '../../context/ThemeContext';
 
-const socket = io(import.meta.env.VITE_API_URL);
+const socket = io(import.meta.env.VITE_API_SOCKET_URL);
 
 const AdminNotificationBell = () => {
   const [notifications, setNotifications] = useState([]);
@@ -20,6 +20,18 @@ const AdminNotificationBell = () => {
   const { theme } = useTheme();
 
   useEffect(() => {
+
+    socket.on('connect', () => {
+      console.log('✅ Connecté au WebSocket');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('❌ Déconnecté du WebSocket');
+    });
+
+    socket.on('newOrder', (data) => {
+      console.log("🆕 Nouvelle commande reçue:", data);
+    });
     // Écouter toutes les nouvelles commandes
     socket.on('newOrder', (newNotification) => {
       setNotifications((prev) => [newNotification, ...prev]);

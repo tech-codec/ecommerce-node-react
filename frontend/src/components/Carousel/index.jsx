@@ -36,7 +36,7 @@ function Index() {
   };
 
   return (
-    <div className="relative md:mb-5">
+    <div className="relative mb-6 md:mb-8">
         {
             loading
             ?<p>chargement</p>
@@ -55,7 +55,7 @@ function Index() {
           >
             {
     
-               categoriesData.length > 0 && categoriesData?.map(category=> <div key={category._id} className="w-full mb-6 h-40 banner_670:h-48 banner_890:h-56 visible_filter:h-64 bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(category.image)})` }} />)
+               categoriesData.length > 0 && categoriesData?.map(category=> <div key={category._id} className="w-full mb-6 h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(category.image)})` }} />)
             }
            
           </Carousel>

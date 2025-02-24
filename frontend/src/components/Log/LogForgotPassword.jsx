@@ -20,7 +20,7 @@ const LogForgotPassword = () => {
 
     const auth = useSelector(state => state.auth)
 
-    const {success, error, loading} = auth
+    const {error, loading} = auth
     
 
     const dispatch = useDispatch()
@@ -31,16 +31,9 @@ const LogForgotPassword = () => {
     }
 
     return (
-        <div className='w-full flex items-center mt-10 justify-center' onSubmit={onSubmit}>
+        <div className='w-full flex items-center py-8 justify-center my-5p' onSubmit={onSubmit}>
 
             <form className='w-full md-wrap:w-1/2 bg-white py-5 px-5'>
-                {success?.message?.includes("E-mail de réinitialisation du mot") &&
-                    <div className='flex mb-2 w-full items-center justify-center font-semibold text-lg'>
-                        <div className='w-full text-white font-semibold px-4 py-9 bg-green-500 flex items-center justify-center '>
-                            <span>{success.message} à {email}</span>
-                        </div>
-                    </div>
-                }
                 {
                 loading &&
                     <div className='flex mb-2 w-full items-center justify-center font-semibold text-lg'>
@@ -57,12 +50,12 @@ const LogForgotPassword = () => {
                 </div>
                 <div className='w-full text-white font-semibold items-center justify-center flex'>
                     <Link to={"/signIn"}>
-                        <button className='py-2 px-4 shadow-lg mr-3 bg-orange-700 rounded-3xl'>
+                        <button className='py-2 px-4 shadow-lg mr-3 bg-orange-500 hover:bg-orange-400 rounded-3xl'>
                             Se connecter
                         </button>
                     </Link>
 
-                    <button type='submit' className='py-2 px-4 bg-orange-700 shadow-lg rounded-3xl'>
+                    <button type='submit' className='py-2 px-4 bg-orange-500 hover:bg-orange-400 shadow-lg rounded-3xl'>
                         Envoyer
                     </button>
                 </div>

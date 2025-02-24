@@ -25,6 +25,53 @@
     background: rgba(0, 0, 0, 0.3);
     animation: scrollbar-animation 5s linear infinite;
   }
+
+
+
+/*********************/
+
+.list-product-same-categorie-container .custom-carousel-item {
+  transition: transform 0.2s ease-in-out;
+}
+
+.list-product-same-categorie-container .custom-carousel-item:hover {
+  transform: scale(1.05);
+}
+
+.list-product-same-categorie-container img {
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.list-product-same-categorie-container img:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.list-product-same-categorie-container .carousel-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.list-product-same-categorie-container .custom-dot-list-style {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.list-product-same-categorie-container .custom-dot-list-style li {
+  background: #ddd;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+}
+
+.custom-dot-list-style li.slick-active {
+  background: #007bff;
+}
+
+
+
   
   @keyframes scrollbar-animation {
     0% {

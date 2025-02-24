@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from "react-toastify";
 import { updatePasswordUser } from '../actions/userAction/user.action';
 
 const UpdatePassword = () => {
-  const apiUrl = import.meta.env.VITE_API_URL;
   const auth = useSelector(state => state.auth);
   const { user} = auth;
   const { theme } = useTheme();

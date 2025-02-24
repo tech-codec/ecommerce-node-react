@@ -15,6 +15,7 @@ import { loadUser } from './actions/authAction/auth.action.js';
 import { getAllCategories } from './actions/categoryAction/category.action.js';
 import { getAllProducts } from './actions/productAction/product.action.js';
 import { SearchProvider } from './context/SearchContext.jsx';
+import { DashboardProvider } from './context/DashboradContext.jsx';
 
 store.dispatch(loadUser())
 store.dispatch(getAllCategories())
@@ -30,7 +31,9 @@ createRoot(document.getElementById('root')).render(
       <FilterProvider>
         <CartProvider>
           <SearchProvider>
-            <App />
+            <DashboardProvider>
+              <App />
+            </DashboardProvider>
           </SearchProvider>
         </CartProvider>
       </FilterProvider>

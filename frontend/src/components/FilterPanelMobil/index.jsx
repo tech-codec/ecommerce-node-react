@@ -106,7 +106,7 @@ function FilterPanelMobil({ filters, setFilters, listMotCle = [] }) {
                                 />
                                 <RangeSlider
                                     min={0}
-                                    max={1000000}
+                                    max={10000}
                                     value={filters.minPrice}
                                     onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
                                     label="Prix minimum"
@@ -124,7 +124,7 @@ function FilterPanelMobil({ filters, setFilters, listMotCle = [] }) {
                                 />
                                 <RangeSlider
                                     min={0}
-                                    max={1000000}
+                                    max={10000}
                                     value={filters.maxPrice}
                                     onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
                                     label="Prix maximum"

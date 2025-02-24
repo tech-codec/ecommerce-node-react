@@ -32,15 +32,6 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
         )
     }
 
-    // const handleCheckboxChange = (keyword) => {
-    //     setFilters((prevFilters) => ({
-    //         ...prevFilters,
-    //         selectedKeywords: prevFilters.selectedKeywords.includes(keyword)
-    //             ? prevFilters.selectedKeywords.filter((k) => k !== keyword)
-    //             : [...prevFilters.selectedKeywords, keyword]
-    //     }));
-    // };
-
     return (
         <div className='hidden sticky top-auto visible_filter:w-25p visible_filter:block list_p_1179:w-20p'>
             <div className='sticky top-24'>
@@ -107,7 +98,7 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
                                     />
                                     <RangeSlider
                                         min={0}
-                                        max={1000000}
+                                        max={10000}
                                         value={filters.minPrice}
                                         onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
                                         label="Prix minimum"
@@ -125,7 +116,7 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
                                     />
                                     <RangeSlider
                                         min={0}
-                                        max={1000000}
+                                        max={10000}
                                         value={filters.maxPrice}
                                         onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
                                         label="Prix maximum"
@@ -153,18 +144,6 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
                         isOpenMotCle && (
                             <div className="w-full">
                                 {listMotCle.length > 0 && listMotCle.map((keyword) => (
-                                    // <div key={keyword} className="flex items-center mb-2">
-                                    //     <input
-                                    //         type="checkbox"
-                                    //         id={keyword}
-                                    //         value={keyword}
-                                    //         onChange={() => handleCheckboxChange(keyword)}
-                                    //         className="form-checkbox h-5 w-5 text-blue-600"
-                                    //     />
-                                    //     <label htmlFor={keyword} className="ml-2 text-gray-700">
-                                    //         {keyword}
-                                    //     </label>
-                                    // </div>
                                     <RadioButton
                                         key={keyword}
                                         id={keyword}

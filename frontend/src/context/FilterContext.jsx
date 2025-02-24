@@ -7,7 +7,7 @@ function FilterProvider({children}) {
     const [filters, setFilters] = useState(
         {
           minPrice: 0,
-          maxPrice: 100000000,
+          maxPrice: 10000,
           sortBy: '',
           selectedKeyword:""
           //selectedKeywords:""

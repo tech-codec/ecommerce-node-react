@@ -9,28 +9,31 @@ import {
     LOGOUT_SUCCESS, 
     REGISTER_ERROR, 
     REGISTER_SUCCESS,
+    RESET_PASSWORD_ERROR,
+    RESET_PASSWORD_SUCCESS,
     USER_AUTORISED_ERROR,
     USER_AUTORISED_LOADED,
     USER_AUTORISED_LOADING
 } from "./type.auth.action";
-import { getUser } from "../userAction/user.action";
 
 
-export const loadUser = ()=> async dispatch=>{
-    dispatch({type:USER_AUTORISED_LOADING})
-    try{
+export const loadUser = () => async dispatch => {
+    dispatch({ type: USER_AUTORISED_LOADING })
+    try {
         const res = await axios.get('/userAutorised')
-        console.log("contenue: "+JSON.stringify(res.data.id))
-        dispatch(getUser(res.data.id))
+        console.log("contenue: " + JSON.stringify(res.data.id))
+        const userRes = await axios.get(`/users/${res.data.id}`)
+
         dispatch({
-            type:USER_AUTORISED_LOADED,
-            payload:res.data
+            type: USER_AUTORISED_LOADED,
+            payload: userRes.data
         })
-    }catch(err){
-        console.log("comptenu de error getUser: "+JSON.stringify(err.response.data))
+
+    } catch (err) {
+        console.log("comptenu de error getUser: " + JSON.stringify(err.response.data))
         dispatch({
-            type:USER_AUTORISED_ERROR,
-            payload:err.response.data
+            type: USER_AUTORISED_ERROR,
+            payload: err.response.data
         })
     }
 }
@@ -122,6 +125,38 @@ export const forgotPassword = ({email}) => async dispatch =>{
 }
 
 
+
+export const resetPassword = (token, { password, confirmPassword }) => async dispatch => {
+    dispatch({ type: USER_AUTORISED_LOADING })
+    const confing = {
+        headers: {
+            'content-type': 'application/json'
+        }
+    }
+
+    const body = JSON.stringify({ password, confirmPassword })
+
+    try {
+
+        const res = await axios.post(`/auth/reset-password/${token}`, body, confing)
+        dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+            payload: res.data
+        })
+
+        toast.success("le mot de passe à été rénitialisé avec succès")
+        //window.location.href = '/login'
+
+    } catch (err) {
+        dispatch({
+            type: RESET_PASSWORD_ERROR,
+            payload: err.response.data
+        })
+        toast.error("Une erreur c'est produit lors de la rénitialisation du mot de passe!");
+    }
+}
+
+
 export const logout = ()=> async dispatch =>{
     try{
         const res = await axios.post('/auth/logout')
@@ -130,6 +165,7 @@ export const logout = ()=> async dispatch =>{
             payload:res.data
         })
         toast.success("déconnexion réussite")
+        window.location.href = '/'
     }catch(err){
         dispatch({
             type:LOGOUT_ERROR,

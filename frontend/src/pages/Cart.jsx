@@ -17,17 +17,17 @@ const Cart = () => {
   
 
   return (
-    <div className="px-5p md:px-10p mt-10 mb-6">
+    <div className="px-5p md:px-10p mt-5 mb-6">
       <div className='flex justify-between w-full gap-4 mb-6'>
 
         <div className='flex flex-col w-full cart-wrap:w-74p bg-white pt-6 px-5 pb-7'>
           <div className='border-b border-gray-300'>
-            <h2 className='text-lg md:text-xl list_p_1406:text-2xl font-bold mb-4'> Votre panier</h2>
+            <h2 className='text-xl list_p_1406:text-2xl font-bold mb-4'> Votre panier</h2>
           </div>
           <div>
             {cart.map(item => {
               return (
-                <div key={item._id} className='flex w-full mb-6 pb-5 gap-1 bg-white p-3 mt-2 border-b border-gray-200'>
+                <div key={item._id} className='flex w-full mb-6 pb-5 gap-1 bg-white py-3 mt-2 border-b border-gray-200'>
                   <Link to={`/product/${item._id}`}>
                     <img src={apiUrl + extractUploads(item?.images[0])} alt={item.name} className='w-20 h-20 cart-img-360:w-28 cart-img-360:h-28 md:w-52 md:h-52' />
                   </Link>
@@ -77,7 +77,7 @@ const Cart = () => {
           </div>
 
           <div className='hidden md:flex items-center justify-between font-semibold'>
-            <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-xs md:text-sm list_p_1406:text-lg mt-2' onClick={() => clearCart()}>
+            <button className='bg-orange-500 hover:bg-orange-400 py-2 px-4 md:px-6 rounded-3xl text-white text-xs md:text-sm list_p_1406:text-lg mt-2' onClick={() => clearCart()}>
               Vider le panier
             </button>
 
@@ -95,7 +95,7 @@ const Cart = () => {
               <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> €</h1>
             </div>
 
-            <button className='bg-red-700 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-2 w-full' onClick={() => clearCart()}>
+            <button className='bg-orange-500 hover:bg-orange-400 py-2 px-4 md:px-6 rounded-3xl text-white text-sm md:text-lg mt-2 w-full' onClick={() => clearCart()}>
               Vider le panier
             </button>
 
@@ -121,7 +121,7 @@ const Cart = () => {
         </div>
       </div>
 
-      <div className='w-full cart-wrap:w-74p  bg-white p-9 mb-6 '></div>
+      <div className='w-full cart-wrap:w-74p  bg-white p-9 '></div>
 
       <div className='font-semibold bg-white w-full fixed left-0 z-40 bottom-0 p-2  block cart-wrap:hidden'>
 

@@ -130,7 +130,7 @@ function ProductDetail({ product }) {
               key={index}
               src={apiUrl + extractUploads(image)}
               alt={`product ${index}`}
-              className={`cursor-pointer mb-2 h-16 lg:h-20 w-16 ml-2 xl:w-20 border-2 ${selectedImage === image && "border-orange-700"} border-gray-300 md:mr-0 lg:mb-2`}
+              className={`cursor-pointer mb-2 h-16 lg:h-20 w-16 ml-2 xl:w-20 border-2 ${selectedImage === image && "border-orange-500 hover:border-orange-400"} border-gray-300 md:mr-0 lg:mb-2`}
               onClick={() => setSelectedImage(image)}
             />
           ))}
@@ -171,7 +171,7 @@ function ProductDetail({ product }) {
           <h3 className='text-2xl lg:text-4xl banner_890:text-3xl font-semibold text-gray-800'>{product.name}</h3>
           <Link to={"/cart"}>
             <button
-              className='w-40 my-4 sc-1193:my-0 banner_890:w-48 wd-wrap:w-96 shadow-lg bg-orange-600 flex items-center justify-center hover:bg-orange-700 text-white py-1 lg:py-2 rounded-2xl'
+              className='w-40 my-4 sc-1193:my-0 banner_890:w-48 wd-wrap:w-96 shadow-lg bg-orange-500 flex items-center justify-center hover:bg-orange-400 text-white py-1 lg:py-2 rounded-2xl'
             >
               <span className='text-base banner_890:text-xl md-wrap:text-xl'>Mon panier</span>
             </button>
@@ -190,7 +190,7 @@ function ProductDetail({ product }) {
           </div>
         </div>
         <button
-          className='w-59p banner_890:w-40p wd-wrap:w-30p shadow-lg bg-orange-600 flex items-center justify-center hover:bg-orange-700 text-white py-1 lg:py-2 rounded-2xl mb-6 mt-2-1 lg:mt-4 banner_890:mt-28'
+          className='w-59p banner_890:w-40p wd-wrap:w-30p shadow-lg bg-orange-500 flex items-center justify-center hover:bg-orange-400 text-white py-1 lg:py-2 rounded-2xl mb-6 mt-2-1 lg:mt-4 banner_890:mt-28'
           onClick={() => handleOnClick(product)}
         >
           <span className='text-base md-wrap:text-xl'>Ajouter au panier</span>

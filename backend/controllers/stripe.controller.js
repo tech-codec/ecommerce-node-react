@@ -111,20 +111,27 @@ exports.createCheckoutSession = async (req, res) => {
 }
 
 
+
+
+/********************************** */
+
 const createOrder = async (customer, data, req, res) => {
     try {
-        const items = JSON.parse(customer.metadata.cart);
+        const io = req.app.get('io');
+        if (!io) {
+            console.error("❌ Socket.io instance is not available");
+            return res.status(500).json({ error: "Socket.io not initialized" });
+        }
 
-        // Préparation des produits pour la commande
+        const items = JSON.parse(customer.metadata.cart);
         const products = items.map((item) => ({
             product: item.id,
             quantity: item.quantity,
         }));
 
-        // Mise à jour des stocks des produits
         await Promise.all(
             items.map(async (item) => {
-                const product = await Product.findById(item.id); // Utilisez `findById` pour récupérer un produit spécifique
+                const product = await Product.findById(item.id);
                 if (product) {
                     product.stock -= item.quantity;
                     await product.save();
@@ -132,8 +139,6 @@ const createOrder = async (customer, data, req, res) => {
             })
         );
 
-
-        // Création de la commande
         const order = await Order.create({
             user: customer.metadata.userId,
             products,
@@ -146,12 +151,12 @@ const createOrder = async (customer, data, req, res) => {
             payment_status: data.payment_status,
         });
 
-        // Mise à jour de liste des commandes de l'utilisateur
-        const user = await User.findById(customer.metadata.userId)
-        user.orders.push(order._id)
-        await user.save()
+        const user = await User.findById(customer.metadata.userId);
+        if (user) {
+            user.orders.push(order._id);
+            await user.save();
+        }
 
-        // Création de la notification
         const notification = await Notification.create({
             user: customer.metadata.userId,
             order: order._id,
@@ -160,14 +165,13 @@ const createOrder = async (customer, data, req, res) => {
             totalPrice: data.amount_total,
         });
 
-        // Emission de l'événement via WebSocket
-        req.app.get('io').emit('newOrder', notification);
+        io.emit('newOrder', notification);
 
         res.status(200).json({ received: true });
-        console.log("Notification saved:", notification);
-        console.log("Order saved:", order);
+        console.log("✅ Notification saved:", notification);
+        console.log("✅ Order saved:", order);
     } catch (err) {
-        console.error("Error creating order:", err);
+        console.error("❌ Error creating order:", err);
         res.status(500).json({ error: "Internal Server Error", details: err.message });
     }
 };

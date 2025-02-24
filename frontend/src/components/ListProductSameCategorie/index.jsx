@@ -9,6 +9,7 @@ import { extractUploads } from '../../utils/help';
 function ListProductSameCategorie({ products, category }) {
   const { addToCart } = useContext(CartContext);
   const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleOnClick = (product) => {
     console.log("merci pour le produit ajouter");
     addToCart(product);
@@ -50,12 +51,12 @@ function ListProductSameCategorie({ products, category }) {
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
         dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px custom-carousel-item" // Added custom class
+        itemClass="carousel-item-padding-40-px custom-carousel-item"
       >
-        {products.filter(product => product.category === category).map((prd) => (
-          <div key={prd._id} className="rounded-lg border bg-white py-4 px-4 shadow-lg">
+        {products.filter(product => product.category._id === category._id).map((prd) => (
+          <div key={prd._id} className="rounded-lg border bg-white py-4 px-4 shadow-lg transition-transform transform hover:scale-105">
             <Link to={`/product/${prd._id}`}>
-              <img src={apiUrl + extractUploads(prd.images?.[0])} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer" />
+              <img src={apiUrl + extractUploads(prd.images?.[0])} alt="" className="rounded-lg m-auto w-40 h-40 cursor-pointer hover:shadow-lg transition-shadow duration-200" />
             </Link>
             <Link to={`/product/${prd._id}`}>
               <div className="text-sm cursor-pointer text-gray-700 whitespace-normal mt-4 mb-8 text-center max-h-16 overflow-hidden overflow-ellipsis">
@@ -69,7 +70,7 @@ function ListProductSameCategorie({ products, category }) {
                 </div>
                 <span className="font-semibold text-lg text-gray-900">{prd.new_price} €</span>
               </div>
-              <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-600 hover:bg-orange-700 flex items-center justify-center relative" onClick={() => handleOnClick(prd)}>
+              <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-500 hover:bg-orange-400 flex items-center justify-center relative" onClick={() => handleOnClick(prd)}>
                 <span className="text-lg absolute top-2 left-0 text-white"><ion-icon name="add-outline"></ion-icon></span>
                 <div className="w-5 h-5">
                   <span className="text-2xl text-white"><ion-icon name="cart-outline"></ion-icon></span>
@@ -82,4 +83,5 @@ function ListProductSameCategorie({ products, category }) {
     </div>
   );
 }
+
 export default ListProductSameCategorie;

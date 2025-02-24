@@ -28,6 +28,33 @@
     color: white;
     border: 1px solid #007bff;
   }
+
+
+
+
+
+/****/
+  .list-products{
+    padding: 3px;
+  }
+  
+  .list-products .rounded-lg {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .list-products .rounded-lg:hover {
+    transform: scale(1.05);
+  }
+  
+  .list-products img {
+    transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  .list-products img:hover {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+
   
   /* Responsive styles */
   @media (max-width: 768px) {

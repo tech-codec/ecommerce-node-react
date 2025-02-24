@@ -19,7 +19,7 @@ export default function Product() {
 
     <div className='px-5p md:px-10p mt-10'>
       <ProductDetail product={product} />
-      <h2 className='mt-4 mb-6 text-gray-900 text-xl font-semibold'>Produits de la même catégorie</h2>
+      <h2 className='mt-4 lg:mt-7 mb-6 text-gray-900 text-2xl lg:text-3xl font-semibold'>Produits de la même catégorie</h2>
       <ListProductSameCategorie products={productsData} category={product.category}/>
     </div>
   );

@@ -19,7 +19,7 @@ const RadioButton = ({ id, name, value, label, checked, onChange }) => {
           <span
             className={`
               w-4 h-4 inline-block mr-2 rounded-full border border-gray-400
-              ${checked ? 'bg-orange-700 border-transparent' : 'bg-white'}
+              ${checked ? 'bg-orange-500 border-transparent' : 'bg-white'}
               transition duration-150 ease-in-out
             `}
           ></span>

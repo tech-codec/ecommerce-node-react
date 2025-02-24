@@ -15,7 +15,6 @@ import {
     USER_AUTORISED_LOADED,
     USER_AUTORISED_LOADING
 } from "./type.auth.action";
-import { getUser } from "../userAction/user.action";
 
 
 export const loadUser = () => async dispatch => {

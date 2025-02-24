@@ -24,6 +24,7 @@ export default {
         '59p':'59%',
         '79p': '79%',
         '134p': '134%',
+        '450px': '450px'
         // Ajoutez d'autres pourcentages si nécessaire
       },
       colors:{

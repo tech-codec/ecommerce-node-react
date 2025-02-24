@@ -31,7 +31,7 @@ const AddEditProductModal = ({ show, product, onSave, categories, onClose }) => 
     if (product) {
       setValue('_id', product._id || null);
       setValue('name', product.name || '');
-      setValue('category', product.category);
+      setValue('category', product.category._id);
       setValue('description', product.description || '');
       setValue('new_price', product.new_price || 0);
       setValue('old_price', product.old_price || 0);
