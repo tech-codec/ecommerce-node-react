@@ -1,6 +1,6 @@
 import axios from "../../utils/axiosConfig"
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
     FORGOT_PASSWORD_ERROR,
     FORGOT_PASSWORD_SUCCESS,
@@ -60,7 +60,7 @@ export const login = ({ email, password }) => async dispatch => {
         localStorage.setItem('auth', JSON.stringify(res.data));
         window.location.href = '/dashboard'
         dispatch(loadUser());
-        //toast.success('Connexion réussie avec succès!');
+        toast.success('Connexion réussie avec succès!');
         console.log("le user connecter: "+ JSON.stringify(res.data))
     } catch (err) {
         console.log(JSON.stringify(err.response.data))
@@ -68,7 +68,7 @@ export const login = ({ email, password }) => async dispatch => {
             type: LOGIN_ERROR,
             payload: err.response.data
         })
-        //toast.error("vous avez une erreur de connexion!");
+        toast.error("vous avez une erreur de connexion!");
     }
 }
 
@@ -90,9 +90,9 @@ export const register = ({ name, email, roles, password, confirmPassword }) => a
             type: REGISTER_SUCCESS,
             payload: res.data
         })
-        //toast.success("compte créé avec succès un email d'activation a été envoyé à " + email)
+        toast.success("compte créé avec succès un email d'activation a été envoyé à " + email)
     } catch (err) {
-        //toast.error("vous avez une erreur d'enregistrement ")
+        toast.error("vous avez une erreur d'enregistrement ")
         console.log('une erreur sur le serveur que voici: ' + err)
         dispatch({
             type: REGISTER_ERROR,
@@ -118,14 +118,14 @@ export const forgotPassword = ({ email }) => async dispatch => {
             payload: res.data
         })
         console.log("good for reset pass :" + JSON.stringify(res.data))
-        //toast.success("Vous avez reçue un mail de rénitialisation de mot de passe")
+        toast.success("Vous avez reçue un mail de rénitialisation de mot de passe")
     } catch (err) {
         dispatch({
             type: FORGOT_PASSWORD_ERROR,
             payload: err.response.data
         })
         console.log("error lors de l'envoir du mail pour reset le pass: " + err.response.data)
-        //toast.error("Une erreur c'est produit lors de l'envoir du mail!");
+        toast.error("Une erreur c'est produit lors de l'envoir du mail!");
     }
 }
 
@@ -147,7 +147,7 @@ export const resetPassword = (token, { password, confirmPassword }) => async dis
             payload: res.data
         })
 
-        //toast.success("le mot de passe à été rénitialisé avec succès")
+        toast.success("le mot de passe à été rénitialisé avec succès")
         //window.location.href = '/login'
 
     } catch (err) {
@@ -155,7 +155,7 @@ export const resetPassword = (token, { password, confirmPassword }) => async dis
             type: RESET_PASSWORD_ERROR,
             payload: err.response.data
         })
-        //toast.error("Une erreur c'est produit lors de la rénitialisation du mot de passe!");
+        toast.error("Une erreur c'est produit lors de la rénitialisation du mot de passe!");
     }
 }
 
@@ -177,6 +177,6 @@ export const logout = () => async dispatch => {
             payload: err.response.data
         })
         console.log("deconnexion errot: " + JSON.stringify(err.response.data))
-        //toast.error("Erreur lors de la déconnexion")
+        toast.error("Erreur lors de la déconnexion")
     }
 }
