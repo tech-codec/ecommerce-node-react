@@ -128,7 +128,7 @@ export const forgotPassword = ({ email }) => async dispatch => {
     }
 }
 
-export const resetPassword_frontend = (token, { password, confirmPassword }) => async dispatch => {
+export const resetPassword = (token, { password, confirmPassword }) => async dispatch => {
     dispatch({ type: USER_AUTORISED_LOADING })
     const confing = {
         headers: {
