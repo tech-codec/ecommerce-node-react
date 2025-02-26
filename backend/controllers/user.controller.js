@@ -25,26 +25,6 @@ exports.getUser = async (req, res)=>{
 }
 
 
-// exports.updateUser = async (req, res)=>{
-//     const {id} = req.params
-//     const {name,firstName, phoneNumber, email, bio, roles} = req.body
-
-
-//     try{
-//         image = req.file !== null ? req.file.path : ""
-//         const userUpdate = await User.findByIdAndUpdate(id, {name, email, image:image, bio, roles}, {new:true,upsert:true,setDefaultsOnInsert:true,runValidators:true}).select('-password')
-        
-//         if(!userUpdate) res.status('404').json({message:"utilisateur non trouvé"})
-        
-//         res.status(200).json(userUpdate)
-
-//     }catch(error){
-//         console.log(error);
-//         res.status(500).json({message:"Erreur du serveur"})
-//     }
-// }
-
-
 exports.updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, firstName, phoneNumber, email, bio, roles } = req.body;

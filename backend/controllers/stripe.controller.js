@@ -112,9 +112,6 @@ exports.createCheckoutSession = async (req, res) => {
 
 
 
-
-/********************************** */
-
 const createOrder = async (customer, data, req, res) => {
     try {
         const io = req.app.get('io');

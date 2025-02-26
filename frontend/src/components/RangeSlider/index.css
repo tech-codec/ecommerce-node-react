@@ -20,13 +20,13 @@ input[type="range"] {
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    background: rgb(221, 91, 43); /* Couleur du curseur */
+    background: rgb(106, 44, 207); /* Couleur du curseur */
     cursor: pointer;
     margin-top: -8px; /* Positionnement du curseur */
   }
   
   input[type="range"]:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 3px rgb(221, 91, 43); /* Effet de focus */
+    box-shadow: 0 0 0 3px rgb(106, 44, 207); /* Effet de focus */
   }
   
   input[type="range"]::-moz-range-track {
@@ -41,7 +41,7 @@ input[type="range"] {
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    background: rgb(221, 91, 43); /* Couleur du curseur */
+    background: rgb(106, 44, 207); /* Couleur du curseur */
     cursor: pointer;
   }
   
@@ -68,7 +68,7 @@ input[type="range"] {
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    background: rgb(221, 91, 43); /* Couleur du curseur */
+    background: rgb(106, 44, 207); /* Couleur du curseur */
     cursor: pointer;
     margin-top: -8px; /* Positionnement du curseur */
   }

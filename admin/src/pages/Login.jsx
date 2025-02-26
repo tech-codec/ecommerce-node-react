@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineMailOutline } from "react-icons/md";
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -22,7 +22,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const { email, password } = formData;
-  const { error, success, loading } = auth;
+  const { error, loading } = auth;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 

@@ -3,7 +3,6 @@ import { FaRegEye } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5';
 import LoadingLoader from "../LoadingLoader";
-import { useNavigate } from 'react-router-dom';
 import { getAllOrdersByUser, getOrder, updateStatusOrder } from '../../actions/orderAction/order.action';
 import { formatNumberWithSeparators, removeTrailingZeros } from '../../utils/help';
 import { DashboardContext } from '../../context/DashboradContext';

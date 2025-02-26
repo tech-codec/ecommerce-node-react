@@ -1,6 +1,4 @@
-import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoChevronDown } from "react-icons/io5";
-import userImage from "../../assets/images/avatar_image.png"
 import { MdDarkMode } from "react-icons/md";
 import { MdLightMode } from "react-icons/md";
 import { useTheme } from "../../context/ThemeContext";

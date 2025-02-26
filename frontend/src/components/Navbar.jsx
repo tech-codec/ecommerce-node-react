@@ -9,6 +9,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { LuUserRound } from "react-icons/lu";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { SearchContext } from '../context/SearchContext';
+import { truncateText } from '../utils/help';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -160,7 +161,8 @@ const Navbar = () => {
                 <Link to={"/dashboard"}>
                   <div onClick={handleSetKeword} className='flex flex-col items-center justify-between hover:underline'>
                     <span className='text-xl xl:text-2xl'><LuUserRound /></span>
-                    <span className=''>{user?.name}</span>
+                    <span className='hidden sm:block '>{user?.name}</span>
+                    <span className='block sm:hidden '>{ truncateText(user?.name, 4) }</span>
                   </div>
                 </Link>
               </div>

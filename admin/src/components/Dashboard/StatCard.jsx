@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Text, Metric } from '@tremor/react';
-import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 
 const StatCard = ({ title, value, trend, trendValue, Icon, color, footer }) => {
   const cardClass = "relative overflow-hidden bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300";

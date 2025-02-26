@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Text, Metric } from '@tremor/react';
-import { CurrencyEuroIcon, ShoppingCartIcon, UsersIcon, ChartBarIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { FaEuroSign, FaShoppingCart, FaUsers, FaChartBar, FaExclamationCircle } from 'react-icons/fa';
 import formatNumberWithSeparators from '../../utils/numberSeparator';
 import { removeTrailingZeros } from '../../utils/truncateText';
 
@@ -22,7 +22,7 @@ const DashboardOverview = ({ stats }) => {
         <div className="relative p-6 z-10">
           <div className="flex items-center space-x-4 mb-4">
             <div className={`${iconWrapperClass} bg-indigo-100 dark:bg-indigo-900`}>
-              <CurrencyEuroIcon className="w-8 h-8 text-indigo-600 dark:text-indigo-300" />
+              <FaEuroSign className="w-8 h-8 text-indigo-600 dark:text-indigo-300" />
             </div>
             <div className={`${growthClass} ${stats?.revenueGrowth >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'} dark:bg-opacity-20`}>
               {stats?.revenueGrowth >= 0 ? '↑' : '↓'} {Math.abs(stats?.revenueGrowth)}%
@@ -44,7 +44,7 @@ const DashboardOverview = ({ stats }) => {
         <div className="relative p-6 z-10">
           <div className="flex items-center space-x-4 mb-4">
             <div className={`${iconWrapperClass} bg-emerald-100 dark:bg-emerald-900`}>
-              <ShoppingCartIcon className="w-8 h-8 text-emerald-600 dark:text-emerald-300" />
+              <FaShoppingCart className="w-8 h-8 text-emerald-600 dark:text-emerald-300" />
             </div>
             <div className="flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-opacity-20">
               {stats?.orderCompletionRate}% complétées
@@ -71,7 +71,7 @@ const DashboardOverview = ({ stats }) => {
         <div className="relative p-6 z-10">
           <div className="flex items-center space-x-4 mb-4">
             <div className={`${iconWrapperClass} bg-blue-100 dark:bg-blue-900`}>
-              <UsersIcon className="w-8 h-8 text-blue-600 dark:text-blue-300" />
+              <FaUsers className="w-8 h-8 text-blue-600 dark:text-blue-300" />
             </div>
             <div className={`${growthClass} ${stats?.customerGrowth >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'} dark:bg-opacity-20`}>
               {stats?.customerGrowth >= 0 ? '↑' : '↓'} {Math.abs(stats?.customerGrowth)}%
@@ -91,14 +91,14 @@ const DashboardOverview = ({ stats }) => {
         <div className="relative p-6 z-10">
           <div className="flex items-center space-x-4 mb-4">
             <div className={`${iconWrapperClass} bg-amber-100 dark:bg-amber-900`}>
-              <ChartBarIcon className="w-8 h-8 text-amber-600 dark:text-amber-300" />
+              <FaChartBar className="w-8 h-8 text-amber-600 dark:text-amber-300" />
             </div>
             <div className="flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 dark:bg-opacity-20">
               Objectif: 10%
             </div>
           </div>
           <Text className={textClass}>Taux de Conversion</Text>
-          <Metric className={metricClass}>{stats?.conversionRate == null?0:stats?.conversionRate}%</Metric>
+          <Metric className={metricClass}>{stats?.conversionRate == null ? 0 : stats?.conversionRate}%</Metric>
           <div className="mt-4">
             <div className="w-full h-2 bg-amber-100 dark:bg-amber-900 rounded-full overflow-hidden">
               <div 
@@ -118,7 +118,7 @@ const DashboardOverview = ({ stats }) => {
         <div className="relative p-6 z-10">
           <div className="flex items-center space-x-4 mb-4">
             <div className={`${iconWrapperClass} bg-amber-100 dark:bg-amber-900`}>
-              <ExclamationCircleIcon className="w-8 h-8 text-amber-600 dark:text-amber-300" />
+              <FaExclamationCircle className="w-8 h-8 text-amber-600 dark:text-amber-300" />
             </div>
             <div className={`${growthClass} ${stats?.lowStock > 10 ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'} dark:bg-opacity-20`}>
               {stats?.lowStock > 10 ? '↓' : '↑'} {stats?.lowStock > 10 ? 'Stock critique' : 'Stock normal'}

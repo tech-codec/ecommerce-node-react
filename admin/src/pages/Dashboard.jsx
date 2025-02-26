@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TabGroup, Tab, TabList, TabPanels, TabPanel } from '@tremor/react';
 import DashboardOverview from '../components/Dashboard/DashboardOverview';
-import RealTimeStats from '../components/Dashboard/RealTimeStats';
 import SalesChart from '../components/Dashboard/SalesChart';
 import CustomerActivity from '../components/Dashboard/CustomerActivity';
 import TopProducts from '../components/Dashboard/TopProducts';
@@ -15,32 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCustomerActivity, getAllCustomerStats, getAllLowStock, getAllRealTime, getAllRecentOrders, getAllSales, getAllTopProducts, getAllVisitors } from '../actions/dashBoardAction/dashboard.action';
 
 const Dashboard = () => {
-  const apiUrl = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch()
   const dashboardState = useSelector(state => state.dashboard)
   const {lowStockProducts, topProducts, customerActivity, customerStats, recentOrders, salesData, visitorsData, statistic} = dashboardState
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState(0);
-  const [dashboardData, setDashboardData] = useState({
-    stats: {
-      revenue: 0,
-      revenueGrowth: 0,
-      orders: 0,
-      orderCompletionRate: 0,
-      newCustomers: 0,
-      customerGrowth: 0,
-      conversionRate: 0,
-      lowStock: 0
-    },
-    salesData: [],
-    customerActivity: [],
-    topProducts: [],
-    recentOrders: [],
-    visitorsData: [],
-    customerStats: [],
-    lowStockProducts: []
-  });
-
+ 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -78,7 +57,6 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  console.log("low-stock: ", JSON.stringify(dashboardData.lowStockProducts))
   return (
     <div className="w-full p-4 lg:p-8">
       <div className='mb-8 flex items-center justify-between flex-wrap gap-2'>
@@ -89,7 +67,6 @@ const Dashboard = () => {
       </div>
 
       <DashboardOverview stats={statistic} />
-      {/* <RealTimeStats  /> */}
 
       <TabGroup index={activeTab} onIndexChange={setActiveTab}>
         <TabList className="flex gap-3 mt-5 overflow-x-auto border-b-2 border-gray-200 dark:border-gray-700">

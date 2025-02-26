@@ -1,21 +1,13 @@
-// src/Cart.js
-//import { useCart } from '../context/CartContext';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import { extractUploads } from '../utils/help';
-import { useSelector } from 'react-redux';
 import PayementButton from '../components/PayementButton';
-
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, clearCart, getTotalPrice, getTotalItems } = useContext(CartContext)
   const apiUrl = import.meta.env.VITE_API_URL;
-  const authState = useSelector(state => state.auth)
-  const {isAuthenticated} = authState
   
-  
-
   return (
     <div className="px-5p md:px-10p mt-5 mb-6">
       <div className='flex justify-between w-full gap-4 mb-6'>

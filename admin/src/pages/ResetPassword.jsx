@@ -23,7 +23,7 @@ function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { password, confirmPassword } = formData;
-  const { error, success, loading } = auth;
+  const { error, loading } = auth;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 

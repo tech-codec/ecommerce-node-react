@@ -1,11 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const flowbite = require("flowbite-react/tailwind");
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js",
-    "./node_modules/tw-elements/js/**/*.js"
   ],
   theme: {
     extend: {
@@ -32,6 +29,7 @@ export default {
       },
       screens:{
         'cart-img-360':'360px',
+        'user-name-490': '490px',
         'banner_670':'670px',
         'banner_890':'890px',
         'visible_filter':'1001px',
@@ -52,8 +50,6 @@ export default {
     },
   },
   plugins: [
-    require('tw-elements/plugin.cjs'),
-    flowbite.plugin(),
-    require('flowbite/plugin')
+    
   ],
 }

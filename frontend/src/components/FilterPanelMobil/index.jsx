@@ -32,15 +32,6 @@ function FilterPanelMobil({ filters, setFilters, listMotCle = [] }) {
         )
     }
 
-    // const handleCheckboxChange = (keyword) => {
-    //     setFilters((prevFilters) => ({
-    //         ...prevFilters,
-    //         selectedKeywords: prevFilters.selectedKeywords.includes(keyword)
-    //             ? prevFilters.selectedKeywords.filter((k) => k !== keyword)
-    //             : [...prevFilters.selectedKeywords, keyword]
-    //     }));
-    // };
-
     return (
         <div className='w-full block visible_filter:hidden'>
             <div className='pb-4 text-xl flex items-center relative'>

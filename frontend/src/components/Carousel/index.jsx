@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useSelector } from 'react-redux';
@@ -7,14 +6,10 @@ import { extractUploads } from '../../utils/help';
 function Index() {
 
 
-    const categoryState = useSelector(state => state.categories)
+  const categoryState = useSelector(state => state.categories)
 
-    const {categoriesData, loading} = categoryState
-    const apiUrl = import.meta.env.VITE_API_URL;
-
-  useEffect(() => {
-    // Any additional initialization if necessary
-  }, []);
+  const { categoriesData, loading } = categoryState
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const responsive = {
     superLargeDesktop: {
@@ -37,10 +32,10 @@ function Index() {
 
   return (
     <div className="relative mb-6 md:mb-8">
-        {
-            loading
-            ?<p>chargement</p>
-            : <Carousel
+      {
+        loading
+          ? <p>chargement</p>
+          : <Carousel
             responsive={responsive}
             infinite={true}
             autoPlay={true}
@@ -54,13 +49,13 @@ function Index() {
             renderDotsOutside={true} // Render dots outside
           >
             {
-    
-               categoriesData.length > 0 && categoriesData?.map(category=> <div key={category._id} className="w-full mb-6 h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(category.image)})` }} />)
+
+              categoriesData.length > 0 && categoriesData?.map(category => <div key={category._id} className="w-full mb-6 h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(category.image)})` }} />)
             }
-           
+
           </Carousel>
-        }
-     
+      }
+
     </div>
   );
 }

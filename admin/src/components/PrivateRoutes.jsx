@@ -5,7 +5,6 @@ import SideBar from "./SideBar";
 import Header from "./Header";
 import Categories from "../pages/Categories";
 import Dashboard from "../pages/Dashboard";
-import Factures from "../pages/Factures";
 import Users from "../pages/Users";
 import Orders from "../pages/Orders";
 import Products from "../pages/Products";
@@ -38,7 +37,6 @@ function PrivateRoutes() {
           <Routes>
             <Route path='/categories' element={<Categories />} />
             <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/factures' element={<Factures />} />
             <Route path='/users' element={<Users />} />
             <Route path='/orders' element={<Orders />} />
             <Route path='/products' element={<Products />} />

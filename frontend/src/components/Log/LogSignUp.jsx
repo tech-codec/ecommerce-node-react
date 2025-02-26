@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../actions/authAction/auth.action';
 import LoadingLoader from '../LoadingLoader';
@@ -23,7 +23,7 @@ function LogSignUp() {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const { error, success, loading } = auth;
+  const { error, loading } = auth;
 
   const onSubmit = e => {
     e.preventDefault();

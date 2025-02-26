@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, Title, Button, DateRangePicker } from '@tremor/react';
-import { getCookie } from '../../utils/truncateText';
 
 const ExportData = () => {
   const [dateRange, setDateRange] = useState({ from: null, to: null });

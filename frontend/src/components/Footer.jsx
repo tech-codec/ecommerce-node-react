@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import logo from "../assets/logo-3.png";
 
 const Footer = () => {
@@ -51,6 +52,17 @@ const Footer = () => {
         <p className="text-sm text-gray-400 mt-3">
           &copy; {new Date().getFullYear()} TechCodec. Tous droits réservés.
         </p>
+        <div className="flex space-x-4 mt-4">
+          <a href="https://github.com/tech-codec" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
+            <FaGithub size={24} />
+          </a>
+          <a href="https://linkedin.com/in/varus-emegni-limogne-223a3918b" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-white">
+            <FaLinkedin size={24} />
+          </a>
+          <a href="https://www.youtube.com/@TechcodecEmegni" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-white">
+            <FaYoutube size={24} />
+          </a>
+        </div>
       </div>
     </footer>
   );

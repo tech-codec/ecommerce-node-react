@@ -25,7 +25,7 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { name, email, roles, password, confirmPassword } = formData;
-  const { error, success, loading } = auth;
+  const { error, loading } = auth;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
