@@ -19,7 +19,7 @@ import {
   TiShoppingCart,
 } from "react-icons/ti";
 import {
-  LuUser2,
+  LuUser
 } from "react-icons/lu";
 import {
   FaLongArrowAltLeft,
@@ -158,7 +158,7 @@ function SideBar() {
               pageActive === '/profil' && 'bg-gray-600'
             } items-center text-lg cursor-pointer text-gray-300 hover:text-white mb-3 px-4 py-2 hover:bg-gray-600 rounded-sm`}
           >
-            <LuUser2 />
+            < LuUser />
             <span className="ml-2">Profile</span>
           </div>
         </Link>

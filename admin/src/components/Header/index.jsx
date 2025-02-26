@@ -4,7 +4,7 @@ import { MdLightMode } from "react-icons/md";
 import { useTheme } from "../../context/ThemeContext";
 import { RiDashboardHorizontalFill } from "react-icons/ri";
 import { IoMenuOutline } from "react-icons/io5";
-import { LuUser2 } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useState } from "react";
@@ -71,7 +71,7 @@ function Header() {
 
                     <Link to={'/profil'}>
                         <div onClick={toggleSousMenu} className="flex items-center justify-start px-5 mb-4 gap-2 cursor-pointer hover:text-purple-700">
-                            <div className="text-xl"><LuUser2 /></div>
+                            <div className="text-xl"><LuUser /></div>
                             <span>Profile</span>
                         </div>
                     </Link>
