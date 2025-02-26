@@ -1,6 +1,5 @@
 import axios from "../../utils/axiosConfig"
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
     FORGOT_PASSWORD_ERROR,
     FORGOT_PASSWORD_SUCCESS,

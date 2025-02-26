@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "postinstall": "npm install react-toastify --legacy-peer-deps",
-    "build": "npm list react-toastify && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
