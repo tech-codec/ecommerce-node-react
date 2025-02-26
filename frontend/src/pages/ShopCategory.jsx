@@ -17,7 +17,7 @@ export default function ShopCategory({ banner, category, products, listMotCle })
 
   return (
     <div className='px-5p md:px-10p mt-5'>
-      <div className="w-full mb-6 mb-6 h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(banner)})` }} >
+      <div className="w-full mb-6  h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(banner)})` }} >
       </div>
       <div onClick={() => setOpen(!open)} className=' cursor-pointer'>
         <ButtonFilter />

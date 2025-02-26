@@ -15,8 +15,7 @@ const recordVisit = require('../milddleware/recordVisit');
 
 const router = express.Router();
 
-// Utilisez le middleware pour enregistrer les visites
-router.use(recordVisit)
+
 router.get('/visitors',verifyToken, isAdminAndEmployer, getVisitors);
 router.get('/sales' ,verifyToken, isAdminAndEmployer,getSales)
 router.get('/top-products', verifyToken, isAdminAndEmployer, getTopProducts);

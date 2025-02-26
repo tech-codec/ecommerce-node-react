@@ -4,7 +4,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import LoadingLoader from "../components/LoadingLoader";
-import { resetPassword } from '../../../admin/src/actions/authAction/auth.action';
+import { resetPassword } from '../actions/authAction/auth.action';
 
 function ResetPassword() {
   const auth = useSelector(state => state.auth);
