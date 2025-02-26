@@ -13,7 +13,11 @@ export default defineConfig({
         }
       ]
     }),
-    
   ],
   assetsInclude: ['**/*.JPG', '**/*.jpg', '**/*.png', '**/*.jpeg', '**/*.gif', '**/*.svg'],
+  build: {
+    rollupOptions: {
+      external: ['react-toastify'],
+    },
+  },
 });
