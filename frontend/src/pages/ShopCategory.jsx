@@ -5,6 +5,7 @@ import { FilterContext } from '../context/FilterContext'
 import ButtonFilter from '../components/ButtonFilter'
 import FilterPanelMobil from '../components/FilterPanelMobil'
 import { extractUploads } from '../utils/help'
+import { FaTimes } from 'react-icons/fa';
 
 export default function ShopCategory({ banner, category, products, listMotCle }) {
 
@@ -30,9 +31,11 @@ export default function ShopCategory({ banner, category, products, listMotCle })
       {/**mobil phone */}
       <div className={` fixed z-50 flex flex-col justify-between  visible_filter:hidden top-0 left-0 w-full h-full bg-white py-5 px-8 duration-500 ${open ? "left-0" : "left-[-100%]"} `}>
         <div className=''>
-        <div className='text-3xl mb-3 flex items-center justify-end cursor-pointer' >
-          <span onClick={() => setOpen(!open)}><ion-icon name="close"></ion-icon></span>
-        </div>
+
+          <div className='text-2xl mb-3 flex items-center justify-end cursor-pointer'>
+            <span onClick={() => setOpen(!open)}><FaTimes /></span>
+          </div>
+
           <FilterPanelMobil filters={filters} setFilters={setFilters} listMotCle={listMotCle} />
           <button className='shadow-xl w-full block visible_filter:hidden text-gray-700 border relative border-black py-2 rounded-2xl mt-8' onClick={() => setOpen(!open)}>
             <span className='text-xl'>Afficher les résulats</span>

@@ -5,6 +5,7 @@ import { FilterContext } from '../context/FilterContext';
 import Carousel from '../components/Carousel';
 import ButtonFilter from '../components/ButtonFilter';
 import FilterPanelMobil from '../components/FilterPanelMobil';
+import { FaTimes } from 'react-icons/fa';
 
 export default function Search({ products, allCategories }) {
   const { filters, setFilters, applyFilters } = useContext(FilterContext);
@@ -19,19 +20,16 @@ export default function Search({ products, allCategories }) {
       const filteredResults = products?.filter(product =>
         product.name.toLowerCase().includes(query.toLowerCase())
       );
-      if(filteredResults !==null){
+      if (filteredResults !== null) {
         setResults(filteredResults);
-      }else{
+      } else {
         setResults(products);
       }
-      
     };
-   
 
     fetchResults();
-    fetchKewords(query)
-  }, [query, products,allCategories]);
-  
+    fetchKewords(query);
+  }, [query, products, allCategories]);
 
   const fetchKewords = (searchQuery) => {
     if (!searchQuery) return;
@@ -57,7 +55,7 @@ export default function Search({ products, allCategories }) {
   return (
     <div className='px-5p md:px-10p mt-5'>
       <Carousel />
-      <p className= 'text-2xl sm:text-3xl text-gray-500 font-semibold mb-6'>{`${lengthProducts} résultats pour "${query}"`}</p>
+      <p className='text-2xl sm:text-3xl text-gray-500 font-semibold mb-6'>{`${lengthProducts} résultats pour "${query}"`}</p>
       <div onClick={() => setOpen(!open)} className='cursor-pointer'>
         <ButtonFilter />
       </div>
@@ -69,10 +67,10 @@ export default function Search({ products, allCategories }) {
       {/* Mobile phone */}
       <div className={`fixed z-50 flex flex-col justify-between visible_filter:hidden top-0 left-0 w-full h-full bg-white py-5 px-8 duration-500 ${open ? "left-0" : "left-[-100%]"}`}>
         <div>
-          <div className='text-3xl mb-3 flex items-center justify-end cursor-pointer'>
-            <span onClick={() => setOpen(!open)}><ion-icon name="close"></ion-icon></span>
+          <div className='text-2xl mb-3 flex items-center justify-end cursor-pointer'>
+            <span onClick={() => setOpen(!open)}><FaTimes /></span>
           </div>
-          <FilterPanelMobil filters={filters} setFilters={setFilters} listMotCle={searchKeyWords?.map(listMotCle => listMotCle.keyword)}/>
+          <FilterPanelMobil filters={filters} setFilters={setFilters} listMotCle={searchKeyWords?.map(listMotCle => listMotCle.keyword)} />
           <button className='shadow-xl w-full block visible_filter:hidden text-gray-700 border relative border-black py-2 rounded-2xl mt-8' onClick={() => setOpen(!open)}>
             <span className='text-xl'>Afficher les résultats</span>
           </button>
