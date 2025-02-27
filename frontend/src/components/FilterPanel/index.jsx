@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import RadioButton from '../RadioBotton';
 import RangeSlider from '../RangeSlider';
-import { FaChevronDown, FaChevronUp, FaOptions } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaSlidersH } from 'react-icons/fa';
 
 function FilterPanel({ filters, setFilters, listMotCle = [] }) {
   const [isOpenParPrix, setIsOpenParPrix] = useState(false);
@@ -33,7 +33,7 @@ function FilterPanel({ filters, setFilters, listMotCle = [] }) {
       <div className="sticky top-24">
         <div className="pb-4 text-xl flex items-center relative">
           <span className="font-bold absolute top-1 left-0">
-            <FaOptions />
+            <FaSlidersH />
           </span>
           <span className="ml-6">Filtres</span>
         </div>
