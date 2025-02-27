@@ -160,7 +160,6 @@ exports.login = async (req, res) => {
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',  //Protection contre CSRF
         });
 
-        // ✅ On ne renvoie pas `user`, mais juste les infos nécessaires
         res.status(200).json({
             message: "Connexion réussie",
             user: { id: user._id, email: user.email, roles: user.roles }
@@ -295,8 +294,12 @@ exports.resetPassword = async (req, res) => {
 
 // Déconnexion
 exports.logout = (req, res) => {
-    res.clearCookie('token');
-    res.json({ message: 'Déconnecté avec succès' });
+    res.clearCookie('token', { 
+        httpOnly: true, 
+        sameSite: 'strict', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict' // Supprimer correctement en HTTPS
+    });
+    return res.status(200).json({ message: 'Déconnecté avec succès' });
 };
 
 

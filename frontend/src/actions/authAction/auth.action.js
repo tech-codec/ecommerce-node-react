@@ -222,21 +222,44 @@ export const resetPassword = (token, { password, confirmPassword }) => async dis
 }
 
 
-export const logout = ()=> async dispatch =>{
-    try{
-        const res = await axios.post('/auth/logout')
+export const logout = () => async dispatch => {
+    try {
+        const res = await axios.post('/auth/logout', {}, { withCredentials: true }); 
+
         dispatch({
-            type:LOGOUT_SUCCESS,
-            payload:res.data
-        })
-        toast.success("déconnexion réussite")
-        window.location.href = '/'
-    }catch(err){
+            type: LOGOUT_SUCCESS,
+            payload: res.data
+        });
+
+        toast.success("Déconnexion réussie");
+        window.location.href = '/';
+    } catch (err) {
         dispatch({
-            type:LOGOUT_ERROR,
-            payload:err.response.data
-        })
-        console.log("deconnexion errot: "+JSON.stringify(err.response.data))
-        toast.error("Erreur lors de la déconnexion")
+            type: LOGOUT_ERROR,
+            payload: err.response?.data || "Erreur inconnue"
+        });
+        console.log("Erreur de déconnexion:", err.response?.data);
+        toast.error("Erreur lors de la déconnexion");
     }
-}
+};
+
+
+
+// export const logout = ()=> async dispatch =>{
+//     try{
+//         const res = await axios.post('/auth/logout')
+//         dispatch({
+//             type:LOGOUT_SUCCESS,
+//             payload:res.data
+//         })
+//         toast.success("déconnexion réussite")
+//         window.location.href = '/'
+//     }catch(err){
+//         dispatch({
+//             type:LOGOUT_ERROR,
+//             payload:err.response.data
+//         })
+//         console.log("deconnexion errot: "+JSON.stringify(err.response.data))
+//         toast.error("Erreur lors de la déconnexion")
+//     }
+// }
