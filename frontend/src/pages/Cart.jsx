@@ -116,7 +116,6 @@ const Cart = () => {
       <div className='w-full cart-wrap:w-74p  bg-white p-9 '></div>
 
       <div className='font-semibold bg-white w-full fixed left-0 z-40 bottom-0 p-2  block cart-wrap:hidden'>
-
         <div className='flex items-center text-sm md:text-lg justify-between'>
           <h1 className='list_p_1406:ext-xl'> sous-total(<span>{getTotalItems()}</span>): </h1>
           <h1 className='tlist_p_1406:ext-xl'> <span>{getTotalPrice().toFixed(2)}</span> €</h1>

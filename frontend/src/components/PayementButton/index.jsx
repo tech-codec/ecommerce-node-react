@@ -37,7 +37,7 @@ const PayementButton = ({cartItems, totalItems}) => {
     }
 
     return (
-        <button onClick={handlePayement} className='bg-orange-500 py-2 px-4 md:px-6 rounded-3xl hover:bg-orange-400 text-white text-sm md:text-lg mt-3  w-full'>
+        <button onClick={handlePayement} className='bg-orange-500 py-2 px-4 md:px-6 rounded-3xl hover:bg-orange-400 text-white text-sm md:text-lg mt-2  w-full'>
           Valider mon panier
         </button>
     )
