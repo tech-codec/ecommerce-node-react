@@ -296,8 +296,8 @@ exports.resetPassword = async (req, res) => {
 exports.logout = (req, res) => {
     res.clearCookie('token', { 
         httpOnly: true, 
-        sameSite: 'strict', 
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict' // Supprimer correctement en HTTPS
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+        secure: process.env.NODE_ENV === 'production', //Supprimer correctement en HTTPS
     });
     return res.status(200).json({ message: 'Déconnecté avec succès' });
 };
