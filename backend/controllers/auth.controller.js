@@ -167,7 +167,7 @@ exports.login = async (req, res) => {
 
     } catch (error) {
         console.error("Erreur de connexion :", error);
-        res.status(500).json({ error: "Une erreur interne est survenue" });
+        res.status(500).json({ error: error.message });
     }
 };
 
