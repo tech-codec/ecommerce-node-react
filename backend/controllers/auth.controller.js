@@ -155,9 +155,9 @@ exports.login = async (req, res) => {
         // Configuration du cookie
         res.cookie('token', token, { 
             httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', // ✅ Secure en production
+            secure: process.env.NODE_ENV === 'production', //Secure en production
             maxAge: maxAge, 
-            sameSite: 'strict' // ✅ Protection contre CSRF
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',  //Protection contre CSRF
         });
 
         // ✅ On ne renvoie pas `user`, mais juste les infos nécessaires

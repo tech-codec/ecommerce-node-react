@@ -39,15 +39,34 @@ const recordVisit = require('./milddleware/recordVisit');
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
+const CLIENT_URL= process.env.CLIENT_URL  
+const ADMIN_URL = process.env.ADMIN_URL
 
 // Configuration de CORS
+const allowedOrigins = [
+ CLIENT_URL,
+ ADMIN_URL
+];
+
 const corsOptions = {
   origin: function (origin, callback) {
-    return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
-  credentials: true,
-  optionSuccessStatus: 200,
+  credentials: true, // Permet l'envoi des cookies
+  optionsSuccessStatus: 200
 };
+
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     return callback(null, true);
+//   },
+//   credentials: true,
+//   optionSuccessStatus: 200,
+// };
 
 // Middlewares globaux
 app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }));
