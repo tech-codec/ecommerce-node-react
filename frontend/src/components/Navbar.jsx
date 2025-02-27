@@ -215,10 +215,12 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <div className='relative flex justify-between items-center gap-9 sc-1193:hidden'>
+      <div className='relative flex justify-between items-center gap-8 sc-1193:hidden'>
         <div className='flex relative flex-col items-center justify-center cursor-pointer text-4xl xl:hidden' onClick={() => setOpen(!open)}>
-          <span className='mb-4'><FaBars /></span>
-          <span className='text-sm md:text-base font-semibold absolute top-8'>Produits</span>
+          <div className='relative left-3 top-1 flex items-center justify-center'>
+            <span className='mb-4'><FaBars /></span>
+            <span className='text-sm md:text-base font-semibold absolute top-8'>Produits</span>
+          </div>
         </div>
         <form onSubmit={handleSearch} className='md:relative h-12 grow flex justify-between items-center rounded-3xl px-2 py-4 border-solid border-2 border-indigo-600'>
           <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} className='w-full px-2 py-1 text-lg border-0 outline-none focus:ring-0 focus:outline-none' />

@@ -31,7 +31,7 @@ function Index() {
   };
 
   return (
-    <div className="relative mb-6 md:mb-8">
+    <div className="relative mb-4 md:mb-8">
       {
         loading
           ? <p>chargement</p>
