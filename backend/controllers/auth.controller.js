@@ -109,31 +109,69 @@ exports.adminRegister = async (req, res) => {
 
 
 // Connexion
+// exports.login = async (req, res) => {
+//     const { email, password } = req.body;
+
+//     try {
+//         const user = await User.login(email,password);
+//         const token = jwt.sign({ id: user._id, roles: user.roles}, process.env.JWT_SECRET, { expiresIn: '3d' });
+
+//         // Stockage du token dans un cookie
+//         res.cookie('token', token, { 
+//             httpOnly: true, 
+//             maxAge:maxAge, 
+//             sameSite: 'strict', // To prevent CSRF 
+//         });
+//         // // Store the token in a cookie
+//         // res.cookie('token', token, {
+//         //     httpOnly: true,
+//         //     secure: process.env.NODE_ENV === 'production', // Set secure flag in production
+//         //     maxAge,
+//         //     sameSite: 'strict', // To prevent CSRF
+//         // });
+//         res.json({ message: 'Connexion réussie', user });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// };
+
+
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.login(email,password);
-        const token = jwt.sign({ id: user._id, roles: user.roles}, process.env.JWT_SECRET, { expiresIn: '3d' });
+        const user = await User.login(email, password);
+        if (!user) {
+            return res.status(401).json({ error: "Email ou mot de passe incorrect" });
+        }
 
-        // Stockage du token dans un cookie
+        // Création du token JWT
+        const token = jwt.sign(
+            { id: user._id, roles: user.roles },
+            process.env.JWT_SECRET,
+            { expiresIn: '3d' } // Expire en 3 jours
+        );
+
+        // Configuration du cookie
         res.cookie('token', token, { 
             httpOnly: true, 
-            maxAge:maxAge, 
-            sameSite: 'strict', // To prevent CSRF 
+            secure: process.env.NODE_ENV === 'production', // ✅ Secure en production
+            maxAge: maxAge, 
+            sameSite: 'strict' // ✅ Protection contre CSRF
         });
-        // // Store the token in a cookie
-        // res.cookie('token', token, {
-        //     httpOnly: true,
-        //     secure: process.env.NODE_ENV === 'production', // Set secure flag in production
-        //     maxAge,
-        //     sameSite: 'strict', // To prevent CSRF
-        // });
-        res.json({ message: 'Connexion réussie', user });
+
+        // ✅ On ne renvoie pas `user`, mais juste les infos nécessaires
+        res.status(200).json({
+            message: "Connexion réussie",
+            user: { id: user._id, email: user.email, roles: user.roles }
+        });
+
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Erreur de connexion :", error);
+        res.status(500).json({ error: "Une erreur interne est survenue" });
     }
 };
+
 
 
 exports.activateAccount = async (req, res) => {

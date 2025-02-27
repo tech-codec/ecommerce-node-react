@@ -17,56 +17,121 @@ import {
 } from "./type.auth.action";
 
 
-export const loadUser = () => async dispatch => {
-    dispatch({ type: USER_AUTORISED_LOADING })
+// export const loadUser = () => async dispatch => {
+//     dispatch({ type: USER_AUTORISED_LOADING })
+//     try {
+//         const res = await axios.get('/userAutorised')
+//         console.log("contenue: " + JSON.stringify(res.data.id))
+//         const userRes = await axios.get(`/users/${res.data.id}`)
+
+//         dispatch({
+//             type: USER_AUTORISED_LOADED,
+//             payload: userRes.data
+//         })
+
+//     } catch (err) {
+//         console.log("comptenu de error getUser: " + JSON.stringify(err.response.data))
+//         dispatch({
+//             type: USER_AUTORISED_ERROR,
+//             payload: err.response.data
+//         })
+//     }
+// }
+
+
+export const loadUser = () => async (dispatch) => {
+    dispatch({ type: USER_AUTORISED_LOADING });
+
     try {
-        const res = await axios.get('/userAutorised')
-        console.log("contenue: " + JSON.stringify(res.data.id))
-        const userRes = await axios.get(`/users/${res.data.id}`)
+        const res = await axios.get('/userAutorised', { withCredentials: true });
+
+        if (!res.data?.id) {
+            throw new Error('Utilisateur non trouvé');
+        }
+
+        console.log("Contenu de l'utilisateur autorisé: ", res.data.id);
+
+        const userRes = await axios.get(`/users/${res.data.id}`, { withCredentials: true });
 
         dispatch({
             type: USER_AUTORISED_LOADED,
             payload: userRes.data
-        })
+        });
 
     } catch (err) {
-        console.log("comptenu de error getUser: " + JSON.stringify(err.response.data))
+        console.log("Erreur lors du chargement de l'utilisateur : ", err.response?.data || err.message);
         dispatch({
             type: USER_AUTORISED_ERROR,
-            payload: err.response.data
-        })
+            payload: err.response?.data || { error: 'Une erreur est survenue' }
+        });
     }
-}
+};
 
-export const login = ({email, password})=> async dispatch =>{
-    dispatch({type:USER_AUTORISED_LOADING})
-    const config ={
-        headers:{
-            'content-type': 'application/json'
-        }
-    }
 
-    const body = JSON.stringify({email, password})
+export const login = ({ email, password }) => async (dispatch) => {
+    dispatch({ type: USER_AUTORISED_LOADING });
 
-    try{
-        const res = await axios.post('/auth/login',body, config)
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true // Important pour envoyer les cookies avec la requête
+    };
+
+    const body = JSON.stringify({ email, password });
+
+    try {
+        const res = await axios.post('/auth/login', body, config);
+
         dispatch({
-            type:LOGIN_SUCCESS,
-            payload:res.data
-        })
-        console.log(res.data)
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        });
+
+        console.log(res.data);
         dispatch(loadUser());
         toast.success('Connexion réussie avec succès!');
         window.location.href = '/'
-    }catch(err){
-        console.log(JSON.stringify(err.response.data))
+    } catch (err) {
+        console.log('Erreur de connexion :', err.response?.data || err.message);
         dispatch({
-            type:LOGIN_ERROR,
-            payload: err.response.data
-        })
-        toast.error("vous avez une erreur de connexion!");
+            type: LOGIN_ERROR,
+            payload: err.response?.data || { error: 'Une erreur est survenue' }
+        });
+
     }
-}
+};
+
+
+// export const login = ({email, password})=> async dispatch =>{
+//     dispatch({type:USER_AUTORISED_LOADING})
+//     const config ={
+//         headers:{
+//             'content-type': 'application/json'
+//         }
+//     }
+
+//     const body = JSON.stringify({email, password})
+
+//     try{
+//         const res = await axios.post('/auth/login',body, config)
+//         dispatch({
+//             type:LOGIN_SUCCESS,
+//             payload:res.data
+//         })
+//         console.log(res.data)
+//         dispatch(loadUser());
+//         toast.success('Connexion réussie avec succès!');
+//         window.location.href = '/'
+//     }catch(err){
+//         console.log(JSON.stringify(err.response.data))
+//         dispatch({
+//             type:LOGIN_ERROR,
+//             payload: err.response.data
+//         })
+//         toast.error("vous avez une erreur de connexion!");
+//     }
+// }
 
 
 export const register = ({name, email, password, confirmPassword}) => async dispatch=>{
