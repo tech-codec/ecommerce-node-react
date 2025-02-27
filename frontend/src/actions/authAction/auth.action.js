@@ -98,7 +98,7 @@ export const login = ({ email, password }) => async (dispatch) => {
             type: LOGIN_ERROR,
             payload: err.response?.data || { error: 'Une erreur est survenue' }
         });
-
+        toast.error("vous avez une erreur de connexion!");
     }
 };
 
