@@ -8,13 +8,13 @@ import { logout } from '../actions/authAction/auth.action';
 import { TiShoppingCart } from "react-icons/ti";
 import { LuUserRound } from "react-icons/lu";
 import { TfiMenuAlt } from "react-icons/tfi";
+import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { SearchContext } from '../context/SearchContext';
 import { truncateText } from '../utils/help';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  //const [query, setQuery] = useState('');
-  const {query, setQuery} = useContext(SearchContext)
+  const { query, setQuery } = useContext(SearchContext);
   const [searchResults, setSearchResults] = useState([]);
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -92,10 +92,9 @@ const Navbar = () => {
     }
   }, [query]);
 
-  const handleSetKeword = ()=>{
-    setQuery('')
-  }
-
+  const handleSetKeword = () => {
+    setQuery('');
+  };
 
   // Gestion du clic sur un mot clé de recherche
   const handleKeywordClick = (keyword) => {
@@ -109,8 +108,8 @@ const Navbar = () => {
     <nav className='sticky py-2 bg-white top-0 z-50 px-5p md:px-10p '>
       <div className='flex justify-between items-center gap-1 height-e:gap-9'>
         <div className='cursor-pointer flex justify-between items-center gap-4'>
-          <div className='hidden sc-1193:block cursor-pointer text-3xl sm:text-5xl xl:hidden' onClick={() => setOpen(!open)}>
-            <ion-icon name="reorder-three-outline"></ion-icon>
+          <div className='hidden sc-1193:block cursor-pointer text-2xl sm:text-4xl xl:hidden' onClick={() => setOpen(!open)}>
+            <FaBars />
           </div>
           <Link to={"/"}><img onClick={handleSetKeword} src={logo} alt="" className='h-9 sm:w-32 md:w-36 lg:w-44 md:h-12' /></Link>
         </div>
@@ -123,7 +122,7 @@ const Navbar = () => {
             className='w-full px-2 py-1 text-lg border-0 outline-none focus:ring-0 focus:outline-none'
           />
           <button type='submit' className='flex text-white gap-1 px-2 py-1 ml-2 text-sm justify-between items-center rounded-2xl bg-orange-500 hover:bg-orange-400 font-semibold'>
-            <ion-icon name="search-outline"></ion-icon>
+            <FaSearch />
             <span>Rechercher</span>
           </button>
           {searchResults?.length > 0 && (
@@ -132,7 +131,7 @@ const Navbar = () => {
               {searchResults.map((result) => (
                 <li key={result.keyword} className="p-2 border-b">
                   <div className="cursor-pointer px-1 sc-1193:px-2 flex items-center" onClick={() => handleKeywordClick(result.keyword)}>
-                    <ion-icon name="search-outline"></ion-icon>
+                    <FaSearch />
                     <span className='ml-2'>{result.keyword}</span> 
                   </div>
                 </li>
@@ -211,24 +210,24 @@ const Navbar = () => {
                 } }>Boutique</li>
             </Link>
           </ul>
-          <div className='text-3xl' onClick={() => setOpen(!open)}>
-            <ion-icon name="close"></ion-icon>
+          <div className='text-2xl' onClick={() => setOpen(!open)}>
+            <FaTimes />
           </div>
         </div>
       </div>
       <div className='relative flex justify-between items-center gap-9 sc-1193:hidden'>
-        <div className='flex relative flex-col items-center justify-center cursor-pointer text-5xl xl:hidden' onClick={() => setOpen(!open)}>
-          <span className='mb-4'><ion-icon name="reorder-three-outline"></ion-icon></span>
-          <span className='text-sm md:text-base absolute top-10'>Produits</span>
+        <div className='flex relative flex-col items-center justify-center cursor-pointer text-4xl xl:hidden' onClick={() => setOpen(!open)}>
+          <span className='mb-4'><FaBars /></span>
+          <span className='text-sm md:text-base font-semibold absolute top-8'>Produits</span>
         </div>
         <form onSubmit={handleSearch} className='md:relative h-12 grow flex justify-between items-center rounded-3xl px-2 py-4 border-solid border-2 border-indigo-600'>
           <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} className='w-full px-2 py-1 text-lg border-0 outline-none focus:ring-0 focus:outline-none' />
           <button type='submit' className='hidden md:flex text-white gap-1 px-2 py-1 ml-2 text-sm justify-between items-center rounded-2xl bg-orange-500 hover:bg-orange-400 font-semibold'>
-            <ion-icon name="search-outline"></ion-icon>
+            <FaSearch />
             <span>Rechercher</span>
           </button>
-          <button type='submit' className='flex md:hidden text-gray-500 pr-2 text-2xl'>
-            <ion-icon name="search-outline"></ion-icon>
+          <button type='submit' className='flex md:hidden text-gray-500 pr-2 text-xl'>
+            <FaSearch />
           </button>
           {searchResults?.length > 0 && (
           <div className="absolute top-16 md:top-11 w-full left-0 right-0 bg-white shadow-lg -z-50 border-solid border-2 border-indigo-600 rounded-3xl">
@@ -236,7 +235,7 @@ const Navbar = () => {
             {searchResults.map((result) => (
                 <li key={result.keyword} className="p-2 border-b">
                   <div className="cursor-pointer px-1 sc-1193:px-2 flex items-center" onClick={() => handleKeywordClick(result.keyword)}>
-                    <ion-icon name="search-outline"></ion-icon>
+                    <FaSearch />
                     <span className='ml-2'>{result.keyword}</span> 
                   </div>
                 </li>

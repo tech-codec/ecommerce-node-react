@@ -5,6 +5,7 @@ import './ListProductSameCategorie.css'; // Ensure this is imported for custom s
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../context/CartContext';
 import { extractUploads } from '../../utils/help';
+import { FaCartPlus, FaPlus } from 'react-icons/fa';
 
 function ListProductSameCategorie({ products, category }) {
   const { addToCart } = useContext(CartContext);
@@ -71,9 +72,8 @@ function ListProductSameCategorie({ products, category }) {
                 <span className="font-semibold text-lg text-gray-900">{prd.new_price} €</span>
               </div>
               <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-500 hover:bg-orange-400 flex items-center justify-center relative" onClick={() => handleOnClick(prd)}>
-                <span className="text-lg absolute top-2 left-0 text-white"><ion-icon name="add-outline"></ion-icon></span>
                 <div className="w-5 h-5">
-                  <span className="text-2xl text-white"><ion-icon name="cart-outline"></ion-icon></span>
+                  <span className="text-xl text-white"><FaCartPlus /></span>
                 </div>
               </div>
             </div>

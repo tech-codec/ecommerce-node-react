@@ -4,6 +4,7 @@ import { CartContext } from '../../context/CartContext';
 import { extractUploads } from '../../utils/help';
 import { SearchContext } from '../../context/SearchContext';
 import ReactPaginate from 'react-paginate';
+import { FaCartPlus, FaPlus } from 'react-icons/fa';
 import './ListProducts.css'; 
 
 function ListProducts({ products }) {
@@ -71,9 +72,8 @@ function ListProducts({ products }) {
                 <span className="font-semibold text-lg text-gray-900">{product.new_price} €</span>
               </div>
               <div className="w-12 cursor-pointer h-12 rounded-full bg-orange-500 hover:bg-orange-400 flex items-center justify-center relative" onClick={() => handleOnClick(product)}>
-                <span className="text-lg absolute top-2 left-0 text-white"><ion-icon name="add-outline"></ion-icon></span>
                 <div className="w-5 h-5">
-                  <span className="text-2xl text-white"><ion-icon name="cart-outline"></ion-icon></span>
+                  <span className="text-xl text-white"><FaCartPlus /></span>
                 </div>
               </div>
             </div>
