@@ -4,6 +4,10 @@ import { login } from '../../actions/authAction/auth.action';
 import LoadingLoader from '../LoadingLoader';
 import { Link } from 'react-router-dom';
 import { IoEyeOff, IoEye } from "react-icons/io5";
+import Modal from 'react-modal'; // Importer React Modal
+
+// Configuration de la modale
+Modal.setAppElement('#root'); // Permet de définir l'élément root pour l'accessibilité
 
 function LogSignIn() {
   const auth = useSelector(state => state.auth);
@@ -16,6 +20,8 @@ function LogSignIn() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [cookiesAccepted, setCookiesAccepted] = useState(false); // État pour vérifier l'acceptation des cookies
+  const [modalIsOpen, setModalIsOpen] = useState(false); // État pour gérer l'ouverture de la modale
 
   const { email, password } = formData;
 
@@ -23,11 +29,30 @@ function LogSignIn() {
 
   const onSubmit = e => {
     e.preventDefault();
+
+    if (!cookiesAccepted) {
+      // Ouvre la modale si les cookies ne sont pas acceptés
+      setModalIsOpen(true);
+      return; // Empêche l'envoi immédiat si les cookies ne sont pas acceptés
+    }
+
+    // Si les cookies sont déjà acceptés, procéder normalement
     dispatch(login({ email, password }));
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleCookiesAcceptance = () => {
+    setCookiesAccepted(true);
+    setModalIsOpen(false); // Ferme la modale
+    dispatch(login({ email, password })); // Continue avec la connexion
+  };
+
+  const handleCookiesRejection = () => {
+    setModalIsOpen(false); // Ferme la modale
+    alert("Vous devez accepter les cookies pour pouvoir vous connecter.");
   };
 
   return (
@@ -38,6 +63,8 @@ function LogSignIn() {
           <LoadingLoader />
         </div>
       }
+
+      {/* Formulaire de connexion */}
       <form className="bg-white shadow-md rounded px-3 md:px-8 md:pt-6 pb-8 mb-4" onSubmit={onSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -79,14 +106,39 @@ function LogSignIn() {
           </div>
           <Link to={'/signUp'}>
             <span className="inline-block align-baseline mb-4 font-bold text-sm text-blue-500 hover:text-blue-800">
-              créer un compte
+              Créer un compte
             </span>
           </Link>
         </div>
       </form>
       <p className="text-center px-3 text-gray-500 text-xs">
-        Accéder à votre compte sans avoir à vous authentifier pendant 30 jours.
+        Accédez à votre compte sans avoir à vous authentifier pendant 30 jours.
       </p>
+
+      {/* Modale pour l'acceptation des cookies */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Confirmation des cookies"
+        className="bg-white p-5 rounded shadow-md max-w-lg mx-auto mt-20"
+      >
+        <h2 className="text-xl font-semibold mb-4">Activer les cookies pour continuer</h2>
+        <p className="mb-4">Pour vous connecter, veuillez désactiver votre bloqueur de publicités ou autoriser les cookies et scripts nécessaires à l'authentification. Acceptez-vous d'activer les cookies pour continuer ?</p>
+        <div className="flex justify-around">
+          <button
+            className="bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded"
+            onClick={handleCookiesAcceptance}
+          >
+            Accepter
+          </button>
+          <button
+            className="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded"
+            onClick={handleCookiesRejection}
+          >
+            Annuler
+          </button>
+        </div>
+      </Modal>
     </div>
   )
 }
