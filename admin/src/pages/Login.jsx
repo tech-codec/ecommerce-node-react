@@ -8,6 +8,10 @@ import LoadingLoader from "../components/LoadingLoader";
 import { login } from '../actions/authAction/auth.action';
 import { useTheme } from '../context/ThemeContext';
 import ThemeToggleButton from '../components/ThemeToggleButton';
+import Modal from 'react-modal'; // Importer React Modal
+
+// Configuration de la modale
+Modal.setAppElement('#root');
 
 function Login() {
   const auth = useSelector(state => state.auth);
@@ -20,6 +24,8 @@ function Login() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [cookiesAccepted, setCookiesAccepted] = useState(false); // État pour vérifier l'acceptation des cookies
+  const [modalIsOpen, setModalIsOpen] = useState(false); // État pour gérer l'ouverture de la modale
 
   const { email, password } = formData;
   const { error, loading } = auth;
@@ -28,16 +34,33 @@ function Login() {
 
   const onSubmit = e => {
     e.preventDefault();
+
+    if (!cookiesAccepted) {
+      setModalIsOpen(true); // Ouvre la modale si les cookies ne sont pas acceptés
+      return; // Empêche l'envoi immédiat si les cookies ne sont pas acceptés
+    }
+
+    // Si les cookies sont déjà acceptés, procéder normalement
     dispatch(login({ email, password }));
+  };
+
+  const handleCookiesAcceptance = () => {
+    setCookiesAccepted(true);
+    setModalIsOpen(false); // Ferme la modale
+    dispatch(login({ email, password })); // Continue avec la connexion
+  };
+
+  const handleCookiesRejection = () => {
+    setModalIsOpen(false); // Ferme la modale
+    alert("Vous devez accepter les cookies pour pouvoir vous connecter.");
   };
 
   return (
     <div className={`flex items-center px-4 flex-col h-screen justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-200'}`}>
       <div className="flex justify-end mb-4">
-          <ThemeToggleButton />
+        <ThemeToggleButton />
       </div>
       <div className={`w-full mx-2 299bp:mx-6 lg:w-550px ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} py-8 md:p-8 my-5p`}>
-      
         {error?.error?.includes("activer") &&
           <div className='px-3 md:px-8'>
             <div className='w-full text-white font-semibold px-4 py-5 bg-red-600 flex items-center justify-center'>
@@ -106,6 +129,36 @@ function Login() {
           Accéder à votre compte sans avoir à vous authentifier pendant 30 jours.
         </p>
       </div>
+
+      {/* Modale pour l'acceptation des cookies */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Confirmation des cookies"
+        className="bg-white p-5 rounded shadow-md max-w-lg mx-auto mt-20"
+      >
+        <h2 className="text-xl font-semibold mb-4">Activer les cookies pour continuer</h2>
+        <p className="mb-4">Pour vous connecter, veuillez désactiver votre bloqueur de publicités ou autoriser les cookies et scripts nécessaires à l'authentification.</p>
+        
+        <p className="mb-4 text-sm text-gray-600">
+          Si vous essayez d'accéder à ce site via un navigateur tel que WhatsApp, il se peut que l'accès soit restreint. Utilisez un navigateur normal comme <strong>Chrome</strong> pour une expérience optimale.
+        </p>
+
+        <div className="flex justify-around">
+          <button
+            className="bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded"
+            onClick={handleCookiesAcceptance}
+          >
+            Accepter
+          </button>
+          <button
+            className="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded"
+            onClick={handleCookiesRejection}
+          >
+            Annuler
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

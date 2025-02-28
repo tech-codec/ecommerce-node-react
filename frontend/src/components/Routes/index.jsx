@@ -16,6 +16,7 @@ import AccountActivation from '../../pages/AccountActivation'
 import Dashboard from '../../pages/Dashboard'
 import Footer from '../Footer'
 import ResetPassword from '../../pages/ResetPassword'
+import ScrollToTopButton from '../ScrollToTopButton'
 
 const MyRoutes = () => {
 
@@ -67,6 +68,7 @@ const MyRoutes = () => {
         </main>
         <Footer />
       </div>
+      <ScrollToTopButton/>
       <ToastContainer />
     </Router>
   )

@@ -182,14 +182,14 @@ const Orders = () => {
           </div>
           <div className='flex items-center justify-between text-white'>
             <button
-              className="bg-purple-500 hover:bg-purple-400 flex items-center justify-between rounded-md hover:bg-opacity-80 px-4 mr-3 py-2"
+              className="bg-orange-500 hover:bg-orange-400 flex items-center justify-between rounded-md hover:bg-opacity-80 px-4 mr-3 py-2"
               disabled={page === 0}
               onClick={() => setPage(page - 1)}
             >
               <span><IoChevronBackSharp /></span>Précédent
             </button>
             <button
-              className="bg-purple-500 hover:bg-purple-400 flex items-center justify-between rounded-md hover:bg-opacity-80 px-4 py-2"
+              className="bg-orange-500 hover:bg-orange-400 flex items-center justify-between rounded-md hover:bg-opacity-80 px-4 py-2"
               disabled={(page + 1) * rowsPerPage >= filteredOrders?.length}
               onClick={() => setPage(page + 1)}
             >

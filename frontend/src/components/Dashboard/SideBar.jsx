@@ -14,8 +14,8 @@ const Sidebar = () => {
                     <button
                         onClick={() => setPositionActive(1)}
                         className={`flex items-center gap-3 p-3 rounded-lg transition-all
-                        ${positionActive === 1 ? 'text-purple-600 bg-gray-100' : 'text-gray-700'}  
-                        hover:text-purple-600 hover:bg-gray-100 w-full`}
+                        ${positionActive === 1 ? 'text-orange-500 bg-gray-100' : 'text-gray-700'}  
+                        hover:text-orange-500 hover:bg-gray-100 w-full`}
                     >
                         <FaShoppingCart className="text-xl" />
                         <span className="font-medium">Commandes</span>
@@ -24,8 +24,8 @@ const Sidebar = () => {
                     <button
                         onClick={() => setPositionActive(2)}
                         className={`flex items-center gap-3 p-3 rounded-lg transition-all
-                        ${positionActive === 2 ? 'text-purple-600 bg-gray-100' : 'text-gray-700'}  
-                        hover:text-purple-600 hover:bg-gray-100 w-full`}
+                        ${positionActive === 2 ? 'text-orange-500 bg-gray-100' : 'text-gray-700'}  
+                        hover:text-orange-500 hover:bg-gray-100 w-full`}
                     >
                         <FaUser className="text-xl" />
                         <span className="font-medium">Profil</span>
@@ -34,8 +34,8 @@ const Sidebar = () => {
                     <button
                         onClick={() => setPositionActive(3)}
                         className={`flex items-center gap-3 p-3 rounded-lg transition-all
-                        ${positionActive === 3 ? 'text-purple-600 bg-gray-100' : 'text-gray-700'}  
-                        hover:text-purple-600 hover:bg-gray-100 w-full`}
+                        ${positionActive === 3 ? 'text-orange-500 bg-gray-100' : 'text-gray-700'}  
+                        hover:text-orange-500 hover:bg-gray-100 w-full`}
                     >
                         <FaCog className="text-xl" />
                         <span className="font-medium">Paramètres</span>
@@ -44,8 +44,8 @@ const Sidebar = () => {
                     <button
                         onClick={() => setPositionActive(4)}
                         className={`flex items-center gap-3 p-3 rounded-lg transition-all
-                        ${positionActive === 4 ? 'text-purple-600 bg-gray-100' : 'text-gray-700'}  
-                        hover:text-purple-600 hover:bg-gray-100 w-full`}
+                        ${positionActive === 4 ? 'text-orange-500 bg-gray-100' : 'text-gray-700'}  
+                        hover:text-orange-500 hover:bg-gray-100 w-full`}
                     >
                         <FaLock className="text-xl" />
                         <span className="font-medium">Mot de passe</span>
@@ -58,7 +58,7 @@ const Sidebar = () => {
                 <button
                     onClick={() => setPositionActive(1)}
                     className={`flex flex-col items-center text-gray-700 p-2 transition-all
-                    ${positionActive === 1 ? 'text-purple-600' : ''}`}
+                    ${positionActive === 1 ? 'text-orange-500' : ''}`}
                 >
                     <FaShoppingCart className="text-2xl" />
                 </button>
@@ -66,7 +66,7 @@ const Sidebar = () => {
                 <button
                     onClick={() => setPositionActive(2)}
                     className={`flex flex-col items-center text-gray-700 p-2 transition-all
-                    ${positionActive === 2 ? 'text-purple-600' : ''}`}
+                    ${positionActive === 2 ? 'text-orange-500' : ''}`}
                 >
                     <FaUser className="text-2xl" />
                 </button>
@@ -74,7 +74,7 @@ const Sidebar = () => {
                 <button
                     onClick={() => setPositionActive(3)}
                     className={`flex flex-col items-center text-gray-700 p-2 transition-all
-                    ${positionActive === 3 ? 'text-purple-600' : ''}`}
+                    ${positionActive === 3 ? 'text-orange-500' : ''}`}
                 >
                     <FaCog className="text-2xl" />
                 </button>
@@ -82,7 +82,7 @@ const Sidebar = () => {
                 <button
                     onClick={() => setPositionActive(4)}
                     className={`flex flex-col items-center text-gray-700 p-2 transition-all
-                    ${positionActive === 4 ? 'text-purple-600' : ''}`}
+                    ${positionActive === 4 ? 'text-orange-500' : ''}`}
                 >
                     <FaLock className="text-2xl" />
                 </button>
