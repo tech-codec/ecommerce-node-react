@@ -25,7 +25,7 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { name, email, roles, password, confirmPassword } = formData;
-  const { error, loading } = auth;
+  const { error, success, loading } = auth;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +54,12 @@ function Register() {
           <ThemeToggleButton />
       </div>
       <div className={`w-full mx-2 299bp:mx-8 md:w-550px ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'} py-8 md:p-8 my-5p`}>
-       
+      {
+      success &&
+        <div className='px-3 py-4 mx-3 mb-2 text-white text-base bg-green-600 md:px-8 text-center break-words max-w-full'>
+          {success?.message}
+        </div>
+      }
         {loading &&
           <div className='px-3 md:px-8 flex items-center justify-center'>
             <LoadingLoader />

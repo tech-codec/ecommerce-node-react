@@ -23,7 +23,7 @@ function LogSignUp() {
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const { error, loading } = auth;
+  const { error,success, loading } = auth;
 
   const onSubmit = e => {
     e.preventDefault();
@@ -40,6 +40,12 @@ function LogSignUp() {
 
   return (
     <div className='w-full lg:w-9/12 xl:w-3/5 bg-white mx-auto py-8 md:p-8 my-5p'>
+      {
+      success &&
+        <div className='px-3 py-4 mx-3 mb-2 text-white text-base bg-green-600 md:px-8 text-center break-words max-w-full'>
+          {success?.message}
+        </div>
+      }
       {
       loading &&
         <div className='px-3 md:px-8 flex items-center justify-center'>

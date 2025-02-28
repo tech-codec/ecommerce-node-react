@@ -2,14 +2,10 @@
 exports.registerErrors = (error)=>{
     let errors = {name:"", email:"", password:"", firstName:""}
 
-    if(error.message.includes("name") && error.message.includes("minimum"))
-        errors.name = "le nom est incorecte et dois avoir au moins 3 caractères"
-    if(error.message.includes("name") && error.message.includes("maximum"))
-        errors.name = "le nom est incorecte et dois avoir au plus 55 caractères"
-    if(error.message.includes("firstName") && error.message.includes("minimum"))
-        errors.firstName = "le prénom est incorecte et dois avoir au moins 3 caractères"
-    if(error.message.includes("firstName") && error.message.includes("maximum"))
-        errors.firstName = "le prénom est incorecte et dois avoir au plus 55 caractères"
+    if(error.message.includes("name"))
+        errors.name = "Le nom est incorrect et doit avoir entre 3 et 55 caractères."
+    if(error.message.includes("firstName"))
+        errors.firstName = "Le prénom est incorrect et doit avoir entre 3 et 55 caractères."
     if(error.message.includes("email"))
         errors.email = "cet email est incorrecte ou dèjà pris"
     if(error.message.includes("password"))

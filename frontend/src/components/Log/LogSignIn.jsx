@@ -57,6 +57,12 @@ function LogSignIn() {
 
   return (
     <div className='w-full lg:w-9/12 xl:w-3/5 bg-white mx-auto py-8 md:p-8 my-5p'>
+       {
+      error?.error &&
+        <div className='px-3 py-4 mx-3 mb-2 text-white text-base bg-red-600 md:px-8 text-center break-words max-w-full'>
+          {error?.error}
+        </div>
+      }
       {
         loading &&
         <div className='px-3 md:px-8 flex items-center justify-center'>
