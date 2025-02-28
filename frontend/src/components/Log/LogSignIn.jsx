@@ -123,7 +123,12 @@ function LogSignIn() {
         className="bg-white p-5 rounded shadow-md max-w-lg mx-auto mt-20"
       >
         <h2 className="text-xl font-semibold mb-4">Activer les cookies pour continuer</h2>
-        <p className="mb-4">Pour vous connecter, veuillez désactiver votre bloqueur de publicités ou autoriser les cookies et scripts nécessaires à l'authentification. Acceptez-vous d'activer les cookies pour continuer ?</p>
+        <p className="mb-4">Pour vous connecter, veuillez désactiver votre bloqueur de publicités ou autoriser les cookies et scripts nécessaires à l'authentification.</p>
+        
+        <p className="mb-4 text-sm text-gray-600">
+          Si vous essayez d'accéder à ce site via un navigateur tel que WhatsApp, il se peut que l'accès soit restreint. Utilisez un navigateur normal comme <strong>Chrome</strong> pour une expérience optimale.
+        </p>
+
         <div className="flex justify-around">
           <button
             className="bg-green-500 hover:bg-green-400 text-white py-2 px-4 rounded"
