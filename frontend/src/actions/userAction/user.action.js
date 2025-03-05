@@ -71,7 +71,7 @@ export const updatePasswordUser = (id, {password, newPassword, confirmPassword})
     const body = JSON.stringify({password,newPassword, confirmPassword})
 
     try{
-        const res = await axios.put(`/users/update-USER-password/${id}`, body, config)
+        const res = await axios.put(`/users/update-user-password/${id}`, body, config)
         dispatch({
             type:UPDATE_PASSWORD_USER_LOADED,
             payload:res.data

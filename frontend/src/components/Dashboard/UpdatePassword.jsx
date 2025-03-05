@@ -19,7 +19,7 @@ const UpdatePassword = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(updatePasswordUser(user.id, { password, newPassword, confirmPassword }));
+        dispatch(updatePasswordUser(user._id, { password, newPassword, confirmPassword }));
     };
 
     return (
