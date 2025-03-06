@@ -15,7 +15,9 @@ exports.getAllUsers = async (req, res)=>{
 exports.getUser = async (req, res)=>{
     try{
         const user = await User.findById(req.params.id).populate('roles').select('-password')
-        if(!user) res.status(404).json({message: "l'utilisateur n'existe pas"})
+        if(!user){
+            return res.status(404).json({message: "l'utilisateur n'existe pas"})
+        } 
         res.status(200).json(user)
     }catch(error){
          // Gestion des erreurs
