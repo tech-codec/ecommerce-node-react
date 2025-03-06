@@ -6,6 +6,8 @@ import ButtonFilter from '../components/ButtonFilter'
 import FilterPanelMobil from '../components/FilterPanelMobil'
 import { extractUploads } from '../utils/help'
 import { FaTimes } from 'react-icons/fa';
+import LoadingLoader from '../components/LoadingLoader'
+import { useSelector } from 'react-redux'
 
 export default function ShopCategory({ banner, category, products, listMotCle }) {
 
@@ -14,11 +16,22 @@ export default function ShopCategory({ banner, category, products, listMotCle })
   const listProductsFilters = applyFilters(products, filters)
   const [open, setOpen] = useState(false)
   const apiUrl = import.meta.env.VITE_API_URL;
+  const productState = useSelector(state => state.products)
+  const categorieState = useSelector(state => state.categories)
+  const { loading } = productState;
 
 
   return (
     <div className='px-5p md:px-10p mt-5'>
-      <div className="w-full mb-6  h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(banner)})` }} >
+      {
+        loading ||  categorieState.loading?  (
+          <div className='px-3  md:px-8 flex items-center flex-col justify-center h-450px md:h-screen'>
+            <LoadingLoader />
+            <p className='text-xl text-gray-500 text-center mt-3'>Patientez quelques minutes le temps que les données chargent</p>
+          </div>
+        ) :(
+      <>
+         <div className="w-full mb-6  h-56 banner_670:h-64 banner_890:h-96 visible_filter:h-450px bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(${apiUrl + extractUploads(banner)})` }} >
       </div>
       <div onClick={() => setOpen(!open)} className=' cursor-pointer'>
         <ButtonFilter />
@@ -41,7 +54,10 @@ export default function ShopCategory({ banner, category, products, listMotCle })
             <span className='text-xl'>Afficher les résulats</span>
           </button>
         </div>
+     
       </div>
+      </>
+    )}
     </div>
   )
 }

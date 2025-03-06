@@ -6,6 +6,8 @@ import Carousel from '../components/Carousel';
 import ButtonFilter from '../components/ButtonFilter';
 import FilterPanelMobil from '../components/FilterPanelMobil';
 import { FaTimes } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import LoadingLoader from '../components/LoadingLoader'
 
 export default function Search({ products, allCategories }) {
   const { filters, setFilters, applyFilters } = useContext(FilterContext);
@@ -14,6 +16,9 @@ export default function Search({ products, allCategories }) {
   const [searchKeyWords, setSearchKeyWords] = useState([]);
   const [results, setResults] = useState([]);
   const [lengthProducts, setLengthProducts] = useState(0);
+  const productState = useSelector(state => state.products)
+  const categorieState = useSelector(state => state.categories)
+  const { loading } = productState;
 
   useEffect(() => {
     const fetchResults = () => {
@@ -54,6 +59,14 @@ export default function Search({ products, allCategories }) {
 
   return (
     <div className='px-5p md:px-10p mt-5'>
+       {
+        loading || categorieState.loading?  (
+          <div className='px-3  md:px-8 flex items-center flex-col justify-center h-450px md:h-screen'>
+            <LoadingLoader />
+            <p className='text-xl text-gray-500 text-center mt-3'>Patientez quelques minutes le temps que les données chargent</p>
+          </div>
+        ) :(
+      <>
       <Carousel />
       <p className='text-2xl sm:text-3xl text-gray-500 font-semibold mb-6'>{`${lengthProducts} résultats pour "${query}"`}</p>
       <div onClick={() => setOpen(!open)} className='cursor-pointer'>
@@ -76,6 +89,8 @@ export default function Search({ products, allCategories }) {
           </button>
         </div>
       </div>
+      </>
+        )}
     </div>
   );
 }
