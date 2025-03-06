@@ -116,7 +116,7 @@ function UpdateProfil() {
                 <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow">
                     <div className="flex flex-col items-center">
                         <img
-                            src={userForm.image instanceof File ? URL.createObjectURL(userForm.image) : `${apiUrl}${extractUploads(user.image)}`}
+                            src={userForm.image instanceof File ? URL.createObjectURL(userForm.image) : `${apiUrl}${extractUploads(user?.image)}`}
                             className="w-24 h-24 rounded-full mb-4"
                             alt=""
                         />
