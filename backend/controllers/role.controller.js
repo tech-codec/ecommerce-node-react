@@ -56,23 +56,34 @@ exports.deleteRole = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Vérifier si le rôle existe
+        const role = await Role.findById(id);
+        if (!role) {
+            return res.status(404).send('Rôle non trouvé.');
+        }
+
+        // Empêcher la suppression du rôle "admin"
+        if (role.name.toLowerCase() === "admin") {
+            return res.status(403).send("Le rôle 'admin' ne peut pas être supprimé.");
+        }
+
         // Supprimer le rôle par son ID
         await Role.findByIdAndDelete(id);
 
-        // Trouver tous les utilisateurs
+        // Mettre à jour les utilisateurs en supprimant ce rôle de leur liste de rôles
         const users = await User.find();
-
-        // Pour chaque utilisateur, supprimer le rôle de leur tableau de rôles
         for (const user of users) {
-            user.roles = user.roles.filter(r => r.toString() !== id);
-            console.log(user.roles)
-            await user.save();
+            // Vérifier si l'utilisateur a ce rôle
+            if (user.roles.includes(id)) {
+                // Filtrer pour retirer uniquement ce rôle
+                user.roles = user.roles.filter(r => r.toString() !== id);
+                await user.save();
+            }
         }
 
-        // Envoyer la réponse une fois que tout est terminé
-        res.status(204).send('Le rôle a été supprimé et les utilisateurs ont été mis à jour.');
+        res.status(200).send("Le rôle a été supprimé et les utilisateurs ont été mis à jour.");
     } catch (error) {
-        // En cas d'erreur, envoyer une réponse d'erreur
-        res.status(500).send('Erreur lors de la suppression du rôle et de la mise à jour des utilisateurs.');
+        console.error("Erreur suppression rôle:", error);
+        res.status(500).send("Erreur lors de la suppression du rôle et de la mise à jour des utilisateurs.");
     }
 };

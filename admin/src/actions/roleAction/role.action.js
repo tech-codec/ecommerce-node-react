@@ -63,7 +63,7 @@ export const deleteRole = (id)=> async dispatch =>{
             type:DELETE_ROLE_LOADED,
             payload: res.data
         })
-        toast.success("Le rôle à été supprimer avec succès")
+        toast.success(res.data)
         //window.location.reload()
         dispatch(getAllRoles())
     }catch(err){
@@ -71,7 +71,7 @@ export const deleteRole = (id)=> async dispatch =>{
             type:DELETE_ROLE_ERROR,
             payload: err.response.data
         })
-        toast.error("Le rôle n'a pas été supprimer")
+        toast.error(err.response.data)
         dispatch(getAllRoles())
     }
 }
@@ -99,9 +99,10 @@ export const editeRole = (id, {name})=> async dispatch =>{
             type:EDITE_ROLE_ERROR,
             payload: err.response.data
         })
+        toast.error("Le rôle n'a pas été modifier")
+        dispatch(getAllRoles())
     }
-    toast.error("Le rôle n'a pas été modifier")
-    dispatch(getAllRoles())
+   
 }
 
 
@@ -127,8 +128,9 @@ export const addRole = ({name})=> async dispatch =>{
             type:ADD_ROLE_ERROR,
             payload: err.response.data
         })
+        toast.error(err.response.data)
+        dispatch(getAllRoles())
     }
-    //toast.error("Le rôle n'as pas été ajouter")
-    dispatch(getAllRoles())
+    
     //window.location.reload()
 }
