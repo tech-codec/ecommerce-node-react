@@ -1,5 +1,6 @@
 const Product = require('../models/Product')
-
+const Order = require('../models/Order');
+const Notification = require('../models/Notification');
 
 exports.createProduct = async (req, res) => {
     const { name, description, old_price, new_price, category, stock, status } = req.body;
@@ -137,6 +138,27 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
     const { id } = req.params;
-    await Product.findByIdAndDelete(id);
-    res.status(204).send("produit supprimé avec succès");
+
+    try {
+        // Vérifier si le produit existe
+        const product = await Product.findById(id);
+
+        if (!product) {
+            return res.status(404).send("Produit non trouvé");
+        }
+
+        // Vérifier s'il y a des commandes contenant ce produit
+        const orders = await Order.find({ 'products.product': id });
+
+        if (orders.length > 0) {
+            return res.status(400).send("Le produit ne peut pas être supprimé car il a été commandé");
+        }
+
+        // Supprimer le produit
+        await Product.findByIdAndDelete(id);
+
+        res.status(204).send("Produit supprimé avec succès");
+    } catch (error) {
+        res.status(500).send("Une erreur est survenue lors de la suppression du produit");
+    }
 };

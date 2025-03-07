@@ -92,14 +92,14 @@ export const deleteProduct = (id)=>async dispatch=>{
             type:DELETE_PRODUCT_LOADED,
             payload: res.data
         })
-        toast.success("Le produit à été supprimé avec succès")
+        toast.success(res.data)
         dispatch(getAllProducts())
     }catch(err){
         dispatch({
             type: DELETE_PRODUCT_ERROR,
             payload: err.response.data
         })
-        toast.error("Le produit à été supprimé avec succès")
+        toast.error(err.response.data)
         dispatch(getAllProducts())
     }
 }
