@@ -40,7 +40,7 @@ exports.register = async (req, res) => {
 
         const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
         const url = `${process.env.CLIENT_URL}/activate/${token}`;
-        console.log("mon url de connexion: "+url+"\n")
+        console.log("mon url de connexion : "+url+"\n")
         console.log("mon token : "+token)
 
         await transporter.sendMail({
