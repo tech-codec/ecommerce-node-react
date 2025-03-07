@@ -99,30 +99,24 @@ exports.deleteCategory = async (req, res) => {
       // Vérifier si la catégorie existe
       const category = await Category.findById(id);
       if (!category) {
-          return res.status(404).json({ message: "Catégorie non trouvée" });
+          return res.status(404).send("Catégorie non trouvée.");
       }
 
-      // Supprimer la catégorie par son ID
+      // Vérifier si des produits sont liés à cette catégorie
+      const productCount = await Product.countDocuments({ category: id });
+      if (productCount > 0) {
+          return res.status(403).send("Impossible de supprimer cette catégorie car elle est liée à un ou plusieurs produits.");
+      }
+
+      // Supprimer la catégorie
       await Category.findByIdAndDelete(id);
 
-      // Trouver tous les produits ayant cette catégorie
-      const products = await Product.find({ category: id });
-
-      // Pour chaque produit, mettre à jour la catégorie à null ou une valeur par défaut
-      const updatedProducts = products.map(product => {
-          product.category = null; // ou une valeur par défaut
-          return product.save();
-      });
-
-      // Attendre que toutes les mises à jour soient terminées
-      await Promise.all(updatedProducts);
-
-      // Envoyer la réponse une fois que tout est terminé
-      res.status(204).json({ message: 'La catégorie a été supprimée et les produits ont été mis à jour.' });
+      res.status(200).send("La catégorie a été supprimée avec succès.");
   } catch (error) {
-      // En cas d'erreur, envoyer une réponse d'erreur
-      res.status(500).json({ error: error.message });
+      console.error("Erreur suppression catégorie:", error);
+      res.status(500).send("Erreur lors de la suppression de la catégorie.");
   }
 };
+
 
 

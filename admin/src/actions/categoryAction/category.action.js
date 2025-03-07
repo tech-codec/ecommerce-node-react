@@ -92,14 +92,14 @@ export const deleteCategory = (id) => async dispatch=>{
             type:DELETE_CATEGORY_LOADED,
             payload: res.data
         })
-        toast.success("la catégorie a été supprimée avec succès")
+        toast.success(res.data)
         dispatch(getAllCategories())
     }catch(err){
         dispatch({
             type:DELETE_CATEGORY_ERROR,
             payload: err.response.data
         })
-        toast.success("la catégorie n'a pas été supprimée")
+        toast.error(err.response.data)
         dispatch(getAllCategories())
     }
 }
