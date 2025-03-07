@@ -171,25 +171,28 @@ exports.deleteUser = async (req, res) => {
         // Vérifier si l'utilisateur existe
         const user = await User.findById(id);
         if (!user) {
-            return res.status(404).json({ message: "Utilisateur non trouvé" });
+            return res.status(404).send("Utilisateur non trouvé" );
         }
 
-        // Supprimer l'utilisateur par son ID
+        // Vérifier si l'utilisateur est connecté
+        if (user.connected) {
+            return res.status(403).send("Impossible de supprimer un utilisateur connecté.");
+        }
+
+        // Supprimer l'utilisateur
         await User.findByIdAndDelete(id);
 
-        // Supprimer toutes les notifications appartenant à cet utilisateur
+        // Supprimer les notifications et commandes associées
         await Notification.deleteMany({ user: id });
+        await Order.deleteMany({ user: id });
 
-        // Supprimer toutes les commandes appartanant à cet utilisateur
-         await Order.deleteMany({user: id})
-
-        // Envoyer la réponse une fois que tout est terminé
-        res.status(204).json({ message: "L'utilisateur a été supprimé avec ses notifications." });
+        res.status(200).send("L'utilisateur a été supprimé avec ses notifications et commandes." );
     } catch (error) {
-        // En cas d'erreur, envoyer une réponse d'erreur
-        res.status(500).json({ error: error.message });
+        console.error("Erreur suppression user:", error);
+        res.status(500).send("Erreur lors de la suppression de l'utilisateurs.");
     }
 };
+
 
 
 

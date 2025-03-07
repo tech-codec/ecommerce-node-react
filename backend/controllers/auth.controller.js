@@ -145,6 +145,10 @@ exports.login = async (req, res) => {
             return res.status(401).json({ error: "Email ou mot de passe incorrect" });
         }
 
+        // Mise à jour du champ `connected` à `true`
+        user.connected = true;
+        await user.save();
+
         // Création du token JWT
         const token = jwt.sign(
             { id: user._id, roles: user.roles },
@@ -155,14 +159,14 @@ exports.login = async (req, res) => {
         // Configuration du cookie
         res.cookie('token', token, { 
             httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', //Secure en production
+            secure: process.env.NODE_ENV === 'production',
             maxAge: maxAge, 
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',  //Protection contre CSRF
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', 
         });
 
         res.status(200).json({
             message: "Connexion réussie",
-            user: { id: user._id, email: user.email, roles: user.roles }
+            user: { id: user._id, email: user.email, roles: user.roles, connected: user.connected }
         });
 
     } catch (error) {
@@ -170,6 +174,7 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 
 
@@ -293,13 +298,40 @@ exports.resetPassword = async (req, res) => {
 };
 
 // Déconnexion
-exports.logout = (req, res) => {
-    res.clearCookie('token', { 
-        httpOnly: true, 
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
-        secure: process.env.NODE_ENV === 'production', //Supprimer correctement en HTTPS
-    });
-    return res.status(200).json({ message: 'Déconnecté avec succès' });
+exports.logout = async (req, res) => {
+    try {
+        // Récupérer le token du cookie
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).send("Aucun utilisateur connecté.");
+        }
+
+        // Vérifier et décoder le token
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+
+        // Vérifier si l'utilisateur existe
+        if (!user) {
+            return res.status(404).send("Utilisateur non trouvé.");
+        }
+
+        // Mettre à jour le statut `connected` à false
+        user.connected = false;
+        await user.save();
+
+        // Supprimer le cookie contenant le token
+        res.clearCookie('token', { 
+            httpOnly: true, 
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
+            secure: process.env.NODE_ENV === 'production'
+        });
+
+        return res.status(200).send("Déconnecté avec succès.");
+    } catch (error) {
+        console.error("Erreur lors de la déconnexion :", error);
+        return res.status(500).send("Erreur lors de la déconnexion.");
+    }
 };
+
 
 

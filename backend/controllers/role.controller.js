@@ -59,7 +59,7 @@ exports.deleteRole = async (req, res) => {
         // Vérifier si le rôle existe
         const role = await Role.findById(id);
         if (!role) {
-            return res.status(404).send('Rôle non trouvé.');
+            return res.status(404).send("Rôle non trouvé.");
         }
 
         // Empêcher la suppression du rôle "admin"
@@ -67,19 +67,20 @@ exports.deleteRole = async (req, res) => {
             return res.status(403).send("Le rôle 'admin' ne peut pas être supprimé.");
         }
 
-        // Supprimer le rôle par son ID
+        // Vérifier si un utilisateur connecté possède ce rôle
+        const connectedUser = await User.findOne({ roles: id, connected: true });
+        if (connectedUser) {
+            return res.status(403).send("Ce rôle ne peut pas être supprimé car il est attribué à un utilisateur connecté.");
+        }
+
+        // Supprimer le rôle
         await Role.findByIdAndDelete(id);
 
-        // Mettre à jour les utilisateurs en supprimant ce rôle de leur liste de rôles
-        const users = await User.find();
-        for (const user of users) {
-            // Vérifier si l'utilisateur a ce rôle
-            if (user.roles.includes(id)) {
-                // Filtrer pour retirer uniquement ce rôle
-                user.roles = user.roles.filter(r => r.toString() !== id);
-                await user.save();
-            }
-        }
+        // Supprimer ce rôle chez les utilisateurs
+        await User.updateMany(
+            { roles: id },
+            { $pull: { roles: id } }
+        );
 
         res.status(200).send("Le rôle a été supprimé et les utilisateurs ont été mis à jour.");
     } catch (error) {
@@ -87,3 +88,4 @@ exports.deleteRole = async (req, res) => {
         res.status(500).send("Erreur lors de la suppression du rôle et de la mise à jour des utilisateurs.");
     }
 };
+

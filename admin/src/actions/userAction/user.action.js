@@ -66,7 +66,7 @@ export const deleteUser = (id)=> async dispatch =>{
             type:DELETE_USER_LOADED,
             payload: res.data
         })
-        toast.success("L'utilisateur à été supprimer avec succès")
+        toast.success(res.data)
         dispatch(getAllUsers())
         //window.location.reload()
     }catch(err){
@@ -74,7 +74,7 @@ export const deleteUser = (id)=> async dispatch =>{
             type:DELETE_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("L'utilisateur n'a pas été supprimer")
+        toast.error(err.response.data)
         dispatch(getAllUsers())
     }
 }

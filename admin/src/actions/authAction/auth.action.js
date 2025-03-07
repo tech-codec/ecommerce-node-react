@@ -56,18 +56,18 @@ export const login = ({ email, password }) => async dispatch => {
         })
         console.log("l'utilisateur connecté: " + res.data)
         // Stocker l'état d'authentification dans localStorage
-        localStorage.setItem('auth', JSON.stringify(res.data));
+        localStorage.setItem('auth', res.data);
         window.location.href = '/dashboard'
         dispatch(loadUser());
-        toast.success('Connexion réussie avec succès!');
-        console.log("le user connecter: "+ JSON.stringify(res.data))
+        toast.success(res.data);
+        console.log("le user connecter: "+ res.data)
     } catch (err) {
         console.log(JSON.stringify(err.response.data))
         dispatch({
             type: LOGIN_ERROR,
             payload: err.response.data
         })
-        toast.error("vous avez une erreur de connexion!");
+        toast.error(err.response.data);
     }
 }
 
@@ -166,7 +166,7 @@ export const logout = () => async dispatch => {
             type: LOGOUT_SUCCESS,
             payload: res.data
         })
-        //toast.success("déconnexion réussite")
+        toast.success(res.data)
         localStorage.setItem('currentPage', '/dashboard');
         //localStorage.setItem("auth", JSON.stringify({isAuthenticated:false, user:null}))
         //window.location.href = '/login'
@@ -176,6 +176,6 @@ export const logout = () => async dispatch => {
             payload: err.response.data
         })
         console.log("deconnexion errot: " + JSON.stringify(err.response.data))
-        toast.error("Erreur lors de la déconnexion")
+        toast.error(err.response.data)
     }
 }
