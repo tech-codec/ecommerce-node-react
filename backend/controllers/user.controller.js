@@ -35,7 +35,12 @@ exports.updateUser = async (req, res) => {
     try {
         const user = await User.findById(id);
         if (!user) {
-            return res.status(404).json({ message: "Utilisateur non trouvé" });
+            return res.status(404).send("Utilisateur non trouvé");
+        }
+
+        // Vérifier si le user est protégée
+        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
         }
 
         const updatedData = {
@@ -106,6 +111,14 @@ exports.updateStateUser = async (req, res)=>{
     console.log(isActive)
 
     try{
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).send("Utilisateur non trouvé");
+        }
+        // Vérifier si le user est protégée
+        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        }
 
         const userUpdate = await User.findByIdAndUpdate(
             id, 
@@ -113,11 +126,9 @@ exports.updateStateUser = async (req, res)=>{
             {new:true,upsert:true,setDefaultsOnInsert:true,runValidators:true}
         ).select('-password')
 
-        if(!userUpdate) res.status('404').json({message:"utilisateur non trouvé"})
-
         res.status(200).json(userUpdate)
     }catch(error){
-        res.status('500').json({error:"utilisateur non trouvé sur le serveur"})
+        res.status('500').send("utilisateur non trouvé sur le serveur")
     }
 }
 
@@ -134,6 +145,13 @@ exports.adminUpdatePassWord = async (req, res)=>{
 
     try{
         const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).send("Utilisateur non trouvé");
+        }
+        // Vérifier si le user est protégée
+        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        }
         user.password = password
         await user.save()
         res.status(200).json({message:"Le mot de passe à été rénitialisé avec succè"})
@@ -157,6 +175,13 @@ exports.UpdateUserPassWord = async (req, res)=>{
         }
         if (newPassword !== confirmPassword) {
             return res.status(400).json({ confirmPasswordError: "Les mots de passe ne correspondent pas" });
+        }
+        if (!user) {
+            return res.status(404).send("Utilisateur non trouvé");
+        }
+        // Vérifier si le user est protégée
+        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
         }
         user.password = newPassword
         await user.save()

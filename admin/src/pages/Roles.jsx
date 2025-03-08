@@ -17,7 +17,6 @@ import { addRole, deleteRole, editeRole, getAllRoles } from '../actions/roleActi
 const Roles = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const tab = ["admin", "employer"]
   
   // État pour gérer les rôles
   const rolesState = useSelector(state => state.roles);
@@ -165,7 +164,7 @@ const Roles = () => {
                   <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{role.name}</td>
                   <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleEdit(role)}>
-                      <span className={`text-gray-500 ${tab.includes(role.name.toLowerCase()) && "hidden"} `}><FaPencil /></span>
+                      <span className='text-gray-500'><FaPencil /></span>
                     </button>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleShowDelete(role._id)}>
                       <span className='text-red-800'><RiDeleteBin6Line /></span>

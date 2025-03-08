@@ -100,7 +100,7 @@ export const updateUser = (id, formData) => async dispatch =>{
             type:UPDATE_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("L'utilisateur n'a pas été moddifier cas un problème est survenu")
+        toast.error(err.response.data)
         
     }
 }
@@ -127,7 +127,7 @@ export const adminUpdateUser = (id, formData) => async dispatch =>{
             type:UPDATE_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("L'utilisateur n'a pas été moddifier cas un problème est survenu")
+        toast.error(err.response.data)
         dispatch(getAllUsers())
     }
 }
@@ -155,7 +155,7 @@ export const updateStatusUser = (id, {isActive}) => async dispatch=>{
             type: UPDATE_STATUS_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("Le status n'a pas été modifier")
+        toast.error(err.response.data)
     }
 }
 
@@ -181,7 +181,7 @@ export const resetPasswordUser = (id, {password, confirmPassword}) => async disp
             type: RESET_PASSWORD_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("Le mot de passe de l'utilisateur n'a pas été rénitialisé")
+        toast.error(err.response.data)
     }
 }
 
@@ -209,7 +209,7 @@ export const updatePasswordUser = (id, {password, newPassword, confirmPassword})
             type: UPDATE_PASSWORD_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("Le mot de passe de l'utilisateur n'a pas été modiffier")
+        toast.error(err.response.data)
     }
 }
 

@@ -54,41 +54,39 @@ exports.getcategory = async (req, res) => {
 
 
 exports.updateCategory = async (req, res) => {
-
   const { id } = req.params;
   const { name, description, listMotCle } = req.body;
+
+  const protectedCategories = ["ordinateur", "téléphone", "vêtement", "télévision"];
 
   try {
     const category = await Category.findById(id);
     if (!category) {
-      return res.status(404).json({ message: "Catégorie non trouvée" });
+      return res.status(404).send("Catégorie non trouvée");
+    }
+
+    // Vérifier si la catégorie est protégée
+    if (protectedCategories.includes(category.name.toLowerCase())) {
+      return res.status(403).send(`La catégorie '${category.name}' ne peut pas être modifiée.`);
     }
 
     const updatedData = {
       name: name || category.name,
       description: description || category.description,
-      listMotCle: listMotCle ? JSON.parse(listMotCle) : category.listMotCle
+      listMotCle: listMotCle ? JSON.parse(listMotCle) : category.listMotCle,
+      image: req.file ? req.file.path : category.image
     };
-
-    if (req.file) {
-      updatedData.image = req.file.path;
-      // Optionally, delete the old image file here if needed
-    } else {
-      updatedData.image = category.image;
-    }
 
     const categoryUpdate = await Category.findByIdAndUpdate(id, updatedData, {
       new: true,
-      upsert: true,
-      setDefaultsOnInsert: true,
       runValidators: true
     });
 
     res.status(200).json(categoryUpdate);
   } catch (error) {
+    console.error("Erreur lors de la mise à jour de la catégorie :", error);
     res.status(500).json({ error: error.message });
   }
-
 };
 
 

@@ -43,14 +43,28 @@ exports.getRole = async (req, res)=>{
 
 exports.updateRole = async (req, res) => {
     const { id } = req.params;
-    try{
+    try {
+        // Vérifier si le rôle existe
+        const role = await Role.findById(id);
+        if (!role) {
+            return res.status(404).send("Rôle non trouvé");
+        }
+
+        // Vérifier si le rôle est "admin" ou "employer"
+        if (["admin", "employer"].includes(role.name.toLowerCase())) {
+            return res.status(403).send(`Le rôle '${role.name}' ne peut pas être modifié.`);
+        }
+
+        // Mettre à jour le rôle
         const updatedRole = await Role.findByIdAndUpdate(id, req.body, { new: true });
+
         res.json(updatedRole);
-    }catch(error){
-        res.status(500).json({message:"le rôle n'a pas été modifier"})
+    } catch (error) {
+        console.error("Erreur lors de la modification du rôle :", error);
+        res.status(500).json({ message: "Le rôle n'a pas pu être modifié." });
     }
-    
 };
+
 
 exports.deleteRole = async (req, res) => {
     try {
@@ -64,7 +78,7 @@ exports.deleteRole = async (req, res) => {
 
         // Empêcher la suppression du rôle "admin"
         if (role.name.toLowerCase() === "admin" || role.name.toLowerCase() === "employer") {
-            return res.status(403).send("Le rôle 'admin' ou 'employer' ne peut pas être supprimé.");
+            return res.status(403).send(`Le rôle '${role.name.toLowerCase()}' ne peut pas être supprimé.`);
         }
 
         // Vérifier si un utilisateur connecté possède ce rôle

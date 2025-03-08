@@ -99,7 +99,7 @@ export const editeRole = (id, {name})=> async dispatch =>{
             type:EDITE_ROLE_ERROR,
             payload: err.response.data
         })
-        toast.error("Le rôle n'a pas été modifier")
+        toast.error(err.response.data)
         dispatch(getAllRoles())
     }
    

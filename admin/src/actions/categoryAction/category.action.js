@@ -46,8 +46,7 @@ export const editeCategory = (id, formData) => async dispatch=>{
             type:EDITE_CATEGORY_ERROR,
             payload: err.response.data
         })
-        toast.error("la catégorie n'a pas été modifiée")
-        console.log("modif error cat: ", JSON.stringify(err.response.data))
+        toast.error(err.response.data)
         dispatch(getAllCategories())
     }
 }
