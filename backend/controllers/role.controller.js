@@ -63,8 +63,8 @@ exports.deleteRole = async (req, res) => {
         }
 
         // Empêcher la suppression du rôle "admin"
-        if (role.name.toLowerCase() === "admin") {
-            return res.status(403).send("Le rôle 'admin' ne peut pas être supprimé.");
+        if (role.name.toLowerCase() === "admin" || role.name.toLowerCase() === "employer") {
+            return res.status(403).send("Le rôle 'admin' ou 'employer' ne peut pas être supprimé.");
         }
 
         // Vérifier si un utilisateur connecté possède ce rôle

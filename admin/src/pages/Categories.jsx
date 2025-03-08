@@ -18,6 +18,7 @@ const Categories = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const { theme } = useTheme();
   const dispatch = useDispatch();
+  const tab = ["ordinateur", "téléphone", "vêtement", "télévision"]
 
   // État pour gérer les catégories
   const categoryState = useSelector(state => state.categories);
@@ -179,7 +180,7 @@ const Categories = () => {
                   <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{category.listMotCle.join(', ')}</td>
                   <td className={`border-r-0 columns-2 flex ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleEdit(category)}>
-                      <span className='text-gray-500'><FaPencil /></span>
+                      <span className={`text-gray-500 ${tab.includes(category.name.toLowerCase()) && "hidden"} `}><FaPencil /></span>
                     </button>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleShowDelete(category._id)}>
                       <span className='text-red-800'><RiDeleteBin6Line /></span>

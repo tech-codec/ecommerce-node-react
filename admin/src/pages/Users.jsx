@@ -226,7 +226,7 @@ const Users = () => {
                   <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>{user.phoneNumber}</td>
                   <td className={`border-r-0 ${theme === 'dark' ? "border-gray-600" : "border-gray-200"} border-b px-4 py-5`}>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleEdit(user)}>
-                      <span className='text-gray-500'><FaPencil /></span>
+                      <span className={`text-gray-500 ${user.name.toLowerCase() =="techcodec" && 'hidden'} `}><FaPencil /></span>
                     </button>
                     <button className="bg-transparent px-2 py-1 m-1" onClick={() => handleShowDelete(user._id)}>
                       <span className='text-red-800'><RiDeleteBin6Line /></span>

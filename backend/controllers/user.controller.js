@@ -3,6 +3,7 @@ const Order = require('../models/Order')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const { registerErrors } = require('../utils/errors.util')
+const Role = require('../models/Role')
 
 
 exports.getAllUsers = async (req, res)=>{
@@ -168,6 +169,11 @@ exports.UpdateUserPassWord = async (req, res)=>{
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
+
+        const role = await Role.findOne({name:"admin"})
+        if (!role) {
+            return res.status(404).send("Utilisateur ou le rôle n'a pas été trouvé" );
+        }
         // Vérifier si l'utilisateur existe
         const user = await User.findById(id);
         if (!user) {
@@ -177,6 +183,10 @@ exports.deleteUser = async (req, res) => {
         // Vérifier si l'utilisateur est connecté
         if (user.connected) {
             return res.status(403).send("Impossible de supprimer un utilisateur connecté.");
+        }
+
+        if(user.roles.includes(role._id)){
+            return res.status(403).send("Impossible de supprimer un utilisateur avec le rôle admin.")
         }
 
         // Supprimer l'utilisateur
