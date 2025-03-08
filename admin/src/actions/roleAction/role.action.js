@@ -132,5 +132,4 @@ export const addRole = ({name})=> async dispatch =>{
         dispatch(getAllRoles())
     }
     
-    //window.location.reload()
 }

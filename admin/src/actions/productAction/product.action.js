@@ -69,7 +69,6 @@ export const addProduct = (formData)=> async dispatch=>{
         toast.success("Le produit a été ajoutée avec succès.")
         console.log("add prod: ", JSON.stringify(res.data))
         dispatch(getAllProducts())
-        window.location.reload()
     }catch(err){
         dispatch({
             type:ADD_PRODUCT_LOADED,
@@ -78,7 +77,6 @@ export const addProduct = (formData)=> async dispatch=>{
         toast.error("Le produit n'a pas été ajoutée.")
         console.log("error add prod: ", JSON.stringify(err.response.data))
         dispatch(getAllProducts())
-        window.location.reload()
     }
 }
 
