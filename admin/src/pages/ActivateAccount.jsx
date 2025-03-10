@@ -19,8 +19,8 @@ const ActivateAccount = () => {
         // Redirection vers la page de connexion après une activation réussie
         navigate('/login');
       } catch (error) {
-        setMessage(error.response.data.error);
-        toast.error(error.response.data.error);
+        setMessage("Erreur lors de l'activation du compte.");
+        toast.error("Le token est invalide");
         console.log('erreur activation: '+error)
       }
     };
@@ -28,8 +28,11 @@ const ActivateAccount = () => {
   }, [token, navigate]);
 
   return (
-    <div className="activation-page">
-      <h1>{message}</h1>
+    <div className="flex items-center justify-center my-5p">
+      <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+        <h1 className="text-2xl font-bold mb-4">Activation de compte</h1>
+        <p>{message}</p>
+      </div>
     </div>
   );
 };
