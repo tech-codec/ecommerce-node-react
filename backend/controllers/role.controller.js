@@ -51,7 +51,7 @@ exports.updateRole = async (req, res) => {
         }
 
         // Vérifier si le rôle est "admin" ou "employer"
-        if (["admin", "employer"].includes(role.name.toLowerCase())) {
+        if (["admin", "employer","client"].includes(role.name.toLowerCase())) {
             return res.status(403).send(`Le rôle '${role.name}' ne peut pas être modifié.`);
         }
 
@@ -77,7 +77,7 @@ exports.deleteRole = async (req, res) => {
         }
 
         // Empêcher la suppression du rôle "admin"
-        if (role.name.toLowerCase() === "admin" || role.name.toLowerCase() === "employer") {
+        if (["admin", "employer","client"].includes(role.name.toLowerCase())) {
             return res.status(403).send(`Le rôle '${role.name.toLowerCase()}' ne peut pas être supprimé.`);
         }
 

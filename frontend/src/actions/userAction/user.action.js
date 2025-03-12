@@ -76,7 +76,7 @@ export const updatePasswordUser = (id, {password, newPassword, confirmPassword})
             type:UPDATE_PASSWORD_USER_LOADED,
             payload:res.data
         })
-        toast.success("Votre mot de passe n'a été modiffié")
+        toast.success("Votre mot de passe a été modiffié")
     }catch(err){
         dispatch({
             type: UPDATE_PASSWORD_USER_ERROR,

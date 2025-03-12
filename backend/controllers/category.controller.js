@@ -57,7 +57,6 @@ exports.updateCategory = async (req, res) => {
   const { id } = req.params;
   const { name, description, listMotCle } = req.body;
 
-  const protectedCategories = ["ordinateur", "téléphone", "vêtement", "télévision"];
 
   try {
     const category = await Category.findById(id);
@@ -66,7 +65,7 @@ exports.updateCategory = async (req, res) => {
     }
 
     // Vérifier si la catégorie est protégée
-    if (protectedCategories.includes(category.name.toLowerCase())) {
+    if (["ordinateur", "téléphone", "vêtement", "télévision"].includes(category.name.toLowerCase())) {
       return res.status(403).send(`La catégorie '${category.name}' ne peut pas être modifiée.`);
     }
 
@@ -92,27 +91,32 @@ exports.updateCategory = async (req, res) => {
 
 exports.deleteCategory = async (req, res) => {
   try {
-      const { id } = req.params;
+    const { id } = req.params;
 
-      // Vérifier si la catégorie existe
-      const category = await Category.findById(id);
-      if (!category) {
-          return res.status(404).send("Catégorie non trouvée.");
-      }
+    // Vérifier si la catégorie existe
+    const category = await Category.findById(id);
+    if (!category) {
+      return res.status(404).send("Catégorie non trouvée.");
+    }
 
-      // Vérifier si des produits sont liés à cette catégorie
-      const productCount = await Product.countDocuments({ category: id });
-      if (productCount > 0) {
-          return res.status(403).send("Impossible de supprimer cette catégorie car elle est liée à un ou plusieurs produits.");
-      }
+    // Vérifier si des produits sont liés à cette catégorie
+    const productCount = await Product.countDocuments({ category: id });
+    if (productCount > 0) {
+      return res.status(403).send("Impossible de supprimer cette catégorie car elle est liée à un ou plusieurs produits.");
+    }
 
-      // Supprimer la catégorie
-      await Category.findByIdAndDelete(id);
+    // Vérifier si la catégorie est protégée
+    if (["ordinateur", "téléphone", "vêtement", "télévision"].includes(category.name.toLowerCase())) {
+      return res.status(403).send(`La catégorie '${category.name}' ne peut pas être supprimer.`);
+    }
 
-      res.status(200).send("La catégorie a été supprimée avec succès.");
+    // Supprimer la catégorie
+    await Category.findByIdAndDelete(id);
+
+    res.status(200).send("La catégorie a été supprimée avec succès.");
   } catch (error) {
-      console.error("Erreur suppression catégorie:", error);
-      res.status(500).send("Erreur lors de la suppression de la catégorie.");
+    console.error("Erreur suppression catégorie:", error);
+    res.status(500).send("Erreur lors de la suppression de la catégorie.");
   }
 };
 

@@ -39,8 +39,8 @@ exports.updateUser = async (req, res) => {
         }
 
         // Vérifier si le user est protégée
-        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
-            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        if (["techcodec","alain","pablo"].includes(user.name.toLowerCase())) {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin ou user de test`);
         }
 
         const updatedData = {
@@ -116,8 +116,8 @@ exports.updateStateUser = async (req, res)=>{
             return res.status(404).send("Utilisateur non trouvé");
         }
         // Vérifier si le user est protégée
-        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
-            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        if (["techcodec","alain","pablo"].includes(user.name.toLowerCase())) {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin ou user de test`);
         }
 
         const userUpdate = await User.findByIdAndUpdate(
@@ -149,8 +149,8 @@ exports.adminUpdatePassWord = async (req, res)=>{
             return res.status(404).send("Utilisateur non trouvé");
         }
         // Vérifier si le user est protégée
-        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
-            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        if (["techcodec","alain","pablo"].includes(user.name.toLowerCase())) {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin ou user de test`);
         }
         user.password = password
         await user.save()
@@ -180,8 +180,8 @@ exports.UpdateUserPassWord = async (req, res)=>{
             return res.status(404).send("Utilisateur non trouvé");
         }
         // Vérifier si le user est protégée
-        if (user.name.toLowerCase() === "techcodec" || user.name.toLowerCase() === "alain") {
-            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin`);
+        if (["techcodec","alain","pablo"].includes(user.name.toLowerCase())) {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être modifiée car il est le super admin ou un user de test`);
         }
         user.password = newPassword
         await user.save()
@@ -212,6 +212,10 @@ exports.deleteUser = async (req, res) => {
 
         if(user.roles.includes(role._id)){
             return res.status(403).send("Impossible de supprimer un utilisateur avec le rôle admin.")
+        }
+       // Vérifier si le user est protégée
+       if (["techcodec","alain","pablo"].includes(user.name.toLowerCase())) {
+            return res.status(403).send(`L'utilisateur '${user.name}' ne peut pas être supprimer car il est le super admin ou un user de test`);
         }
 
         // Supprimer l'utilisateur
