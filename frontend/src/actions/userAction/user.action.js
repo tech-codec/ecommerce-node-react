@@ -51,7 +51,7 @@ export const updateUser = (id, formData) => async dispatch =>{
             type:UPDATE_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("L'utilisateur n'a pas été moddifier cas un problème est survenu")
+        toast.error(err.response.data)
         
     }
 }
@@ -82,6 +82,6 @@ export const updatePasswordUser = (id, {password, newPassword, confirmPassword})
             type: UPDATE_PASSWORD_USER_ERROR,
             payload: err.response.data
         })
-        toast.error("Votre mot de passe n'a pas été modiffié")
+        toast.error(err.response.data)
     }
 }
