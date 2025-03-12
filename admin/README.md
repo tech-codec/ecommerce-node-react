@@ -46,7 +46,7 @@ L'application sera accessible sur `http://localhost:your_port`.
 
 ## Démo
 
-- **Démo en ligne** : [lien du site en ligne](https://shop-store-one.vercel.app/)
+- **Démo en ligne** : [lien du site en ligne](https://admin-shop-store.vercel.app/)
     - exemple de compte (email:useralain99@gmail.com , password: 1234567)
     - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
 - **Démo de la video en ligne sur ma chaine youtube**: [lien de la vidéo en ligne](https://www.youtube.com/watch?v=-skrT-X8nPs)
