@@ -40,12 +40,12 @@ cd ecommerce-node-react
 - **Démo en ligne du frontend (pour la partie client)** : [lien du site en ligne](https://shop-store-one.vercel.app/)
     - exemple de compte (email: userpablo@9gmail.com, password: 1234567)
     - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
-- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne]()
+- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne](https://www.youtube.com/watch?v=SCy1VY_LUCo)
 
 - **Démo en ligne de l'administration** : [lien du site en ligne](https://admin-shop-store.vercel.app/)
     - exemple de compte (email:useralain99@gmail.com , password: 1234567)
     - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
-- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne]()
+- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne](https://youtu.be/-skrT-X8nPs)
 
 ### Backend
 
