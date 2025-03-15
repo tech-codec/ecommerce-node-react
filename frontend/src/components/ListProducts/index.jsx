@@ -32,7 +32,6 @@ function ListProducts({ products }) {
   }, []);
 
   const handleOnClick = (product) => {
-    console.log("merci pour le produit");
     addToCart(product);
   };
 

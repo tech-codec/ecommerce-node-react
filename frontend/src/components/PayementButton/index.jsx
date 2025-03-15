@@ -15,7 +15,6 @@ const PayementButton = ({cartItems, totalItems}) => {
             }
         }
 
-        console.log("mon user: ", user)
 
         const userId = user?._id
 
@@ -31,7 +30,7 @@ const PayementButton = ({cartItems, totalItems}) => {
             }
                
         }catch(error){
-            console.log("l'erreur lors du payement: ", error)
+           
         }
 
     }

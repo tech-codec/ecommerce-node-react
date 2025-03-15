@@ -43,13 +43,13 @@ export const getOrder = (id)=> async dispatch =>{
             type:GET_ORDER_LOADED,
             payload: res.data
         })
-        console.log(res.data)
+        
     }catch(err){
         dispatch({
             type:GET_ORDER_ERROR,
             payload: err.response.data
         })
-        console.log(err.response.data)
+        
     }
 }
 
@@ -100,6 +100,6 @@ export const updateStatusOrder = (id, {orderStatus}) => async dispatch=>{
             payload: err.response.data
         })
         toast.error("Le status n'a pas été modifier")
-        console.log("erreur status order: ", JSON.stringify(err.response.data))
+        
     }
 }

@@ -12,13 +12,13 @@ export const getAllCategories = ()=>async dispatch  =>{
             type: GET_ALL_CATEGORY_LOADED,
             payload: res.data
         })
-        console.log("tous les catégories : ", JSON.parse(res.data))
+        
     }catch(err){
         dispatch({
             type: GET_ALL_CATEGORY_ERROR,
             payload: err.response.data
         })
-        console.log("tous les catégories error : ", JSON.parse(err.response.data))
+        
     }
 }
 
@@ -39,7 +39,7 @@ export const editeCategory = (id, formData) => async dispatch=>{
             payload: res.data
         })
         toast.success("la catégorie a été modifiée avec succès.")
-        console.log("modif cat: ", JSON.stringify(res.data))
+       
         dispatch(getAllCategories())
     }catch(err){
         dispatch({
@@ -66,7 +66,7 @@ export const addCategory = (formData)=> async dispatch=>{
             payload:res.data
         })
         toast.success("La catégorie a été ajoutée avec succès.")
-        console.log("add cat: ", JSON.stringify(res.data))
+        
         dispatch(getAllCategories())
         //window.location.reload()
     }catch(err){
@@ -75,7 +75,7 @@ export const addCategory = (formData)=> async dispatch=>{
             payload:err.response.data
         })
         toast.err("La catégorie n'a pas été ajoutée.")
-        console.log("error add cat: ", JSON.stringify(err.response.data))
+        
         dispatch(getAllCategories())
     }
 }

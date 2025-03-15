@@ -50,7 +50,7 @@ const ExportData = () => {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Erreur lors de l\'export:', error);
+      
       alert(error.message);
     }
   };

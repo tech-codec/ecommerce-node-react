@@ -17,7 +17,7 @@ export const getUser = (id) => async dispatch =>{
     dispatch({type:GET_USER_LOADING})
     try {
         const res = await axios.get(`/users/${id}`)
-        console.log("l'utilisateur connester : "+res.data)
+       
         dispatch({
             type:GET_USER_LOADED,
             payload:res.data

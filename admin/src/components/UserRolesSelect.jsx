@@ -9,7 +9,7 @@ const UserRolesSelect = ({ selectedRoles, onChange, error }) => {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef(null);
-  console.log("les roles du user: " + JSON.stringify(selectedRoles));
+ 
 
   const toggleOpen = () => setIsOpen(!isOpen);
 

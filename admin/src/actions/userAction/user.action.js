@@ -30,13 +30,13 @@ export const getAllUsers = ()=>async dispatch=>{
             type: GET_ALL_USER_LOADED,
             payload:res.data
         })
-        console.log("la liste des user: "+res.data)
+        
     }catch(err){
         dispatch({
             type:GET_ALL_USER_ERROR,
             payload:err.response.data
         })
-        console.log("error users: "+err.response.data)
+        
     }
 }
 
@@ -44,7 +44,7 @@ export const getUser = (id) => async dispatch =>{
     dispatch({type:GET_USER_LOADING})
     try {
         const res = await axios.get(`/users/${id}`)
-        console.log("l'utilisateur connester : "+res.data)
+        
         dispatch({
             type:GET_USER_LOADED,
             payload:res.data

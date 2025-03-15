@@ -17,7 +17,7 @@ function UpdateProfil() {
   const { error } = userState;
   const fileInputRef = createRef();
   const apiUrl = import.meta.env.VITE_API_URL;
-  console.log("error update user: " + JSON.stringify(error));
+ 
 
   useEffect(() => {
     if (user) {

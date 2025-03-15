@@ -44,13 +44,13 @@ export const getRole = (id)=> async dispatch =>{
             type:GET_ROLE_LOADED,
             payload: res.data
         })
-        console.log(res.data)
+       
     }catch(err){
         dispatch({
             type:GET_ROLE_ERROR,
             payload: err.response.data
         })
-        console.log(err.response.data)
+        
     }
 }
 

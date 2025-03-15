@@ -37,7 +37,6 @@ function CategoryAndProduct() {
   }, []);
 
   const handleOnClick = (value) => {
-    console.log("cool merci");
     addToCart(value);
   };
 

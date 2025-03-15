@@ -45,7 +45,7 @@ const AdminNotificationBell = () => {
       setNotifications(data);
       setUnreadCount(data.filter((n) => !n.isRead).length);
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      
     }
   };
 
@@ -68,7 +68,7 @@ const AdminNotificationBell = () => {
       await fetch(`${apiUrl}/notifications/mark-all-read`, { method: 'PUT' });
       setNotifications(notifications.map((notif) => ({ ...notif, isRead: true })));
     } catch (error) {
-      console.error('Error marking notifications as read:', error);
+      
     }
   };
 

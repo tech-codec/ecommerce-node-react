@@ -44,7 +44,6 @@ function Register() {
 
   const onSumit = e => {
     e.preventDefault();
-    console.log({ name, email, roles, password, confirmPassword });
     dispatch(register({ name, email, roles, password, confirmPassword }));
   };
 

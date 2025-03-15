@@ -1,5 +1,4 @@
 
-import { toast } from "react-toastify"
 import axios from "../../utils/axiosConfig"
 import { 
     GET_ALL_CUSTOMER_ACTIVITY_ERROR,
