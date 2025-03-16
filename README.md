@@ -1,60 +1,61 @@
 # E-commerce Application `shop-store`
 
-Bienvenue dans le dépôt de l'application e-commerce `shop-store`. Ce projet est une application complète de commerce électronique construite avec Node.js pour le backend et React.js pour le frontend. Le dépôt est organisé en trois parties principales :
-- Backend : Gère les API et la logique côté serveur.
-- Frontend : L'interface utilisateur pour les clients.
-- Admin : Le panneau d'administration pour gérer les produits, les commandes, analysise des visites etc.
+Welcome to the `shop-store` e-commerce application repository. This project is a complete e-commerce application built with Node.js for the backend and React.js for the frontend. The repository is organized into three main parts:
+- Backend: Manages APIs and server-side logic.
+- Frontend: The user interface for customers.
+- Admin: The admin panel to manage products, orders, visit analysis, etc.
 
-## Fonctionalités de l'application
+## Application Features
 
-- Système de gestion des (utilisateurs, produits, catégories, rôles, visites, commandes, notifications)
-- Système d'authentification complet (envoie de mail sur Gmail, récupération de mot de passe, etc.)
-- Système de payement avec stripe et utilisation des webhook pour la validation des évènements d'achat sur le site
-- Utilisation des websockets pour la notification d'un achat en ligne en temps réel
-- `Dashboad` Pour l'analyse sur les (commandes, gains, produits, visites du site, clients, etc.)
-- Système de gestion de panier
+- Management system for (users, products, categories, roles, visits, orders, notifications)
+- Full authentication system (email sending via Gmail, password recovery, etc.)
+- Payment system with Stripe and use of webhooks to validate purchase events on the site
+- Use of websockets for real-time online purchase notifications
+- `Dashboard` for analysis of (orders, revenue, products, site visits, customers, etc.)
+- Shopping cart management system
 
-## Structure du dépôt
+## Repository Structure
 
-- `backend` : Contient le code serveur Node.js.
-- `frontend` : Contient le code client React.js.
-- `admin` : Contient le panneau d'administration React.js.
+- `backend`: Contains the Node.js server code.
+- `frontend`: Contains the React.js client code.
+- `admin`: Contains the React.js admin panel.
 
-## Prérequis
+## Prerequisites
 
-Assurez-vous d'avoir les éléments suivants installés sur votre machine :
-- Node.js (version 18 ou supérieure)
-- npm (version 9 ou supérieure)
-- MongoDB (si vous utilisez une base de données locale)
+Make sure you have the following installed on your machine:
+- Node.js (version 18 or higher)
+- npm (version 9 or higher)
+- MongoDB (if using a local database)
 
 ## Installation
 
-Clonez le dépôt sur votre machine locale :
+Clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/tech-codec/ecommerce-node-react.git
 cd ecommerce-node-react
 ```
 
-### Démo
-- **Démo en ligne du frontend (pour la partie client)** : [lien du site en ligne](https://shop-store-one.vercel.app/)
-    - exemple de compte (email: userpablo@9gmail.com, password: 1234567)
-    - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
-- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne](https://www.youtube.com/watch?v=SCy1VY_LUCo)
+### Demo
+- **Live demo of the frontend (customer side)**: [Online site link](https://shop-store-one.vercel.app/)
+    - Example account (email: userpablo@9gmail.com, password: 1234567)
+    - Or you can simply create your account by signing up with a valid email
+- **Online video demo of this part on my YouTube channel**: [Video link](https://www.youtube.com/watch?v=SCy1VY_LUCo)
 
-- **Démo en ligne de l'administration** : [lien du site en ligne](https://admin-shop-store.vercel.app/)
-    - exemple de compte (email:useralain99@gmail.com , password: 1234567)
-    - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
-- **Démo de la video en ligne de cette partie sur ma chaine youtube**: [lien de la vidéo en ligne](https://youtu.be/-skrT-X8nPs)
+- **Live demo of the admin panel**: [Online site link](https://admin-shop-store.vercel.app/)
+    - Example account (email: useralain99@gmail.com, password: 1234567)
+    - Or you can simply create your account by signing up with a valid email
+- **Online video demo of this part on my YouTube channel**: [Video link](https://youtu.be/-skrT-X8nPs)
 
 ### Backend
 
-Consultez le [README du backend](backend/README.md) pour les instructions d'installation et de configuration du serveur.
+Check the [backend README](backend/README.md) for installation and server configuration instructions.
 
 ### Frontend
 
-Consultez le [README du frontend](frontend/README.md) pour les instructions d'installation et de configuration de l'interface utilisateur avec une démo et une vidéo.
+Check the [frontend README](frontend/README.md) for installation and configuration instructions for the user interface, including a demo and video.
 
 ### Admin
 
-Consultez le [README du panneau d'administration](admin/README.md) pour les instructions d'installation et de configuration du panneau d'administration avec une démo et une vidéo.
+Check the [admin panel README](admin/README.md) for installation and configuration instructions for the admin panel, including a demo and video.
+

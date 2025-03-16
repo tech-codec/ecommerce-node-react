@@ -1,108 +1,108 @@
 # Frontend - E-commerce Application `shop-store`
 
-Ce dossier contient le code client de l'application e-commerce `shop-store`. Le frontend est construit avec React.js et utilise Redux pour la gestion de l'état.
+This folder contains the client code for the `shop-store` e-commerce application. The frontend is built with React.js and uses Redux for state management.
 
-## Prérequis
+## Prerequisites
 
-Assurez-vous d'avoir les éléments suivants installés sur votre machine :
-- Node.js (version 18 ou supérieure)
-- npm (version 9 ou supérieure)
+Make sure you have the following installed on your machine:
+- Node.js (version 18 or higher)
+- npm (version 9 or higher)
 
 ## Installation
 
-1. Installez les dépendances :
+1. Install the dependencies:
 
 ```bash
 cd frontend
 npm install --legacy-peer-deps
 ```
 
-2. Créez un fichier `.env` à la racine du dossier frontend et ajoutez les variables d'environnement suivantes :
+2. Create a `.env` file at the root of the frontend folder and add the following environment variables:
 
 ```env
-VITE_API_URL =http://localhost:3000/api
+VITE_API_URL=http://localhost:3000/api
 ```
 
-## Démarrage
+## Running the Development Server
 
-Pour démarrer le serveur de développement :
+To start the development server:
 
 ```bash
 npm run dev
 ```
 
-L'application sera accessible sur `http://localhost:your_port`.
+The application will be accessible at `http://localhost:your_port`.
 
-## Structure du projet
+## Project Structure
 
-- `components` : Contient les composants React réutilisables.
-- `pages` : Contient les différentes pages de l'application.
-- `reducers` : Contient les fichiers relatifs à Redux qui sont des reducers.
-- `actions` : Contient les fichiers relatifs à Redux qui sont des actions.
-- `store` : Contient les fichiers relatifs à Redux qui est le store.
-- `utils` : Contient les fonctions utilitaires.
-- `context` : contient les différents context de l'application
+- `components` : Contains reusable React components.
+- `pages` : Contains the different pages of the application.
+- `reducers` : Contains Redux reducer files.
+- `actions` : Contains Redux action files.
+- `store` : Contains the Redux store configuration files.
+- `utils` : Contains utility functions.
+- `context` : Contains the various application contexts.
 
-## Démo
+## Demo
 
-- **Démo en ligne** : [lien du site en ligne](https://shop-store-one.vercel.app/)
-    - exemple de compte (email: userpablo@9gmail.com, password: 1234567)
-    - ou vous pouvez créer simplement votre compte en vous s'inscrivant avec un mail valide
-- **Démo de la video en ligne sur ma chaine youtube**: [lien de la vidéo en ligne](https://www.youtube.com/watch?v=SCy1VY_LUCo)
+- **Online Demo**: [Link to live site](https://shop-store-one.vercel.app/)
+    - Example account (email: userpablo@9gmail.com, password: 1234567)
+    - Or you can simply create your own account by signing up with a valid email.
+- **Video Demo on YouTube**: [Link to the video](https://www.youtube.com/watch?v=SCy1VY_LUCo)
 
-## aperçu
+## Overview
 
-### page d'accueil sur ordinateur
+### Homepage on Desktop
 
-![page d'accueil sur ordinateur](./demo_images/ordi_demo/ordi_accueil.png)
+![Homepage on Desktop](./demo_images/ordi_demo/ordi_accueil.png)
 
-### page d'accueil sur téléphone
+### Homepage on Mobile
 
-![page d'accueil sur téléphone](./demo_images/phone_demo/accuei_phone.png)
+![Homepage on Mobile](./demo_images/phone_demo/accuei_phone.png)
 
-### exmple page catégorie sur ordinateur
+### Example Category Page on Desktop
 
-![exmple page catégorie sur ordinateur](./demo_images/ordi_demo/ordi_page_cat.png)
+![Example Category Page on Desktop](./demo_images/ordi_demo/ordi_page_cat.png)
 
-### exmple page catégorie sur téléphone
+### Example Category Page on Mobile
 
-![exmple page catégorie sur téléphone](./demo_images/phone_demo/phone_cat.png)
-
-
-### filter sur téléphone
-
-![filter sur téléphone](./demo_images/phone_demo/phone_filter.png)
-
-### page présentation d'un produit sur ordinateur
-
-![page présentation d'un produit sur ordinateur](./demo_images/ordi_demo/ordi_hero.png)
-
-### page présentation d'un produit sur téléphone
-
-![page présentation d'un produit sur téléphone](./demo_images/phone_demo/phone_hero.png)
-
-### page de connexion sur ordinateur
-
-![page de connexion sur ordinateur](./demo_images/ordi_demo/ordi_login.png)
-
-### page de connexion sur téléphone
-
-![page de connexion sur téléphone](./demo_images/phone_demo/phone_login.png)
+![Example Category Page on Mobile](./demo_images/phone_demo/phone_cat.png)
 
 
-### présentation de la recherche sur ordinateur
+### Filter on Mobile
 
-![présentation de la recherche sur ordinateur](./demo_images/ordi_demo/ordi_seach.png)
+![Filter on Mobile](./demo_images/phone_demo/phone_filter.png)
 
-### présentation de la recherche sur téléphone
+### Product Presentation Page on Desktop
 
-![présentation de la recherche sur téléphone](./demo_images/phone_demo/phone_seach.png)
+![Product Presentation Page on Desktop](./demo_images/ordi_demo/ordi_hero.png)
 
-### page de payement sur ordinateur
+### Product Presentation Page on Mobile
 
-![page de payement sur ordinateur](./demo_images/ordi_demo/ordi_stripe.png)
+![Product Presentation Page on Mobile](./demo_images/phone_demo/phone_hero.png)
+
+### Login Page on Desktop
+
+![Login Page on Desktop](./demo_images/ordi_demo/ordi_login.png)
+
+### Login Page on Mobile
+
+![Login Page on Mobile](./demo_images/phone_demo/phone_login.png)
 
 
-### page de payement sur téléphone
+### Search Presentation on Desktop
 
-![page de payement sur téléphone](./demo_images/phone_demo/phone_stripe.png)
+![Search Presentation on Desktop](./demo_images/ordi_demo/ordi_seach.png)
+
+### Search Presentation on Mobile
+
+![Search Presentation on Mobile](./demo_images/phone_demo/phone_seach.png)
+
+### Payment Page on Desktop
+
+![Payment Page on Desktop](./demo_images/ordi_demo/ordi_stripe.png)
+
+
+### Payment Page on Mobile
+
+![Payment Page on Mobile](./demo_images/phone_demo/phone_stripe.png)
