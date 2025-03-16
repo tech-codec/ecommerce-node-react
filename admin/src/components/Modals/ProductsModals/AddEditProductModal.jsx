@@ -93,10 +93,10 @@ const AddEditProductModal = ({ show, product, onSave, categories, onClose }) => 
 
   const isUniqueName = (name) => {
     if (product._id) {
-      const productExists = productsData.some((p) => p.name === name && p._id !== product._id);
+      const productExists = productsData.some((p) => p.name.toLowerCase() === name.toLowerCase() && p._id !== product._id);
       return !productExists || 'Le nom existe déjà';
     } else {
-      const productExists = productsData.some((p) => p.name === name);
+      const productExists = productsData.some((p) => p.name.toLowerCase() === name.toLowerCase());
       return !productExists || 'Le nom existe déjà';
     }
   };

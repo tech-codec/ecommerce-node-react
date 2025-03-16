@@ -45,12 +45,12 @@ const AddEditRoleModal = ({ show, role, onSave, onClose }) => {
   const isUniqueName = (name) => {
     if (role?._id) {
       const roleExists = rolesData.some(
-        (r) => r.name === name && r._id !== getValues('_id')
+        (r) => r.name.toLowerCase() === name.toLowerCase() && r._id !== getValues('_id')
       );
       return !roleExists || 'Le nom existe déjà';
     } else {
       const roleExists = rolesData.some(
-        (r) => r.name === name
+        (r) => r.name.toLowerCase() === name.toLowerCase()
       );
       return !roleExists || 'Le nom existe déjà';
     }

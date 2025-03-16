@@ -147,10 +147,10 @@ const AddEditCategoryModal = ({ show, category, onSave, onClose }) => {
 
   const isUniqueName = (name) => {
     if (category._id) {
-      const categoryExists = categoriesData.some((c) => c.name === name && c._id !== category._id);
+      const categoryExists = categoriesData.some((c) => c.name.toLowerCase() === name.toLowerCase() && c._id !== category._id);
       return !categoryExists || 'Le nom existe déjà';
     } else {
-      const categoryExists = categoriesData.some((c) => c.name === name);
+      const categoryExists = categoriesData.some((c) => c.name.toLowerCase() === name.toLowerCase());
       return !categoryExists || 'Le nom existe déjà';
     }
   };

@@ -111,12 +111,12 @@ const AddEditUserModal = ({ show, user, onSave, onClose }) => {
   const isUniqueName = (name) => {
     if (user._id) {
       const userExists = usersData.some(
-        (u) => u.name === name && u._id !== getValues('_id')
+        (u) => u.name.toLowerCase() === name.toLowerCase() && u._id !== getValues('_id')
       );
       return !userExists || 'Le nom existe déjà';
     } else {
       const userExists = usersData.some(
-        (u) => u.name === name
+        (u) => u.name.toLowerCase() === name.toLowerCase()
       );
       return !userExists || 'Le nom existe déjà';
     }
@@ -125,12 +125,12 @@ const AddEditUserModal = ({ show, user, onSave, onClose }) => {
   const isUniqueEmail = (email) => {
     if (user._id) {
       const emailExists = usersData.some(
-        (u) => u.email === email && u._id !== getValues('_id')
+        (u) => u.email.toLowerCase() === email.toLowerCase() && u._id !== getValues('_id')
       );
       return !emailExists || 'L\'email existe déjà';
     } else {
       const emailExists = usersData.some(
-        (u) => u.email === email
+        (u) => u.email.toLowerCase() === email.toLowerCase()
       );
       return !emailExists || 'L\'email existe déjà';
     }

@@ -19,12 +19,14 @@ exports.createRole = async (req, res) => {
 
 exports.getAllRoles = async (req, res) => {
     try {
-      const roles = await Role.find().sort({ createdAt: -1 }); // 1 for ascending order
-      res.json(roles);
+        const roles = await Role.find({ name: { $ne: "admin" } }) // Exclure "admin"
+            .sort({ createdAt: -1 });
+
+        res.json(roles);
     } catch (error) {
-      res.status(500).json({ message: 'Une erreur est survenue', error });
+        res.status(500).json({ message: "Une erreur est survenue", error });
     }
-  };
+};
   
 
 

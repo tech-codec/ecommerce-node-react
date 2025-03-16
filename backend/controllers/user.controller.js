@@ -6,11 +6,19 @@ const { registerErrors } = require('../utils/errors.util')
 const Role = require('../models/Role')
 
 
-exports.getAllUsers = async (req, res)=>{
-    //const users = await User.find().populate('roles').select('-password')
-    const users = await User.find().sort({ createdAt: -1 }).select('-password')
-    res.status(200).json(users)
-}
+exports.getAllUsers = async (req, res) => {
+    try {
+        const excludedNames = ["TechCodec", "alain", "pablo"]; // Liste des noms à exclure
+
+        const users = await User.find({ name: { $nin: excludedNames } }) // Exclure les utilisateurs par nom
+            .sort({ createdAt: -1 })
+            .select('-password');
+
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Une erreur est survenue", error });
+    }
+};
 
 
 exports.getUser = async (req, res)=>{
